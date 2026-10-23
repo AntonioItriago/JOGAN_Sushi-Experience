@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JŌGAN | Panel Administrativo</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .header {
+      background: rgba(0, 0, 0, 0.8);
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #c9a961;
+    }
+
+    .header h1 {
+      color: #c9a961;
+      font-size: 2em;
+      letter-spacing: 3px;
+    }
+
+    .header p {
+      color: #e0e0e0;
+      margin-top: 5px;
+      font-size: 0.9em;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .tab-btn {
+      background: rgba(201, 169, 97, 0.2);
+      color: #c9a961;
+      border: 2px solid #c9a961;
+      padding: 12px 24px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1em;
+      transition: all 0.3s;
+      font-family: 'Georgia', serif;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      background: #c9a961;
+      color: #000;
+    }
+
+    .tab-content {
+      display: none;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+      border-radius: 10px;
+      border: 1px solid #c9a961;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .tab-content h2 {
+      color: #c9a961;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #c9a961;
+      padding-bottom: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #c9a961;
+      font-weight: bold;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #c9a961;
+      border-radius: 5px;
+      color: #fff;
+      font-size: 1em;
+      font-family: 'Georgia', serif;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #d4af37;
+      box-shadow: 0 0 10px rgba(201, 169, 97, 0.3);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn-submit {
+      background: #c9a961;
+      color: #000;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-top: 20px;
+      font-family: 'Georgia', serif;
+      transition: all 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: #d4af37;
+      transform: scale(1.05);
+    }
+
+    .btn-submit:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .mensaje {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .mensaje.exito {
+      background: #d4edda;
+      color: #155724;
+      display: block;
+    }
+
+    .mensaje.error {
+      background: #f8d7da;
+      color: #721c24;
+      display: block;
+    }
+
+    .mensaje.cargando {
+      background: #fff3cd;
+      color: #856404;
+      display: block;
+    }
+
+    .lista-productos {
+      max-height: 500px;
+      overflow-y: auto;
+      margin-top: 20px;
+    }
+
+    .producto-item {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid transparent;
+    }
+
+    .producto-item:hover {
+      background: rgba(201, 169, 97, 0.2);
+      border-color: #c9a961;
+    }
+
+    .producto-info {
+      flex: 1;
+    }
+
+    .producto-info h4 {
+      color: #c9a961;
+      margin-bottom: 5px;
+    }
+
+    .producto-info p {
+      font-size: 0.9em;
+      color: #e0e0e0;
+    }
+
+    .btn-eliminar {
+      background: #ff4444;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-family: 'Georgia', serif;
+      transition: all 0.3s;
+    }
+
+    .btn-eliminar:hover {
+      background: #cc0000;
+      transform: scale(1.05);
+    }
+
+    .cargando {
+      text-align: center;
+      padding: 40px;
+      color: #c9a961;
+      font-size: 1.2em;
+    }
+
+    .spinner {
+      border: 4px solid rgba(201, 169, 97, 0.3);
+      border-top: 4px solid #c9a961;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .stats {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .stat-card {
+      background: rgba(201, 169, 97, 0.1);
+      border: 1px solid #c9a961;
+      padding: 15px 25px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .stat-card .numero {
+      font-size: 2em;
+      color: #c9a961;
+      font-weight: bold;
+    }
+
+    .stat-card .label {
+      font-size: 0.9em;
+      color: #e0e0e0;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header h1 {
+        font-size: 1.5em;
+      }
+
+      .container {
+        padding: 10px;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tab-btn {
+        width: 100%;
+      }
+
+      .tab-content {
+        padding: 20px;
+      }
+
+      .producto-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+
+      .btn-eliminar {
+        width: 100%;
+      }
+
+      .stats {
+        flex-direction: column;
+      }
+
+      .stat-card {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header h1 {
+        font-size: 1.2em;
+      }
+
+      .btn-submit {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🍣 JŌGAN | Panel Administrativo</h1>
+    <p>Gestión de menú - SUSHI EXPERIENCE</p>
+  </div>
+
+  <div class="container">
+    <div class="tabs">
+      <button class="tab-btn active" onclick="mostrarTab('agregar')">➕ Agregar Producto</button>
+      <button class="tab-btn" onclick="mostrarTab('modificar')">✏️ Modificar Producto</button>
+      <button class="tab-btn" onclick="mostrarTab('eliminar')">🗑️ Eliminar Producto</button>
+    </div>
+
+    <!-- TAB: AGREGAR -->
+    <div id="tab-agregar" class="tab-content active">
+      <h2>Agregar Nuevo Producto</h2>
+      <form id="form-agregar">
+        <div class="form-group">
+          <label>Categoría:</label>
+          <input type="text" id="agg-categoria" required placeholder="Ej: Entradas, Rolls Fríos, Promociones">
+        </div>
+        <div class="form-group">
+          <label>Nombre del Producto:</label>
+          <input type="text" id="agg-nombre" required placeholder="Ej: Jōgan Roll">
+        </div>
+        <div class="form-group">
+          <label>Opciones / Proteína:</label>
+          <input type="text" id="agg-opciones" placeholder="Ej: Pollo / Camarón / Cangrejo">
+        </div>
+        <div class="form-group">
+          <label>Descripción / Ingredientes:</label>
+          <textarea id="agg-descripcion" placeholder="Ej: Aguacate, queso crema, cebollín..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Precio ($):</label>
+          <input type="number" id="agg-precio" step="0.01" required placeholder="Ej: 9.00">
+        </div>
+        <div class="form-group">
+          <label>Unidades / Piezas:</label>
+          <input type="text" id="agg-unidades" placeholder="Ej: 8 Piezas">
+        </div>
+        <div class="form-group">
+          <label>Disponible:</label>
+          <select id="agg-disponible">
+            <option value="true">Sí - Disponible</option>
+            <option value="false">No - No Disponible</option>
+          </select>
+        </div>
+        <button type="button" class="btn-submit" onclick="agregarProducto()">Agregar Producto</button>
+        <div id="msg-agregar" class="mensaje"></div>
+      </form>
+    </div>
+
+    <!-- TAB: MODIFICAR -->
+    <div id="tab-modificar" class="tab-content">
+      <h2>Modificar Producto</h2>
+      <div id="lista-modificar" class="lista-productos">
+        <div class="cargando">
+          <div class="spinner"></div>
+          Cargando productos...
+        </div>
+      </div>
+
+      <div id="form-modificar" style="display:none; margin-top: 30px;">
+        <h3 style="color: #c9a961; margin-bottom: 20px;">Editar Producto</h3>
+        <div class="form-group">
+          <label>Categoría:</label>
+          <input type="text" id="mod-categoria">
+        </div>
+        <div class="form-group">
+          <label>Nombre del Producto:</label>
+          <input type="text" id="mod-nombre">
+        </div>
+        <div class="form-group">
+          <label>Opciones / Proteína:</label>
+          <input type="text" id="mod-opciones">
+        </div>
+        <div class="form-group">
+          <label>Descripción / Ingredientes:</label>
+          <textarea id="mod-descripcion"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Precio ($):</label>
+          <input type="number" id="mod-precio" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Unidades / Piezas:</label>
+          <input type="text" id="mod-unidades">
+        </div>
+        <div class="form-group">
+          <label>Disponible:</label>
+          <select id="mod-disponible">
+            <option value="true">Sí - Disponible</option>
+            <option value="false">No - No Disponible</option>
+          </select>
+        </div>
+        <button type="button" class="btn-submit" onclick="modificarProducto()">Guardar Cambios</button>
+        <div id="msg-modificar" class="mensaje"></div>
+      </div>
+    </div>
+
+    <!-- TAB: ELIMINAR -->
+    <div id="tab-eliminar" class="tab-content">
+      <h2>Eliminar Producto</h2>
+      <div id="lista-eliminar" class="lista-productos">
+        <div class="cargando">
+          <div class="spinner"></div>
+          Cargando productos...
+        </div>
+      </div>
+      <div id="msg-eliminar" class="mensaje"></div>
+    </div>
+  </div>
+
+  <script>
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwy8StdnP0QaeExbmXbpqWUxDMvmAV5co5OO5iExf8kbU1FJ2Qqub_FISv9NfOqZac/exec';
+
+    // ============================================
+    // NAVEGACIÓN DE TABS
+    // ============================================
+
+    function mostrarTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById(`tab-${tab}`).classList.add('active');
+      event.target.classList.add('active');
+
+      if (tab === 'modificar' || tab === 'eliminar') {
+        cargarProductos();
+      }
+    }
+
+    // ============================================
+    // FUNCIONES DE API
+    // ============================================
+
+    async function obtenerProductos() {
+      try {
+        const response = await fetch(`${BACKEND_URL}?action=obtenerProductos`);
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error('Error obteniendo productos:', error);
+        throw error;
+      }
+    }
+
+    async function crearProducto(data) {
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'crearProducto',
+            data: data
+          })
+        });
+        const result = await response.json();
+        return result;
+      } catch (error) {
+        console.error('Error creando producto:', error);
+        throw error;
+      }
+    }
+
+    async function modificarProductoAPI(data) {
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'modificarProducto',
+            data: data
+          })
+        });
+        const result = await response.json();
+        return result;
+      } catch (error) {
+        console.error('Error modificando producto:', error);
+        throw error;
+      }
+    }
+
+    async function eliminarProductoAPI(nombre) {
+      try {
+        const response = await fetch(BACKEND_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            action: 'eliminarProducto',
+            data: { nombre: nombre }
+          })
+        });
+        const result = await response.json();
+        return result;
+      } catch (error) {
+        console.error('Error eliminando producto:', error);
+        throw error;
+      }
+    }
+
+    // ============================================
+    // FUNCIONES DE UI
+    // ============================================
+
+    async function cargarProductos() {
+      const listaMod = document.getElementById('lista-modificar');
+      const listaElim = document.getElementById('lista-eliminar');
+
+      listaMod.innerHTML = '<div class="cargando"><div class="spinner"></div>Cargando productos...</div>';
+      listaElim.innerHTML = '<div class="cargando"><div class="spinner"></div>Cargando productos...</div>';
+
+      try {
+        const productos = await obtenerProductos();
+
+        listaMod.innerHTML = '';
+        listaElim.innerHTML = '';
+
+        if (productos.length === 0) {
+          listaMod.innerHTML = '<p style="text-align:center; color:#c9a961;">No hay productos registrados</p>';
+          listaElim.innerHTML = '<p style="text-align:center; color:#c9a961;">No hay productos registrados</p>';
+          return;
+        }
+
+        productos.forEach(p => {
+          // Item para modificar
+          const itemMod = document.createElement('div');
+          itemMod.className = 'producto-item';
+          itemMod.innerHTML = `
+            <div class="producto-info">
+              <h4>${p['Nombre del Producto']}</h4>
+              <p>${p['Categoría']} - $${p['Precio ($)']} - ${p['Disponible'] ? '✅ Disponible' : '❌ No disponible'}</p>
+            </div>
+          `;
+          itemMod.onclick = () => cargarProductoModificar(p);
+          listaMod.appendChild(itemMod);
+
+          // Item para eliminar
+          const itemElim = document.createElement('div');
+          itemElim.className = 'producto-item';
+          itemElim.innerHTML = `
+            <div class="producto-info">
+              <h4>${p['Nombre del Producto']}</h4>
+              <p>${p['Categoría']} - $${p['Precio ($)</p>
+            </div>
+            <button class="btn-eliminar" onclick="eliminarProducto('${p['Nombre del Producto'].replace(/'/g, "\\'")}')">Eliminar</button>
+          `;
+          listaElim.appendChild(itemElim);
+        });
+      } catch (error) {
+        listaMod.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
+        listaElim.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
+      }
+    }
+
+    let nombreOriginal = '';
+
+    function cargarProductoModificar(producto) {
+      nombreOriginal = producto['Nombre del Producto'];
+      document.getElementById('mod-categoria').value = producto['Categoría'] || '';
+      document.getElementById('mod-nombre').value = producto['Nombre del Producto'] || '';
+      document.getElementById('mod-opciones').value = producto['Opciones / Proteína'] || '';
+      document.getElementById('mod-descripcion').value = producto['Descripción / Ingredientes'] || '';
+      document.getElementById('mod-precio').value = producto['Precio ($)'] || '';
+      document.getElementById('mod-unidades').value = producto['Unidades / Piezas'] || '';
+      document.getElementById('mod-disponible').value = producto['Disponible'] ? 'true' : 'false';
+      document.getElementById('form-modificar').style.display = 'block';
+      document.getElementById('form-modificar').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    async function agregarProducto() {
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = 'Agregando...';
+
+      const datos = {
+        categoria: document.getElementById('agg-categoria').value,
+        nombre: document.getElementById('agg-nombre').value,
+        opciones: document.getElementById('agg-opciones').value,
+        descripcion: document.getElementById('agg-descripcion').value,
+        precio: document.getElementById('agg-precio').value,
+        unidades: document.getElementById('agg-unidades').value,
+        disponible: document.getElementById('agg-disponible').value
+      };
+
+      const msg = document.getElementById('msg-agregar');
+
+      try {
+        const resultado = await crearProducto(datos);
+        msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
+        msg.textContent = resultado.mensaje;
+
+        if (resultado.exito) {
+          setTimeout(() => {
+            msg.style.display = 'none';
+            document.getElementById('form-agregar').reset();
+          }, 3000);
+        }
+      } catch (error) {
+        msg.className = 'mensaje error';
+        msg.textContent = '❌ Error de conexión: ' + error.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Agregar Producto';
+      }
+    }
+
+    async function modificarProducto() {
+      const btn = event.target;
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+
+      const datos = {
+        nombreOriginal: nombreOriginal,
+        categoria: document.getElementById('mod-categoria').value,
+        nombre: document.getElementById('mod-nombre').value,
+        opciones: document.getElementById('mod-opciones').value,
+        descripcion: document.getElementById('mod-descripcion').value,
+        precio: document.getElementById('mod-precio').value,
+        unidades: document.getElementById('mod-unidades').value,
+        disponible: document.getElementById('mod-disponible').value
+      };
+
+      const msg = document.getElementById('msg-modificar');
+
+      try {
+        const resultado = await modificarProductoAPI(datos);
+        msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
+        msg.textContent = resultado.mensaje;
+
+        if (resultado.exito) {
+          setTimeout(() => {
+            msg.style.display = 'none';
+            document.getElementById('form-modificar').style.display = 'none';
+            cargarProductos();
+          }, 3000);
+        }
+      } catch (error) {
+        msg.className = 'mensaje error';
+        msg.textContent = '❌ Error de conexión: ' + error.message;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Guardar Cambios';
+      }
+    }
+
+    async function eliminarProducto(nombre) {
+      if (!confirm(`¿Estás seguro de eliminar "${nombre}"?`)) {
+        return;
+      }
+
+      const msg = document.getElementById('msg-eliminar');
+      msg.className = 'mensaje cargando';
+      msg.textContent = 'Eliminando producto...';
+      msg.style.display = 'block';
+
+      try {
+        const resultado = await eliminarProductoAPI(nombre);
+        msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
+        msg.textContent = resultado.mensaje;
+
+        if (resultado.exito) {
+          setTimeout(() => {
+            msg.style.display = 'none';
+            cargarProductos();
+          }, 3000);
+        }
+      } catch (error) {
+        msg.className = 'mensaje error';
+        msg.textContent = '❌ Error de conexión: ' + error.message;
+      }
+    }
+
+    // Cargar productos al iniciar si estamos en la tab correcta
+    document.addEventListener('DOMContentLoaded', function() {
+      // Pre-cargar productos para las tabs que lo necesiten
+    });
+  </script>
+</body>
+</html>

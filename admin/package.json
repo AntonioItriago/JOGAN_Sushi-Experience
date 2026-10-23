@@ -1,0 +1,12 @@
+{
+  "name": "jogan-admin",
+  "version": "1.0.0",
+  "description": "Panel administrativo JŌGAN - SUSHI EXPERIENCE",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Static project - no build needed'"
+  },
+  "keywords": ["jogan", "sushi", "admin"],
+  "author": "Antonio Itriago",
+  "license": "MIT"
+}
