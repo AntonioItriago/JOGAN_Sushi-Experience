@@ -4,11 +4,22 @@
   <meta charset="UTF-8">
   <title>JŌGAN - SUSHI EXPERIENCE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Icono de la pestaña -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+  
+  <!-- Etiquetas para compartir en redes sociales -->
+  <meta property="og:title" content="JŌGAN | Más que Sushi">
+  <meta property="og:description" content="Explora nuestro menú digital, arma tu pedido y envíalo directamente por WhatsApp.">
+  <meta property="og:image" content="https://antonioitriago.github.io/JOGAN_Sushi-Experience/fondo.jpg">
+  <meta property="og:url" content="https://antonioitriago.github.io/JOGAN_Sushi-Experience/">
+  <meta property="og:type" content="website">
+  
   <style>
     body {
       font-family: 'Georgia', serif;
       color: #fff;
-      background: url('fondo.jpg') no-repeat center center fixed; /* ✅ Cambiado */
+      background: url('fondo.jpg') no-repeat center center fixed;
       background-size: cover;
       margin: 0;
       padding: 0;
@@ -106,6 +117,23 @@
       font-size: 0.9em;
       color: #c9a961;
     }
+    .no-disponible {
+      opacity: 0.5;
+      position: relative;
+    }
+    .no-disponible::after {
+      content: 'NO DISPONIBLE';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      background: rgba(255, 0, 0, 0.8);
+      color: white;
+      padding: 10px 20px;
+      font-weight: bold;
+      font-size: 1.2em;
+      border-radius: 5px;
+    }
 
     #carrito-flotante {
       position: fixed;
@@ -149,7 +177,7 @@
   </style>
 </head>
 <body>
-  <h1>JŌGAN 浄眼</h1>
+  <h1>JGAN 浄眼</h1>
   <div id="menu"></div>
 
   <a id="carrito-flotante" href="#" target="_blank">
@@ -161,7 +189,7 @@
 
   <script>
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv";
-    const numeroWhatsApp = "584148165364"; // ✅ Cambiado
+    const numeroWhatsApp = "584148165364";
 
     let seleccionados = {};
 
@@ -178,9 +206,16 @@
           const item = {};
           headers.forEach((h, i) => item[h] = row[i] || "");
 
-          const categoria = item["Categoría"]?.trim() || "Sin categoría";
-          if (!categorias[categoria]) categorias[categoria] = [];
-          categorias[categoria].push(item);
+          // ✅ VALIDACIÓN DE DISPONIBILIDAD
+          const disponible = item["Disponible"];
+          const esDisponible = disponible === true || disponible === "TRUE" || disponible === "true";
+          
+          // Solo agregar si está disponible
+          if (esDisponible) {
+            const categoria = item["Categoría"]?.trim() || "Sin categoría";
+            if (!categorias[categoria]) categorias[categoria] = [];
+            categorias[categoria].push(item);
+          }
         });
 
         const menuDiv = document.getElementById("menu");
@@ -225,8 +260,13 @@
 
           menuDiv.appendChild(catDiv);
         });
+        
+        // Mensaje si no hay productos
+        if (Object.keys(categorias).length === 0) {
+          menuDiv.innerHTML = "<p style='text-align:center; padding:20px;'>No hay productos disponibles en este momento.</p>";
+        }
       } catch (err) {
-        document.getElementById("menu").innerHTML = "Error cargando menú ";
+        document.getElementById("menu").innerHTML = "Error cargando menú 😢";
         console.error(err);
       }
     }
@@ -257,7 +297,7 @@
         detalle += `- ${i.item["Nombre del Producto"]} ×${i.cantidad} → $${subtotal.toFixed(2)}\n`;
       });
 
-      const mensaje = `¡Hola! Quiero realizar un pedido en JŌGAN:\n\n${detalle}\n*TOTAL ESTIMADO:* $${total.toFixed(2)}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
+      const mensaje = `¡Hola! Quiero realizar un pedido en JGAN:\n\n${detalle}\n*TOTAL ESTIMADO:* $${total.toFixed(2)}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
 
       const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
       carritoBtn.href = url;
