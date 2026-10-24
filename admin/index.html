@@ -6,44 +6,22 @@
   <title>JŌGAN | Panel Administrativo</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Georgia', serif;
       background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
       color: #fff;
       min-height: 100vh;
     }
-
     .header {
       background: rgba(0, 0, 0, 0.8);
       padding: 20px;
       text-align: center;
       border-bottom: 3px solid #c9a961;
     }
-
-    .header h1 {
-      color: #c9a961;
-      font-size: 2em;
-      letter-spacing: 3px;
-    }
-
-    .header p {
-      color: #e0e0e0;
-      margin-top: 5px;
-      font-size: 0.9em;
-    }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
+    .header h1 { color: #c9a961; font-size: 2em; letter-spacing: 3px; }
+    .header p { color: #e0e0e0; margin-top: 5px; font-size: 0.9em; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     .tabs {
       display: flex;
       gap: 10px;
@@ -51,7 +29,6 @@
       flex-wrap: wrap;
       justify-content: center;
     }
-
     .tab-btn {
       background: rgba(201, 169, 97, 0.2);
       color: #c9a961;
@@ -64,13 +41,10 @@
       transition: all 0.3s;
       font-family: 'Georgia', serif;
     }
-
-    .tab-btn:hover,
-    .tab-btn.active {
+    .tab-btn:hover, .tab-btn.active {
       background: #c9a961;
       color: #000;
     }
-
     .tab-content {
       display: none;
       background: rgba(0, 0, 0, 0.5);
@@ -78,32 +52,21 @@
       border-radius: 10px;
       border: 1px solid #c9a961;
     }
-
-    .tab-content.active {
-      display: block;
-    }
-
+    .tab-content.active { display: block; }
     .tab-content h2 {
       color: #c9a961;
       margin-bottom: 20px;
       border-bottom: 2px solid #c9a961;
       padding-bottom: 10px;
     }
-
-    .form-group {
-      margin-bottom: 20px;
-    }
-
+    .form-group { margin-bottom: 20px; }
     .form-group label {
       display: block;
       margin-bottom: 8px;
       color: #c9a961;
       font-weight: bold;
     }
-
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
+    .form-group input, .form-group select, .form-group textarea {
       width: 100%;
       padding: 12px;
       background: rgba(255, 255, 255, 0.1);
@@ -113,20 +76,12 @@
       font-size: 1em;
       font-family: 'Georgia', serif;
     }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
       outline: none;
       border-color: #d4af37;
       box-shadow: 0 0 10px rgba(201, 169, 97, 0.3);
     }
-
-    .form-group textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-
+    .form-group textarea { resize: vertical; min-height: 80px; }
     .btn-submit {
       background: #c9a961;
       color: #000;
@@ -140,49 +95,13 @@
       font-family: 'Georgia', serif;
       transition: all 0.3s;
     }
-
-    .btn-submit:hover {
-      background: #d4af37;
-      transform: scale(1.05);
-    }
-
-    .btn-submit:disabled {
-      background: #666;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .mensaje {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 5px;
-      display: none;
-    }
-
-    .mensaje.exito {
-      background: #d4edda;
-      color: #155724;
-      display: block;
-    }
-
-    .mensaje.error {
-      background: #f8d7da;
-      color: #721c24;
-      display: block;
-    }
-
-    .mensaje.cargando {
-      background: #fff3cd;
-      color: #856404;
-      display: block;
-    }
-
-    .lista-productos {
-      max-height: 500px;
-      overflow-y: auto;
-      margin-top: 20px;
-    }
-
+    .btn-submit:hover { background: #d4af37; transform: scale(1.05); }
+    .btn-submit:disabled { background: #666; cursor: not-allowed; transform: none; }
+    .mensaje { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; }
+    .mensaje.exito { background: #d4edda; color: #155724; display: block; }
+    .mensaje.error { background: #f8d7da; color: #721c24; display: block; }
+    .mensaje.cargando { background: #fff3cd; color: #856404; display: block; }
+    .lista-productos { max-height: 500px; overflow-y: auto; margin-top: 20px; }
     .producto-item {
       background: rgba(255, 255, 255, 0.05);
       padding: 15px;
@@ -195,26 +114,13 @@
       align-items: center;
       border: 1px solid transparent;
     }
-
     .producto-item:hover {
       background: rgba(201, 169, 97, 0.2);
       border-color: #c9a961;
     }
-
-    .producto-info {
-      flex: 1;
-    }
-
-    .producto-info h4 {
-      color: #c9a961;
-      margin-bottom: 5px;
-    }
-
-    .producto-info p {
-      font-size: 0.9em;
-      color: #e0e0e0;
-    }
-
+    .producto-info { flex: 1; }
+    .producto-info h4 { color: #c9a961; margin-bottom: 5px; }
+    .producto-info p { font-size: 0.9em; color: #e0e0e0; }
     .btn-eliminar {
       background: #ff4444;
       color: #fff;
@@ -226,19 +132,8 @@
       font-family: 'Georgia', serif;
       transition: all 0.3s;
     }
-
-    .btn-eliminar:hover {
-      background: #cc0000;
-      transform: scale(1.05);
-    }
-
-    .cargando {
-      text-align: center;
-      padding: 40px;
-      color: #c9a961;
-      font-size: 1.2em;
-    }
-
+    .btn-eliminar:hover { background: #cc0000; transform: scale(1.05); }
+    .cargando { text-align: center; padding: 40px; color: #c9a961; font-size: 1.2em; }
     .spinner {
       border: 4px solid rgba(201, 169, 97, 0.3);
       border-top: 4px solid #c9a961;
@@ -248,68 +143,25 @@
       animation: spin 1s linear infinite;
       margin: 20px auto;
     }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    .debug-info {
-      background: rgba(255, 255, 255, 0.05);
-      padding: 15px;
-      border-radius: 5px;
-      margin-top: 20px;
-      font-family: monospace;
-      font-size: 0.9em;
-      color: #aaa;
-    }
-
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     @media (max-width: 768px) {
-      .header h1 {
-        font-size: 1.5em;
-      }
-
-      .container {
-        padding: 10px;
-      }
-
-      .tabs {
-        flex-direction: column;
-      }
-
-      .tab-btn {
-        width: 100%;
-      }
-
-      .tab-content {
-        padding: 20px;
-      }
-
-      .producto-item {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .btn-eliminar {
-        width: 100%;
-      }
+      .header h1 { font-size: 1.5em; }
+      .container { padding: 10px; }
+      .tabs { flex-direction: column; }
+      .tab-btn { width: 100%; }
+      .tab-content { padding: 20px; }
+      .producto-item { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .btn-eliminar { width: 100%; }
     }
-
     @media (max-width: 480px) {
-      .header h1 {
-        font-size: 1.2em;
-      }
-
-      .btn-submit {
-        width: 100%;
-      }
+      .header h1 { font-size: 1.2em; }
+      .btn-submit { width: 100%; }
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>🍣 JGAN | Panel Administrativo</h1>
+    <h1> JŌGAN | Panel Administrativo</h1>
     <p>Gestión de menú - SUSHI EXPERIENCE</p>
   </div>
 
@@ -320,7 +172,6 @@
       <button class="tab-btn" data-tab="eliminar">🗑️ Eliminar Producto</button>
     </div>
 
-    <!-- TAB: AGREGAR -->
     <div id="tab-agregar" class="tab-content active">
       <h2>Agregar Nuevo Producto</h2>
       <form id="form-agregar">
@@ -360,42 +211,19 @@
       </form>
     </div>
 
-    <!-- TAB: MODIFICAR -->
     <div id="tab-modificar" class="tab-content">
       <h2>Modificar Producto</h2>
       <div id="lista-modificar" class="lista-productos">
-        <div class="cargando">
-          <div class="spinner"></div>
-          Cargando productos...
-        </div>
+        <div class="cargando"><div class="spinner"></div>Cargando productos...</div>
       </div>
-
       <div id="form-modificar" style="display:none; margin-top: 30px;">
         <h3 style="color: #c9a961; margin-bottom: 20px;">Editar Producto</h3>
-        <div class="form-group">
-          <label>Categoría:</label>
-          <input type="text" id="mod-categoria">
-        </div>
-        <div class="form-group">
-          <label>Nombre del Producto:</label>
-          <input type="text" id="mod-nombre">
-        </div>
-        <div class="form-group">
-          <label>Opciones / Proteína:</label>
-          <input type="text" id="mod-opciones">
-        </div>
-        <div class="form-group">
-          <label>Descripción / Ingredientes:</label>
-          <textarea id="mod-descripcion"></textarea>
-        </div>
-        <div class="form-group">
-          <label>Precio ($):</label>
-          <input type="number" id="mod-precio" step="0.01">
-        </div>
-        <div class="form-group">
-          <label>Unidades / Piezas:</label>
-          <input type="text" id="mod-unidades">
-        </div>
+        <div class="form-group"><label>Categoría:</label><input type="text" id="mod-categoria"></div>
+        <div class="form-group"><label>Nombre del Producto:</label><input type="text" id="mod-nombre"></div>
+        <div class="form-group"><label>Opciones / Proteína:</label><input type="text" id="mod-opciones"></div>
+        <div class="form-group"><label>Descripción / Ingredientes:</label><textarea id="mod-descripcion"></textarea></div>
+        <div class="form-group"><label>Precio ($):</label><input type="number" id="mod-precio" step="0.01"></div>
+        <div class="form-group"><label>Unidades / Piezas:</label><input type="text" id="mod-unidades"></div>
         <div class="form-group">
           <label>Disponible:</label>
           <select id="mod-disponible">
@@ -408,169 +236,79 @@
       </div>
     </div>
 
-    <!-- TAB: ELIMINAR -->
     <div id="tab-eliminar" class="tab-content">
       <h2>Eliminar Producto</h2>
       <div id="lista-eliminar" class="lista-productos">
-        <div class="cargando">
-          <div class="spinner"></div>
-          Cargando productos...
-        </div>
+        <div class="cargando"><div class="spinner"></div>Cargando productos...</div>
       </div>
       <div id="msg-eliminar" class="mensaje"></div>
     </div>
-
-    <!-- Debug info -->
-    <div id="debug-info" class="debug-info" style="display:none;"></div>
   </div>
 
   <script>
-    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbwy8StdnP0QaeExbmXbpqWUxDMvmAV5co5OO5iExf8kbU1FJ2Qqub_FISv9NfOqZac/exec';
-
-    // ============================================
-    // NAVEGACIÓN DE TABS
-    // ============================================
+    // URL del backend de Google Apps Script
+    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec';
+    
+    // Proxy CORS para evitar el bloqueo de Google
+    const CORS_PROXY = 'https://corsproxy.io/?';
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
       btn.addEventListener('click', function() {
         const tabName = this.getAttribute('data-tab');
-        
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        
         this.classList.add('active');
         document.getElementById(`tab-${tabName}`).classList.add('active');
-        
         if (tabName === 'modificar' || tabName === 'eliminar') {
           cargarProductos();
         }
       });
     });
 
-    // ============================================
-    // FUNCIONES DE API (CORREGIDAS PARA GOOGLE APPS SCRIPT)
-    // ============================================
-
     async function obtenerProductos() {
-      try {
-        console.log(' Llamando a:', BACKEND_URL + '?action=obtenerProductos');
-        
-        const response = await fetch(BACKEND_URL + '?action=obtenerProductos', {
-          method: 'GET',
-          mode: 'cors',
-          headers: {
-            'Accept': 'application/json'
-          }
-        });
-
-        console.log('📥 Respuesta status:', response.status);
-        console.log('📥 Respuesta headers:', response.headers);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const text = await response.text();
-        console.log('📄 Respuesta raw (primeros 500 chars):', text.substring(0, 500));
-
-        try {
-          const data = JSON.parse(text);
-          console.log('✅ Datos parseados:', data);
-          return data;
-        } catch (parseError) {
-          console.error('❌ Error parseando JSON:', parseError);
-          console.error('📄 Texto recibido:', text);
-          throw new Error('La respuesta no es JSON válido: ' + text.substring(0, 200));
-        }
-      } catch (error) {
-        console.error(' Error en obtenerProductos:', error);
-        throw error;
-      }
+      const url = CORS_PROXY + encodeURIComponent(BACKEND_URL + '?action=obtenerProductos');
+      const response = await fetch(url);
+      return await response.json();
     }
 
     async function crearProducto(data) {
-      try {
-        const formData = new URLSearchParams();
-        formData.append('action', 'crearProducto');
-        formData.append('data', JSON.stringify(data));
-
-        const response = await fetch(BACKEND_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: formData.toString()
-        });
-
-        // Con no-cors, no podemos leer la respuesta
-        return { exito: true, mensaje: '✅ Producto creado (respuesta no disponible por CORS)' };
-      } catch (error) {
-        console.error('Error creando producto:', error);
-        throw error;
-      }
+      const url = CORS_PROXY + encodeURIComponent(BACKEND_URL);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'crearProducto', data: data })
+      });
+      return await response.json();
     }
 
     async function modificarProductoAPI(data) {
-      try {
-        const formData = new URLSearchParams();
-        formData.append('action', 'modificarProducto');
-        formData.append('data', JSON.stringify(data));
-
-        const response = await fetch(BACKEND_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: formData.toString()
-        });
-
-        return { exito: true, mensaje: '✅ Producto modificado (respuesta no disponible por CORS)' };
-      } catch (error) {
-        console.error('Error modificando producto:', error);
-        throw error;
-      }
+      const url = CORS_PROXY + encodeURIComponent(BACKEND_URL);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'modificarProducto', data: data })
+      });
+      return await response.json();
     }
 
     async function eliminarProductoAPI(nombre) {
-      try {
-        const formData = new URLSearchParams();
-        formData.append('action', 'eliminarProducto');
-        formData.append('data', JSON.stringify({ nombre: nombre }));
-
-        const response = await fetch(BACKEND_URL, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: formData.toString()
-        });
-
-        return { exito: true, mensaje: '✅ Producto eliminado (respuesta no disponible por CORS)' };
-      } catch (error) {
-        console.error('Error eliminando producto:', error);
-        throw error;
-      }
+      const url = CORS_PROXY + encodeURIComponent(BACKEND_URL);
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'eliminarProducto', data: { nombre: nombre } })
+      });
+      return await response.json();
     }
-
-    // ============================================
-    // FUNCIONES DE UI
-    // ============================================
 
     async function cargarProductos() {
       const listaMod = document.getElementById('lista-modificar');
       const listaElim = document.getElementById('lista-eliminar');
-      const debugInfo = document.getElementById('debug-info');
-
       listaMod.innerHTML = '<div class="cargando"><div class="spinner"></div>Cargando productos...</div>';
       listaElim.innerHTML = '<div class="cargando"><div class="spinner"></div>Cargando productos...</div>';
-      debugInfo.style.display = 'none';
 
       try {
         const productos = await obtenerProductos();
-
         listaMod.innerHTML = '';
         listaElim.innerHTML = '';
 
@@ -581,7 +319,6 @@
         }
 
         productos.forEach(p => {
-          // Item para modificar
           const itemMod = document.createElement('div');
           itemMod.className = 'producto-item';
           itemMod.innerHTML = `
@@ -593,7 +330,6 @@
           itemMod.onclick = () => cargarProductoModificar(p);
           listaMod.appendChild(itemMod);
 
-          // Item para eliminar
           const itemElim = document.createElement('div');
           itemElim.className = 'producto-item';
           itemElim.innerHTML = `
@@ -606,23 +342,9 @@
           listaElim.appendChild(itemElim);
         });
       } catch (error) {
-        console.error('❌ Error completo:', error);
-        listaMod.innerHTML = `<p style="text-align:center; color:#ff4444;">Error cargando productos</p>`;
-        listaElim.innerHTML = `<p style="text-align:center; color:#ff4444;">Error cargando productos</p>`;
-        
-        // Mostrar debug info
-        debugInfo.innerHTML = `
-          <strong>🔍 Información de debug:</strong><br>
-          <strong>Error:</strong> ${error.message}<br>
-          <strong>URL:</strong> ${BACKEND_URL}?action=obtenerProductos<br>
-          <strong>Tipo:</strong> ${error.name}<br><br>
-          <strong>Posibles causas:</strong><br>
-          1. El backend no está desplegado como "Cualquier usuario"<br>
-          2. El backend no está devolviendo JSON válido<br>
-          3. Problemas de CORS<br><br>
-          <strong>Solución:</strong> Abre la consola del navegador (F12) para ver más detalles.
-        `;
-        debugInfo.style.display = 'block';
+        listaMod.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
+        listaElim.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
+        console.error('Error:', error);
       }
     }
 
@@ -657,21 +379,16 @@
       };
 
       const msg = document.getElementById('msg-agregar');
-
       try {
         const resultado = await crearProducto(datos);
         msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
         msg.textContent = resultado.mensaje;
-
         if (resultado.exito) {
-          setTimeout(() => {
-            msg.style.display = 'none';
-            document.getElementById('form-agregar').reset();
-          }, 3000);
+          setTimeout(() => { msg.style.display = 'none'; document.getElementById('form-agregar').reset(); }, 3000);
         }
       } catch (error) {
         msg.className = 'mensaje error';
-        msg.textContent = '❌ Error de conexión: ' + error.message;
+        msg.textContent = '❌ Error: ' + error.message;
       } finally {
         btn.disabled = false;
         btn.textContent = 'Agregar Producto';
@@ -695,22 +412,16 @@
       };
 
       const msg = document.getElementById('msg-modificar');
-
       try {
         const resultado = await modificarProductoAPI(datos);
         msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
         msg.textContent = resultado.mensaje;
-
         if (resultado.exito) {
-          setTimeout(() => {
-            msg.style.display = 'none';
-            document.getElementById('form-modificar').style.display = 'none';
-            cargarProductos();
-          }, 3000);
+          setTimeout(() => { msg.style.display = 'none'; document.getElementById('form-modificar').style.display = 'none'; cargarProductos(); }, 3000);
         }
       } catch (error) {
         msg.className = 'mensaje error';
-        msg.textContent = '❌ Error de conexión: ' + error.message;
+        msg.textContent = '❌ Error: ' + error.message;
       } finally {
         btn.disabled = false;
         btn.textContent = 'Guardar Cambios';
@@ -718,9 +429,7 @@
     }
 
     async function eliminarProducto(nombre) {
-      if (!confirm(`¿Estás seguro de eliminar "${nombre}"?`)) {
-        return;
-      }
+      if (!confirm(`¿Estás seguro de eliminar "${nombre}"?`)) return;
 
       const msg = document.getElementById('msg-eliminar');
       msg.className = 'mensaje cargando';
@@ -731,16 +440,12 @@
         const resultado = await eliminarProductoAPI(nombre);
         msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
         msg.textContent = resultado.mensaje;
-
         if (resultado.exito) {
-          setTimeout(() => {
-            msg.style.display = 'none';
-            cargarProductos();
-          }, 3000);
+          setTimeout(() => { msg.style.display = 'none'; cargarProductos(); }, 3000);
         }
       } catch (error) {
         msg.className = 'mensaje error';
-        msg.textContent = '❌ Error de conexión: ' + error.message;
+        msg.textContent = '❌ Error: ' + error.message;
       }
     }
   </script>
