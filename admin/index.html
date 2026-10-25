@@ -62,11 +62,6 @@
   </div>
 
   <div class="container">
-    <div class="alert-box">
-      <p>⚠️ <strong>Nota importante:</strong> Si el panel no carga los productos desde aquí, usa directamente el panel del Apps Script:</p>
-      <p style="margin-top: 10px;"><a href="https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec" target="_blank">🔗 Abrir panel directo del Apps Script</a></p>
-    </div>
-
     <div class="tabs">
       <button class="tab-btn active" data-tab="agregar">➕ Agregar Producto</button>
       <button class="tab-btn" data-tab="modificar">✏️ Modificar Producto</button>
@@ -153,6 +148,7 @@
   </div>
 
   <script>
+    const SHEET_TSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv';
     const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec';
 
     document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -185,14 +181,21 @@
     }
 
     async function obtenerProductos() {
-      const response = await fetch(BACKEND_URL + '?action=obtenerProductos', {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'omit',
-        headers: { 'Accept': 'application/json' }
-      });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return await response.json();
+      const response = await fetch(SHEET_TSV + '&v=' + Date.now());
+      const text = await response.text();
+      const rows = text.trim().split('\n').map(r => r.split('\t'));
+      const headers = rows[0].map(h => h.trim());
+      const productos = [];
+      
+      for (let i = 1; i < rows.length; i++) {
+        if (rows[i].length < 3) continue;
+        const producto = {};
+        headers.forEach((h, idx) => {
+          producto[h] = (rows[i][idx] || '').trim();
+        });
+        productos.push(producto);
+      }
+      return productos;
     }
 
     async function crearProducto(data) {
@@ -230,7 +233,7 @@
         listaMod.innerHTML = '';
         listaElim.innerHTML = '';
 
-        if (!Array.isArray(productos) || productos.length === 0) {
+        if (productos.length === 0) {
           listaMod.innerHTML = '<p style="text-align:center; color:#C5E17A;">No hay productos registrados</p>';
           listaElim.innerHTML = '<p style="text-align:center; color:#C5E17A;">No hay productos registrados</p>';
           return;
@@ -242,7 +245,7 @@
           itemMod.innerHTML = `
             <div class="producto-info">
               <h4>${p['Nombre del Producto']}</h4>
-              <p>${p['Categoría']} - ${p['Precio ($)']} - ${p['Disponible'] ? '✅ Disponible' : '❌ No disponible'}</p>
+              <p>${p['Categoría']} - ${p['Precio ($)']} - ${p['Disponible'] === 'TRUE' ? '✅ Disponible' : '❌ No disponible'}</p>
             </div>
           `;
           itemMod.onclick = () => cargarProductoModificar(p);
@@ -261,8 +264,8 @@
         });
       } catch (error) {
         console.error('Error:', error);
-        listaMod.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos. Usa el enlace directo del Apps Script arriba.</p>';
-        listaElim.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos. Usa el enlace directo del Apps Script arriba.</p>';
+        listaMod.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
+        listaElim.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
       }
     }
 
@@ -276,7 +279,7 @@
       document.getElementById('mod-descripcion').value = producto['Descripción / Ingredientes'] || '';
       document.getElementById('mod-precio').value = producto['Precio ($)'] || '';
       document.getElementById('mod-unidades').value = producto['Unidades / Piezas'] || '';
-      document.getElementById('mod-disponible').value = producto['Disponible'] ? 'true' : 'false';
+      document.getElementById('mod-disponible').value = producto['Disponible'] === 'TRUE' ? 'true' : 'false';
       document.getElementById('form-modificar').style.display = 'block';
       document.getElementById('form-modificar').scrollIntoView({ behavior: 'smooth' });
     }
