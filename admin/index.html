@@ -1,407 +1,381 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JŌGAN | Panel Administrativo</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Noto Serif JP', serif; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: #F5F5DC; min-height: 100vh; }
-    .header { background: rgba(0, 0, 0, 0.85); padding: 20px; text-align: center; border-bottom: 3px solid #9ACD32; }
-    .header h1 { color: #C5E17A; font-size: 2em; letter-spacing: 3px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
-    .header p { color: #F5F5DC; margin-top: 5px; font-size: 0.9em; }
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-    .tab-btn { background: rgba(154, 205, 50, 0.2); color: #C5E17A; border: 2px solid #9ACD32; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1em; transition: all 0.3s; font-family: 'Noto Serif JP', serif; }
-    .tab-btn:hover { background: rgba(154, 205, 50, 0.4); }
-    .tab-btn.active { background: #9ACD32; color: #1a1a1a; }
-    .tab-content { display: none; background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 10px; border: 1px solid #9ACD32; }
-    .tab-content.active { display: block; }
-    .tab-content h2 { color: #C5E17A; margin-bottom: 20px; border-bottom: 2px solid #9ACD32; padding-bottom: 10px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; margin-bottom: 8px; color: #C5E17A; font-weight: bold; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; background: rgba(245, 245, 220, 0.1); border: 1px solid #9ACD32; border-radius: 5px; color: #F5F5DC; font-size: 1em; font-family: 'Noto Serif JP', serif; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #C5E17A; box-shadow: 0 0 10px rgba(154, 205, 50, 0.3); }
-    .form-group textarea { resize: vertical; min-height: 80px; }
-    .categoria-selector { display: flex; gap: 10px; align-items: flex-end; }
-    .categoria-selector input { flex: 1; }
-    .categoria-selector select { flex: 1; }
-    .categoria-selector button { background: #9ACD32; color: #1a1a1a; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Noto Serif JP', serif; }
-    .btn-submit { background: #9ACD32; color: #1a1a1a; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1em; margin-top: 20px; font-family: 'Noto Serif JP', serif; transition: all 0.3s; }
-    .btn-submit:hover { background: #C5E17A; transform: scale(1.05); }
-    .btn-submit:disabled { background: #666; cursor: not-allowed; transform: none; }
-    .mensaje { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; }
-    .mensaje.exito { background: #d4edda; color: #155724; display: block; }
-    .mensaje.error { background: #f8d7da; color: #721c24; display: block; }
-    .mensaje.cargando { background: #fff3cd; color: #856404; display: block; }
-    .lista-productos { max-height: 500px; overflow-y: auto; margin-top: 20px; }
-    .producto-item { background: rgba(245, 245, 220, 0.05); padding: 15px; margin-bottom: 10px; border-radius: 5px; cursor: pointer; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
-    .producto-item:hover { background: rgba(154, 205, 50, 0.2); border-color: #9ACD32; }
-    .producto-info { flex: 1; }
-    .producto-info h4 { color: #C5E17A; margin-bottom: 5px; }
-    .producto-info p { font-size: 0.9em; color: #F5F5DC; }
-    .btn-eliminar { background: #ff4444; color: #fff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Noto Serif JP', serif; transition: all 0.3s; }
-    .btn-eliminar:hover { background: #cc0000; transform: scale(1.05); }
-    .cargando { text-align: center; padding: 40px; color: #C5E17A; font-size: 1.2em; }
-    .spinner { border: 4px solid rgba(154, 205, 50, 0.3); border-top: 4px solid #9ACD32; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .debug-box { background: rgba(0,0,0,0.7); border: 1px solid #9ACD32; padding: 15px; margin-top: 20px; border-radius: 5px; font-family: monospace; font-size: 0.85em; color: #9ACD32; max-height: 200px; overflow-y: auto; white-space: pre-wrap; display: none; }
-    @media (max-width: 768px) { .header h1 { font-size: 1.5em; } .container { padding: 10px; } .tabs { flex-direction: column; } .tab-btn { width: 100%; } .tab-content { padding: 20px; } .producto-item { flex-direction: column; align-items: flex-start; gap: 10px; } .btn-eliminar { width: 100%; } .categoria-selector { flex-direction: column; } }
-    @media (max-width: 480px) { .header h1 { font-size: 1.2em; } .btn-submit { width: 100%; } }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JŌGAN | Panel Administrativo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Noto Serif JP',serif; background:#1a1a1a; color:#F5F5DC; min-height:100vh; }
+.header { background:#000; padding:20px; text-align:center; border-bottom:3px solid #9ACD32; }
+.header h1 { color:#C5E17A; font-size:1.8em; letter-spacing:2px; }
+.header p { color:#F5F5DC; margin-top:6px; font-size:.85em; }
+.container { max-width:1100px; margin:0 auto; padding:20px; }
+.tabs { display:flex; gap:10px; margin-bottom:25px; flex-wrap:wrap; justify-content:center; }
+.tab-btn { background:rgba(154,205,50,.15); color:#C5E17A; border:2px solid #9ACD32; padding:12px 20px; border-radius:6px; cursor:pointer; font-weight:bold; font-family:inherit; transition:.25s; }
+.tab-btn:hover { background:rgba(154,205,50,.35); }
+.tab-btn.active { background:#9ACD32; color:#111; }
+.tab-content { display:none; background:#222; padding:25px; border-radius:10px; border:1px solid #9ACD32; }
+.tab-content.active { display:block; }
+.tab-content h2 { color:#C5E17A; margin-bottom:20px; border-bottom:2px solid #9ACD32; padding-bottom:10px; }
+.form-group { margin-bottom:18px; }
+.form-group label { display:block; margin-bottom:6px; color:#C5E17A; font-weight:bold; }
+.form-group input,.form-group select,.form-group textarea { width:100%; padding:11px; background:#333; border:1px solid #9ACD32; border-radius:5px; color:#F5F5DC; font-family:inherit; font-size:1em; }
+.form-group textarea { min-height:80px; resize:vertical; }
+.categoria-selector { display:flex; gap:8px; flex-wrap:wrap; }
+.categoria-selector input,.categoria-selector select { flex:1; min-width:140px; }
+.btn { background:#9ACD32; color:#111; border:none; padding:12px 24px; border-radius:5px; cursor:pointer; font-weight:bold; font-family:inherit; transition:.25s; }
+.btn:hover { background:#C5E17A; }
+.btn:disabled { background:#666; cursor:not-allowed; }
+.btn-danger { background:#c0392b; color:#fff; padding:8px 16px; }
+.mensaje { margin-top:15px; padding:12px; border-radius:5px; display:none; }
+.mensaje.ok { display:block; background:#d4edda; color:#155724; }
+.mensaje.err { display:block; background:#f8d7da; color:#721c24; }
+.lista { max-height:420px; overflow-y:auto; margin-top:15px; }
+.producto-item { background:#2b2b2b; border:1px solid #444; padding:14px; margin-bottom:10px; border-radius:6px; display:flex; justify-content:space-between; align-items:center; gap:12px; cursor:pointer; transition:.2s; }
+.producto-item:hover { border-color:#9ACD32; background:#333; }
+.producto-item h4 { color:#C5E17A; margin-bottom:5px; }
+.producto-item p { font-size:.85em; color:#ddd; }
+.debug { display:none; margin-top:20px; padding:12px; background:#111; border:1px solid #9ACD32; border-radius:5px; font-family:monospace; font-size:.8em; color:#9ACD32; white-space:pre-wrap; max-height:200px; overflow:auto; }
+.aviso { font-size:.85em; color:#bbb; margin-bottom:20px; text-align:center; }
+.aviso a { color:#C5E17A; }
+@media(max-width:768px){
+  .tabs{flex-direction:column}
+  .tab-btn{width:100%}
+  .container{padding:12px}
+  .tab-content{padding:18px}
+  .producto-item{flex-direction:column;align-items:flex-start}
+  .btn-danger{width:100%}
+}
+</style>
 </head>
 <body>
-  <div class="header">
-    <h1>🍣 JŌGAN | Panel Administrativo</h1>
-    <p>Gestión de menú - SUSHI EXPERIENCE</p>
+
+<div class="header">
+  <h1>🍣 JŌGAN | Panel Administrativo</h1>
+  <p>Gestión de menú - SUSHI EXPERIENCE</p>
+</div>
+
+<div class="container">
+
+  <p class="aviso">
+    ¿No carga la lista? Usa el
+    <a href="https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec" target="_blank">panel directo de Apps Script</a>
+  </p>
+
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="agregar">➕ Agregar Producto</button>
+    <button class="tab-btn" data-tab="modificar">✏️ Modificar Producto</button>
+    <button class="tab-btn" data-tab="eliminar">🗑️ Eliminar Producto</button>
   </div>
 
-  <div class="container">
-    <div class="tabs">
-      <button class="tab-btn active" id="btn-agregar">➕ Agregar Producto</button>
-      <button class="tab-btn" id="btn-modificar">✏️ Modificar Producto</button>
-      <button class="tab-btn" id="btn-eliminar">🗑️ Eliminar Producto</button>
-    </div>
+  <!-- AGREGAR -->
+  <div id="tab-agregar" class="tab-content active">
+    <h2>Agregar Nuevo Producto</h2>
 
-    <div id="tab-agregar" class="tab-content active">
-      <h2>Agregar Nuevo Producto</h2>
-      <form id="form-agregar">
-        <div class="form-group">
-          <label>Categoría:</label>
-          <div class="categoria-selector">
-            <input type="text" id="agg-categoria-input" placeholder="Escribir nueva categoría..." list="categorias-list">
-            <select id="agg-categoria-select" onchange="document.getElementById('agg-categoria-input').value = this.value">
-              <option value="">-- Seleccionar existente --</option>
-              <option value="Entradas">Entradas</option>
-              <option value="Rolls Fríos">Rolls Fríos</option>
-              <option value="Rolls Tempura">Rolls Tempura</option>
-              <option value="Promociones">Promociones</option>
-              <option value="Extras">Extras</option>
-              <option value="Bebidas">Bebidas</option>
-              <option value="Postres">Postres</option>
-              <option value="Ensaladas">Ensaladas</option>
-            </select>
-            <button type="button" onclick="agregarNuevaCategoria()">+ Nueva</button>
-          </div>
-          <datalist id="categorias-list">
-            <option value="Entradas">
-            <option value="Rolls Fríos">
-            <option value="Rolls Tempura">
-            <option value="Promociones">
-            <option value="Extras">
-            <option value="Bebidas">
-            <option value="Postres">
-            <option value="Ensaladas">
-          </datalist>
-        </div>
-        <div class="form-group"><label>Nombre del Producto:</label><input type="text" id="agg-nombre" required placeholder="Ej: Jōgan Roll"></div>
-        <div class="form-group"><label>Opciones / Proteína:</label><input type="text" id="agg-opciones" placeholder="Ej: Pollo / Camarón / Cangrejo"></div>
-        <div class="form-group"><label>Descripción / Ingredientes:</label><textarea id="agg-descripcion" placeholder="Ej: Aguacate, queso crema, cebollín..."></textarea></div>
-        <div class="form-group"><label>Precio ($):</label><input type="number" id="agg-precio" step="0.01" required placeholder="Ej: 9.00"></div>
-        <div class="form-group"><label>Unidades / Piezas:</label><input type="text" id="agg-unidades" placeholder="Ej: 8 Piezas"></div>
-        <div class="form-group"><label>Disponible:</label><select id="agg-disponible"><option value="true">Sí - Disponible</option><option value="false">No - No Disponible</option></select></div>
-        <button type="button" class="btn-submit" onclick="agregarProducto()">Agregar Producto</button>
-        <div id="msg-agregar" class="mensaje"></div>
-      </form>
-    </div>
-
-    <div id="tab-modificar" class="tab-content">
-      <h2>Modificar Producto</h2>
-      <div id="lista-modificar" class="lista-productos"><div class="cargando"><div class="spinner"></div>Cargando productos...</div></div>
-      <div id="form-modificar" style="display:none; margin-top: 30px;">
-        <h3 style="color: #C5E17A; margin-bottom: 20px;">Editar Producto</h3>
-        <div class="form-group">
-          <label>Categoría:</label>
-          <input type="text" id="mod-categoria" list="categorias-list-mod">
-          <datalist id="categorias-list-mod">
-            <option value="Entradas">
-            <option value="Rolls Fríos">
-            <option value="Rolls Tempura">
-            <option value="Promociones">
-            <option value="Extras">
-            <option value="Bebidas">
-            <option value="Postres">
-            <option value="Ensaladas">
-          </datalist>
-        </div>
-        <div class="form-group"><label>Nombre del Producto:</label><input type="text" id="mod-nombre"></div>
-        <div class="form-group"><label>Opciones / Proteína:</label><input type="text" id="mod-opciones"></div>
-        <div class="form-group"><label>Descripción / Ingredientes:</label><textarea id="mod-descripcion"></textarea></div>
-        <div class="form-group"><label>Precio ($):</label><input type="number" id="mod-precio" step="0.01"></div>
-        <div class="form-group"><label>Unidades / Piezas:</label><input type="text" id="mod-unidades"></div>
-        <div class="form-group"><label>Disponible:</label><select id="mod-disponible"><option value="true">Sí - Disponible</option><option value="false">No - No Disponible</option></select></div>
-        <button type="button" class="btn-submit" onclick="modificarProducto()">Guardar Cambios</button>
-        <div id="msg-modificar" class="mensaje"></div>
+    <div class="form-group">
+      <label>Categoría</label>
+      <div class="categoria-selector">
+        <input type="text" id="agg-categoria" placeholder="Escribir nueva categoría...">
+        <select id="agg-categoria-lista">
+          <option value="">-- Seleccionar --</option>
+        </select>
       </div>
     </div>
 
-    <div id="tab-eliminar" class="tab-content">
-      <h2>Eliminar Producto</h2>
-      <div id="lista-eliminar" class="lista-productos"><div class="cargando"><div class="spinner"></div>Cargando productos...</div></div>
-      <div id="msg-eliminar" class="mensaje"></div>
+    <div class="form-group"><label>Nombre del Producto</label><input type="text" id="agg-nombre" placeholder="Ej: Jōgan Roll"></div>
+    <div class="form-group"><label>Opciones / Proteína</label><input type="text" id="agg-opciones" placeholder="Ej: Pollo / Camarón"></div>
+    <div class="form-group"><label>Descripción / Ingredientes</label><textarea id="agg-descripcion"></textarea></div>
+    <div class="form-group"><label>Precio ($)</label><input type="number" step="0.01" id="agg-precio" placeholder="Ej: 9.00"></div>
+    <div class="form-group"><label>Unidades / Piezas</label><input type="text" id="agg-unidades" placeholder="Ej: 8 Piezas"></div>
+    <div class="form-group">
+      <label>Disponible</label>
+      <select id="agg-disponible"><option value="true">Sí</option><option value="false">No</option></select>
     </div>
 
-    <div id="debug-box" class="debug-box"></div>
+    <button class="btn" id="btn-guardar-agregar">Agregar Producto</button>
+    <div id="msg-agregar" class="mensaje"></div>
   </div>
 
-  <script>
-    const SHEET_TSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv';
-    const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec';
+  <!-- MODIFICAR -->
+  <div id="tab-modificar" class="tab-content">
+    <h2>Modificar Producto</h2>
+    <div id="lista-modificar" class="lista"></div>
 
-    // Debug box
-    function showDebug(msg) {
-      const box = document.getElementById('debug-box');
-      box.style.display = 'block';
-      box.textContent += msg + '\n';
-      console.log(msg);
-    }
+    <div id="form-modificar" style="display:none;margin-top:25px">
+      <h2>Editar Producto</h2>
+      <div class="form-group"><label>Categoría</label><input type="text" id="mod-categoria"></div>
+      <div class="form-group"><label>Nombre del Producto</label><input type="text" id="mod-nombre"></div>
+      <div class="form-group"><label>Opciones / Proteína</label><input type="text" id="mod-opciones"></div>
+      <div class="form-group"><label>Descripción / Ingredientes</label><textarea id="mod-descripcion"></textarea></div>
+      <div class="form-group"><label>Precio ($)</label><input type="number" step="0.01" id="mod-precio"></div>
+      <div class="form-group"><label>Unidades / Piezas</label><input type="text" id="mod-unidades"></div>
+      <div class="form-group">
+        <label>Disponible</label>
+        <select id="mod-disponible"><option value="true">Sí</option><option value="false">No</option></select>
+      </div>
+      <button class="btn" id="btn-guardar-modificar">Guardar Cambios</button>
+      <div id="msg-modificar" class="mensaje"></div>
+    </div>
+  </div>
 
-    // Tabs - usando IDs directos
-    document.getElementById('btn-agregar').addEventListener('click', function() {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-      document.getElementById('tab-agregar').classList.add('active');
-      document.getElementById('debug-box').style.display = 'none';
-      document.getElementById('debug-box').textContent = '';
+  <!-- ELIMINAR -->
+  <div id="tab-eliminar" class="tab-content">
+    <h2>Eliminar Producto</h2>
+    <div id="lista-eliminar" class="lista"></div>
+    <div id="msg-eliminar" class="mensaje"></div>
+  </div>
+
+  <div id="debug" class="debug"></div>
+</div>
+
+<script>
+const SHEET_TSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv';
+const BACKEND = 'https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec';
+
+const $ = function(id){ return document.getElementById(id); };
+let nombreOriginal = '';
+let productosCache = [];
+
+function debug(msg){
+  const d = $('debug');
+  d.style.display = 'block';
+  d.textContent += msg + '\n';
+  console.log(msg);
+}
+
+function mensaje(id, texto, ok){
+  const el = $(id);
+  el.className = 'mensaje ' + (ok ? 'ok' : 'err');
+  el.textContent = texto;
+}
+
+/* ---------- TABS ---------- */
+document.querySelectorAll('.tab-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    const destino = btn.getAttribute('data-tab');
+    document.querySelectorAll('.tab-btn').forEach(function(b){
+      b.classList.toggle('active', b === btn);
     });
-
-    document.getElementById('btn-modificar').addEventListener('click', function() {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-      document.getElementById('tab-modificar').classList.add('active');
-      document.getElementById('debug-box').style.display = 'none';
-      document.getElementById('debug-box').textContent = '';
+    document.querySelectorAll('.tab-content').forEach(function(c){
+      c.classList.toggle('active', c.id === 'tab-' + destino);
+    });
+    if(destino === 'modificar' || destino === 'eliminar'){
       cargarProductos();
+    }
+  });
+});
+
+/* ---------- LECTURA DESDE TSV (permite CORS) ---------- */
+async function obtenerProductos(){
+  const res = await fetch(SHEET_TSV + '&v=' + Date.now());
+  if(!res.ok){ throw new Error('HTTP ' + res.status); }
+  const texto = await res.text();
+  const lineas = texto.replace(/\r/g,'').trim().split('\n');
+  const headers = lineas[0].split('\t').map(function(h){ return h.trim(); });
+
+  debug('Headers: ' + headers.join(' | '));
+
+  const lista = [];
+  for(let i=1; i<lineas.length; i++){
+    const celdas = lineas[i].split('\t');
+    if(!celdas[0] || !celdas[1]) continue;
+    const p = {};
+    headers.forEach(function(h, idx){
+      p[h] = (celdas[idx] || '').trim();
     });
+    lista.push(p);
+  }
+  debug('Productos leídos: ' + lista.length);
+  return lista;
+}
 
-    document.getElementById('btn-eliminar').addEventListener('click', function() {
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      this.classList.add('active');
-      document.getElementById('tab-eliminar').classList.add('active');
-      document.getElementById('debug-box').style.display = 'none';
-      document.getElementById('debug-box').textContent = '';
-      cargarProductos();
+/* ---------- ESCRITURA HACIA APPS SCRIPT ---------- */
+async function enviarAccion(action, data){
+  // text/plain evita el preflight OPTIONS que Apps Script no soporta
+  await fetch(BACKEND, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({ action: action, data: data })
+  });
+}
+
+/* ---------- Poblar categorías ---------- */
+function poblarCategorias(lista){
+  const cats = [...new Set(lista.map(function(p){ return p['Categoría']; }).filter(Boolean))];
+  const select = $('agg-categoria-lista');
+  select.innerHTML = '<option value="">-- Seleccionar --</option>';
+  cats.forEach(function(cat){
+    const op = document.createElement('option');
+    op.value = cat;
+    op.textContent = cat;
+    select.appendChild(op);
+  });
+}
+
+$('agg-categoria-lista').addEventListener('change', function(){
+  if(this.value){ $('agg-categoria').value = this.value; }
+});
+
+/* ---------- Render de listas ---------- */
+function renderListas(lista){
+  const lm = $('lista-modificar');
+  const le = $('lista-eliminar');
+  lm.innerHTML = '';
+  le.innerHTML = '';
+
+  if(lista.length === 0){
+    lm.innerHTML = '<p>No hay productos registrados.</p>';
+    le.innerHTML = '<p>No hay productos registrados.</p>';
+    return;
+  }
+
+  lista.forEach(function(p){
+    const nombre = p['Nombre del Producto'] || '';
+    const categoria = p['Categoría'] || '';
+    const precio = p['Precio ($)'] || '';
+    const disponible = String(p['Disponible']).toUpperCase() === 'TRUE';
+
+    // Tarjeta modificar
+    const card = document.createElement('div');
+    card.className = 'producto-item';
+    const info = document.createElement('div');
+    const titulo = document.createElement('h4');
+    titulo.textContent = nombre;
+    const detalle = document.createElement('p');
+    detalle.textContent = categoria + ' · ' + precio + ' · ' + (disponible ? '✅ Disponible' : '❌ No disponible');
+    info.appendChild(titulo);
+    info.appendChild(detalle);
+    card.appendChild(info);
+    card.addEventListener('click', function(){ cargarParaModificar(p); });
+    lm.appendChild(card);
+
+    // Tarjeta eliminar
+    const card2 = document.createElement('div');
+    card2.className = 'producto-item';
+    const info2 = document.createElement('div');
+    const t2 = document.createElement('h4');
+    t2.textContent = nombre;
+    const d2 = document.createElement('p');
+    d2.textContent = categoria + ' · ' + precio;
+    info2.appendChild(t2);
+    info2.appendChild(d2);
+    const btnDel = document.createElement('button');
+    btnDel.className = 'btn btn-danger';
+    btnDel.textContent = 'Eliminar';
+    btnDel.addEventListener('click', function(ev){
+      ev.stopPropagation();
+      eliminar(nombre);
     });
+    card2.appendChild(info2);
+    card2.appendChild(btnDel);
+    le.appendChild(card2);
+  });
+}
 
-    function agregarNuevaCategoria() {
-      const input = document.getElementById('agg-categoria-input');
-      const nuevaCat = input.value.trim();
-      if (nuevaCat) {
-        const select = document.getElementById('agg-categoria-select');
-        const option = document.createElement('option');
-        option.value = nuevaCat;
-        option.textContent = nuevaCat;
-        select.appendChild(option);
-        select.value = nuevaCat;
-        alert(`✅ Categoría "${nuevaCat}" agregada a la lista`);
-      } else {
-        alert('⚠️ Escribe el nombre de la categoría primero');
-      }
-    }
+async function cargarProductos(){
+  $('lista-modificar').innerHTML = '<p>Cargando productos...</p>';
+  $('lista-eliminar').innerHTML = '<p>Cargando productos...</p>';
+  try{
+    productosCache = await obtenerProductos();
+    poblarCategorias(productosCache);
+    renderListas(productosCache);
+  }catch(err){
+    debug('ERROR: ' + err.message);
+    $('lista-modificar').innerHTML = '<p style="color:#ff6b6b">No se pudo cargar. Revisa el debug.</p>';
+    $('lista-eliminar').innerHTML = '<p style="color:#ff6b6b">No se pudo cargar.</p>';
+  }
+}
 
-    async function obtenerProductos() {
-      showDebug('🔄 Cargando TSV...');
-      const response = await fetch(SHEET_TSV + '&v=' + Date.now());
-      const text = await response.text();
-      showDebug(`📄 TSV recibido: ${text.length} caracteres`);
-      showDebug(`Primeros 200 chars: ${text.substring(0, 200)}`);
-      
-      const rows = text.trim().split('\n').map(r => r.split('\t'));
-      const headers = rows[0].map(h => h.trim());
-      showDebug(`📋 Headers: ${headers.join(', ')}`);
-      
-      const productos = [];
-      for (let i = 1; i < rows.length; i++) {
-        if (rows[i].length < 3) continue;
-        const producto = {};
-        headers.forEach((h, idx) => {
-          producto[h] = (rows[i][idx] || '').trim();
-        });
-        productos.push(producto);
-      }
-      showDebug(`✅ Productos parseados: ${productos.length}`);
-      return productos;
-    }
+/* ---------- MODIFICAR ---------- */
+function cargarParaModificar(p){
+  nombreOriginal = p['Nombre del Producto'];
+  $('mod-categoria').value = p['Categoría'] || '';
+  $('mod-nombre').value = p['Nombre del Producto'] || '';
+  $('mod-opciones').value = p['Opciones / Proteína'] || '';
+  $('mod-descripcion').value = p['Descripción / Ingredientes'] || '';
+  $('mod-precio').value = (p['Precio ($)'] || '').replace('$','').replace(',','.');
+  $('mod-unidades').value = p['Unidades / Piezas'] || '';
+  $('mod-disponible').value = String(p['Disponible']).toUpperCase() === 'TRUE' ? 'true' : 'false';
+  $('form-modificar').style.display = 'block';
+  $('form-modificar').scrollIntoView({ behavior:'smooth' });
+}
 
-    async function crearProducto(data) {
-      const formData = new URLSearchParams();
-      formData.append('action', 'crearProducto');
-      formData.append('data', JSON.stringify(data));
-      await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() });
-      return { exito: true, mensaje: '✅ Producto creado' };
-    }
+$('btn-guardar-modificar').addEventListener('click', async function(){
+  const btn = this;
+  btn.disabled = true;
+  const datos = {
+    nombreOriginal: nombreOriginal,
+    categoria: $('mod-categoria').value,
+    nombre: $('mod-nombre').value,
+    opciones: $('mod-opciones').value,
+    descripcion: $('mod-descripcion').value,
+    precio: $('mod-precio').value,
+    unidades: $('mod-unidades').value,
+    disponible: $('mod-disponible').value
+  };
+  try{
+    await enviarAccion('modificarProducto', datos);
+    mensaje('msg-modificar','✅ Solicitud enviada. Verifica la hoja en 1-2 minutos.',true);
+    $('form-modificar').style.display = 'none';
+  }catch(err){
+    mensaje('msg-modificar','❌ ' + err.message,false);
+  }finally{
+    btn.disabled = false;
+  }
+});
 
-    async function modificarProductoAPI(data) {
-      const formData = new URLSearchParams();
-      formData.append('action', 'modificarProducto');
-      formData.append('data', JSON.stringify(data));
-      await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() });
-      return { exito: true, mensaje: '✅ Producto modificado' };
-    }
+/* ---------- AGREGAR ---------- */
+$('btn-guardar-agregar').addEventListener('click', async function(){
+  const btn = this;
+  const categoria = $('agg-categoria').value.trim();
+  const nombre = $('agg-nombre').value.trim();
+  const precio = $('agg-precio').value;
 
-    async function eliminarProductoAPI(nombre) {
-      const formData = new URLSearchParams();
-      formData.append('action', 'eliminarProducto');
-      formData.append('data', JSON.stringify({ nombre: nombre }));
-      await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() });
-      return { exito: true, mensaje: '✅ Producto eliminado' };
-    }
+  if(!categoria || !nombre || !precio){
+    mensaje('msg-agregar','⚠️ Completa Categoría, Nombre y Precio.',false);
+    return;
+  }
 
-    async function cargarProductos() {
-      const listaMod = document.getElementById('lista-modificar');
-      const listaElim = document.getElementById('lista-eliminar');
-      listaMod.innerHTML = '<div class="cargando"><div class="spinner"></div>Cargando productos...</div>';
-      listaElim.innerHTML = '<div class="cargando"><div class="spinner"></div>Cargando productos...</div>';
+  btn.disabled = true;
+  const datos = {
+    categoria: categoria,
+    nombre: nombre,
+    opciones: $('agg-opciones').value,
+    descripcion: $('agg-descripcion').value,
+    precio: precio,
+    unidades: $('agg-unidades').value,
+    disponible: $('agg-disponible').value
+  };
 
-      try {
-        const productos = await obtenerProductos();
-        listaMod.innerHTML = '';
-        listaElim.innerHTML = '';
+  try{
+    await enviarAccion('crearProducto', datos);
+    mensaje('msg-agregar','✅ Solicitud enviada. Revisa la hoja en 1-2 minutos.',true);
+    $('form-agregar').reset();
+  }catch(err){
+    mensaje('msg-agregar','❌ ' + err.message,false);
+  }finally{
+    btn.disabled = false;
+  }
+});
 
-        if (productos.length === 0) {
-          listaMod.innerHTML = '<p style="text-align:center; color:#C5E17A;">No hay productos registrados</p>';
-          listaElim.innerHTML = '<p style="text-align:center; color:#C5E17A;">No hay productos registrados</p>';
-          return;
-        }
+/* ---------- ELIMINAR ---------- */
+async function eliminar(nombre){
+  if(!confirm('¿Eliminar "' + nombre + '"?')) return;
+  try{
+    await enviarAccion('eliminarProducto', { nombre: nombre });
+    mensaje('msg-eliminar','✅ Solicitud enviada. Verifica la hoja en 1-2 minutos.',true);
+  }catch(err){
+    mensaje('msg-eliminar','❌ ' + err.message,false);
+  }
+}
 
-        productos.forEach(p => {
-          const itemMod = document.createElement('div');
-          itemMod.className = 'producto-item';
-          itemMod.innerHTML = `
-            <div class="producto-info">
-              <h4>${p['Nombre del Producto']}</h4>
-              <p>${p['Categoría']} - ${p['Precio ($)']} - ${p['Disponible'] === 'TRUE' ? '✅ Disponible' : '❌ No disponible'}</p>
-            </div>
-          `;
-          itemMod.onclick = () => cargarProductoModificar(p);
-          listaMod.appendChild(itemMod);
-
-          const itemElim = document.createElement('div');
-          itemElim.className = 'producto-item';
-          itemElim.innerHTML = `
-            <div class="producto-info">
-              <h4>${p['Nombre del Producto']}</h4>
-              <p>${p['Categoría']} - ${p['Precio ($)</p>
-            </div>
-            <button class="btn-eliminar" onclick="event.stopPropagation(); eliminarProducto('${p['Nombre del Producto'].replace(/'/g, "\\'")}')">Eliminar</button>
-          `;
-          listaElim.appendChild(itemElim);
-        });
-      } catch (error) {
-        showDebug(`❌ Error: ${error.message}`);
-        console.error('Error:', error);
-        listaMod.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos. Ver debug abajo.</p>';
-        listaElim.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos. Ver debug abajo.</p>';
-      }
-    }
-
-    let nombreOriginal = '';
-
-    function cargarProductoModificar(producto) {
-      nombreOriginal = producto['Nombre del Producto'];
-      document.getElementById('mod-categoria').value = producto['Categoría'] || '';
-      document.getElementById('mod-nombre').value = producto['Nombre del Producto'] || '';
-      document.getElementById('mod-opciones').value = producto['Opciones / Proteína'] || '';
-      document.getElementById('mod-descripcion').value = producto['Descripción / Ingredientes'] || '';
-      document.getElementById('mod-precio').value = producto['Precio ($)'] || '';
-      document.getElementById('mod-unidades').value = producto['Unidades / Piezas'] || '';
-      document.getElementById('mod-disponible').value = producto['Disponible'] === 'TRUE' ? 'true' : 'false';
-      document.getElementById('form-modificar').style.display = 'block';
-      document.getElementById('form-modificar').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    async function agregarProducto() {
-      const btn = event.target;
-      btn.disabled = true;
-      btn.textContent = 'Agregando...';
-
-      const datos = {
-        categoria: document.getElementById('agg-categoria-input').value,
-        nombre: document.getElementById('agg-nombre').value,
-        opciones: document.getElementById('agg-opciones').value,
-        descripcion: document.getElementById('agg-descripcion').value,
-        precio: document.getElementById('agg-precio').value,
-        unidades: document.getElementById('agg-unidades').value,
-        disponible: document.getElementById('agg-disponible').value
-      };
-
-      const msg = document.getElementById('msg-agregar');
-      try {
-        const resultado = await crearProducto(datos);
-        msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
-        msg.textContent = resultado.mensaje;
-        if (resultado.exito) {
-          setTimeout(() => { msg.style.display = 'none'; document.getElementById('form-agregar').reset(); }, 3000);
-        }
-      } catch (error) {
-        msg.className = 'mensaje error';
-        msg.textContent = '❌ Error: ' + error.message;
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Agregar Producto';
-      }
-    }
-
-    async function modificarProducto() {
-      const btn = event.target;
-      btn.disabled = true;
-      btn.textContent = 'Guardando...';
-
-      const datos = {
-        nombreOriginal: nombreOriginal,
-        categoria: document.getElementById('mod-categoria').value,
-        nombre: document.getElementById('mod-nombre').value,
-        opciones: document.getElementById('mod-opciones').value,
-        descripcion: document.getElementById('mod-descripcion').value,
-        precio: document.getElementById('mod-precio').value,
-        unidades: document.getElementById('mod-unidades').value,
-        disponible: document.getElementById('mod-disponible').value
-      };
-
-      const msg = document.getElementById('msg-modificar');
-      try {
-        const resultado = await modificarProductoAPI(datos);
-        msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
-        msg.textContent = resultado.mensaje;
-        if (resultado.exito) {
-          setTimeout(() => { msg.style.display = 'none'; document.getElementById('form-modificar').style.display = 'none'; cargarProductos(); }, 3000);
-        }
-      } catch (error) {
-        msg.className = 'mensaje error';
-        msg.textContent = '❌ Error: ' + error.message;
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Guardar Cambios';
-      }
-    }
-
-    async function eliminarProducto(nombre) {
-      if (!confirm(`¿Estás seguro de eliminar "${nombre}"?`)) return;
-
-      const msg = document.getElementById('msg-eliminar');
-      msg.className = 'mensaje cargando';
-      msg.textContent = 'Eliminando producto...';
-      msg.style.display = 'block';
-
-      try {
-        const resultado = await eliminarProductoAPI(nombre);
-        msg.className = 'mensaje ' + (resultado.exito ? 'exito' : 'error');
-        msg.textContent = resultado.mensaje;
-        if (resultado.exito) {
-          setTimeout(() => { msg.style.display = 'none'; cargarProductos(); }, 3000);
-        }
-      } catch (error) {
-        msg.className = 'mensaje error';
-        msg.textContent = '❌ Error: ' + error.message;
-      }
-    }
-  </script>
+/* Cargar categorías al abrir */
+cargarProductos();
+</script>
 </body>
 </html>
