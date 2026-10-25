@@ -17,7 +17,8 @@
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
     .tab-btn { background: rgba(154, 205, 50, 0.2); color: #C5E17A; border: 2px solid #9ACD32; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1em; transition: all 0.3s; font-family: 'Noto Serif JP', serif; }
-    .tab-btn:hover, .tab-btn.active { background: #9ACD32; color: #1a1a1a; }
+    .tab-btn:hover { background: rgba(154, 205, 50, 0.4); }
+    .tab-btn.active { background: #9ACD32; color: #1a1a1a; }
     .tab-content { display: none; background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 10px; border: 1px solid #9ACD32; }
     .tab-content.active { display: block; }
     .tab-content h2 { color: #C5E17A; margin-bottom: 20px; border-bottom: 2px solid #9ACD32; padding-bottom: 10px; }
@@ -48,24 +49,22 @@
     .cargando { text-align: center; padding: 40px; color: #C5E17A; font-size: 1.2em; }
     .spinner { border: 4px solid rgba(154, 205, 50, 0.3); border-top: 4px solid #9ACD32; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .alert-box { background: rgba(154, 205, 50, 0.1); border: 2px solid #9ACD32; padding: 20px; margin: 20px 0; border-radius: 10px; text-align: center; }
-    .alert-box a { color: #C5E17A; font-weight: bold; text-decoration: none; }
-    .alert-box a:hover { text-decoration: underline; }
+    .debug-box { background: rgba(0,0,0,0.7); border: 1px solid #9ACD32; padding: 15px; margin-top: 20px; border-radius: 5px; font-family: monospace; font-size: 0.85em; color: #9ACD32; max-height: 200px; overflow-y: auto; white-space: pre-wrap; display: none; }
     @media (max-width: 768px) { .header h1 { font-size: 1.5em; } .container { padding: 10px; } .tabs { flex-direction: column; } .tab-btn { width: 100%; } .tab-content { padding: 20px; } .producto-item { flex-direction: column; align-items: flex-start; gap: 10px; } .btn-eliminar { width: 100%; } .categoria-selector { flex-direction: column; } }
     @media (max-width: 480px) { .header h1 { font-size: 1.2em; } .btn-submit { width: 100%; } }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>🍣 JGAN | Panel Administrativo</h1>
+    <h1>🍣 JŌGAN | Panel Administrativo</h1>
     <p>Gestión de menú - SUSHI EXPERIENCE</p>
   </div>
 
   <div class="container">
     <div class="tabs">
-      <button class="tab-btn active" data-tab="agregar">➕ Agregar Producto</button>
-      <button class="tab-btn" data-tab="modificar">✏️ Modificar Producto</button>
-      <button class="tab-btn" data-tab="eliminar">🗑️ Eliminar Producto</button>
+      <button class="tab-btn active" id="btn-agregar">➕ Agregar Producto</button>
+      <button class="tab-btn" id="btn-modificar">✏️ Modificar Producto</button>
+      <button class="tab-btn" id="btn-eliminar">🗑️ Eliminar Producto</button>
     </div>
 
     <div id="tab-agregar" class="tab-content active">
@@ -145,23 +144,50 @@
       <div id="lista-eliminar" class="lista-productos"><div class="cargando"><div class="spinner"></div>Cargando productos...</div></div>
       <div id="msg-eliminar" class="mensaje"></div>
     </div>
+
+    <div id="debug-box" class="debug-box"></div>
   </div>
 
   <script>
     const SHEET_TSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv';
     const BACKEND_URL = 'https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec';
 
-    document.querySelectorAll('.tab-btn').forEach(btn => {
-      btn.addEventListener('click', function() {
-        const tabName = this.getAttribute('data-tab');
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        this.classList.add('active');
-        document.getElementById(`tab-${tabName}`).classList.add('active');
-        if (tabName === 'modificar' || tabName === 'eliminar') {
-          cargarProductos();
-        }
-      });
+    // Debug box
+    function showDebug(msg) {
+      const box = document.getElementById('debug-box');
+      box.style.display = 'block';
+      box.textContent += msg + '\n';
+      console.log(msg);
+    }
+
+    // Tabs - usando IDs directos
+    document.getElementById('btn-agregar').addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      document.getElementById('tab-agregar').classList.add('active');
+      document.getElementById('debug-box').style.display = 'none';
+      document.getElementById('debug-box').textContent = '';
+    });
+
+    document.getElementById('btn-modificar').addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      document.getElementById('tab-modificar').classList.add('active');
+      document.getElementById('debug-box').style.display = 'none';
+      document.getElementById('debug-box').textContent = '';
+      cargarProductos();
+    });
+
+    document.getElementById('btn-eliminar').addEventListener('click', function() {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      document.getElementById('tab-eliminar').classList.add('active');
+      document.getElementById('debug-box').style.display = 'none';
+      document.getElementById('debug-box').textContent = '';
+      cargarProductos();
     });
 
     function agregarNuevaCategoria() {
@@ -181,12 +207,17 @@
     }
 
     async function obtenerProductos() {
+      showDebug('🔄 Cargando TSV...');
       const response = await fetch(SHEET_TSV + '&v=' + Date.now());
       const text = await response.text();
+      showDebug(`📄 TSV recibido: ${text.length} caracteres`);
+      showDebug(`Primeros 200 chars: ${text.substring(0, 200)}`);
+      
       const rows = text.trim().split('\n').map(r => r.split('\t'));
       const headers = rows[0].map(h => h.trim());
-      const productos = [];
+      showDebug(`📋 Headers: ${headers.join(', ')}`);
       
+      const productos = [];
       for (let i = 1; i < rows.length; i++) {
         if (rows[i].length < 3) continue;
         const producto = {};
@@ -195,6 +226,7 @@
         });
         productos.push(producto);
       }
+      showDebug(`✅ Productos parseados: ${productos.length}`);
       return productos;
     }
 
@@ -263,9 +295,10 @@
           listaElim.appendChild(itemElim);
         });
       } catch (error) {
+        showDebug(`❌ Error: ${error.message}`);
         console.error('Error:', error);
-        listaMod.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
-        listaElim.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos</p>';
+        listaMod.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos. Ver debug abajo.</p>';
+        listaElim.innerHTML = '<p style="text-align:center; color:#ff4444;">Error cargando productos. Ver debug abajo.</p>';
       }
     }
 
