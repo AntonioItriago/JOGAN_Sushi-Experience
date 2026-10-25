@@ -2,13 +2,16 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>JŌGAN - SUSHI EXPERIENCE</title>
+  <title>JGAN - SUSHI EXPERIENCE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Icono de la pestaña -->
+  <!-- Google Fonts: Noto Serif JP (estilo japonés) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
   
-  <!-- Etiquetas para compartir en redes sociales -->
   <meta property="og:title" content="JŌGAN | SUSHI EXPERIENCE">
   <meta property="og:description" content="Explora nuestro menú digital, arma tu pedido y envíalo directamente por WhatsApp.">
   <meta property="og:image" content="https://antonioitriago.github.io/JOGAN_Sushi-Experience/fondo.jpg">
@@ -17,8 +20,8 @@
   
   <style>
     body {
-      font-family: 'Georgia', serif;
-      color: #fff;
+      font-family: 'Noto Serif JP', serif;
+      color: #F5F5DC;
       background: url('fondo.jpg') no-repeat center center fixed;
       background-size: cover;
       margin: 0;
@@ -27,118 +30,105 @@
     }
     h1 {
       text-align: center;
-      background: rgba(0,0,0,0.8);
+      background: rgba(0,0,0,0.85);
       padding: 20px;
       margin: 0;
-      font-size: 2em;
-      letter-spacing: 3px;
+      font-size: 2.2em;
+      letter-spacing: 4px;
+      color: #C5E17A;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
     }
     .category {
       margin: 20px;
-      background: rgba(0,0,0,0.7);
-      border-radius: 10px;
-      padding: 15px;
-      border-left: 3px solid #c9a961;
+      background: rgba(0,0,0,0.75);
+      border-radius: 12px;
+      padding: 18px;
+      border-left: 4px solid #9ACD32;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
     .category h2 {
       margin-top: 0;
-      border-bottom: 2px solid #c9a961;
-      padding-bottom: 8px;
-      color: #c9a961;
-      letter-spacing: 2px;
+      border-bottom: 2px solid #9ACD32;
+      padding-bottom: 10px;
+      color: #C5E17A;
+      letter-spacing: 3px;
+      font-size: 1.6em;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
     .carousel {
       display: flex;
       overflow-x: auto;
       scroll-behavior: smooth;
     }
-    .carousel::-webkit-scrollbar {
-      display: none;
-    }
-    .carousel {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
+    .carousel::-webkit-scrollbar { display: none; }
+    .carousel { -ms-overflow-style: none; scrollbar-width: none; }
     .item {
       flex: 0 0 auto;
-      width: 240px;
+      width: 250px;
       margin: 10px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 8px;
-      padding: 12px;
+      background: rgba(245, 245, 220, 0.1);
+      border-radius: 10px;
+      padding: 14px;
       text-align: center;
-      border: 1px solid rgba(201, 169, 97, 0.3);
+      border: 1px solid rgba(154, 205, 50, 0.4);
+      backdrop-filter: blur(5px);
     }
     .item h3 {
       margin: 0;
-      font-size: 1.1em;
-      color: #c9a961;
+      font-size: 1.2em;
+      color: #C5E17A;
       letter-spacing: 1px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
-    .item p {
-      font-size: 0.9em;
-      margin: 5px 0;
-      color: #e0e0e0;
-    }
-    .opciones {
-      font-size: 0.8em;
-      color: #d4af37;
-      font-style: italic;
-      min-height: 18px;
-    }
-    .unidades {
-      font-size: 0.85em;
-      color: #b8d4e3;
-    }
+    .item p { font-size: 0.9em; margin: 6px 0; color: #F5F5DC; }
+    .opciones { font-size: 0.85em; color: #FAF0E6; font-style: italic; min-height: 18px; }
+    .unidades { font-size: 0.85em; color: #E8F5E9; }
     .precio {
-      font-size: 1.1em;
+      font-size: 1.2em;
       font-weight: bold;
-      color: #fff;
-      margin-top: 10px;
+      color: #C5E17A;
+      margin-top: 12px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
     .select-btn {
-      margin-top: 8px;
-      padding: 8px 12px;
-      background: #c9a961;
-      color: #000;
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #9ACD32;
+      color: #1a1a1a;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
       font-weight: bold;
       letter-spacing: 1px;
       transition: all 0.3s;
+      font-family: 'Noto Serif JP', serif;
     }
     .select-btn:hover {
-      background: #d4af37;
+      background: #C5E17A;
       transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(154, 205, 50, 0.4);
     }
-    .cantidad {
-      margin-top: 5px;
-      font-size: 0.9em;
-      color: #c9a961;
-    }
+    .cantidad { margin-top: 6px; font-size: 0.9em; color: #C5E17A; }
 
     #carrito-flotante {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #c9a961;
-      color: #000;
+      background: #9ACD32;
+      color: #1a1a1a;
       border-radius: 50%;
-      width: 60px;
-      height: 60px;
+      width: 65px;
+      height: 65px;
       text-decoration: none;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+      box-shadow: 0 4px 15px rgba(154, 205, 50, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
+      font-size: 26px;
       z-index: 1000;
       transition: transform 0.2s;
     }
-    #carrito-flotante:active {
-      transform: scale(0.9);
-    }
+    #carrito-flotante:active { transform: scale(0.9); }
     #contador-carrito {
       position: absolute;
       top: -5px;
@@ -146,17 +136,15 @@
       background: #ff4444;
       color: white;
       border-radius: 50%;
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       font-size: 14px;
       display: none;
       align-items: center;
       justify-content: center;
       font-weight: bold;
     }
-    #pedido {
-      display: none;
-    }
+    #pedido { display: none; }
   </style>
 </head>
 <body>
@@ -171,9 +159,8 @@
   <a id="pedido" href="#" target="_blank">📲 Pedir</a>
 
   <script>
-    // ✅ TRUCO ANTI-CACHÉ: Añadimos la hora actual al final de la URL
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv&v=" + new Date().getTime();
-    const numeroWhatsApp = "584141889077";
+    const numeroWhatsApp = "584148165364";
 
     let seleccionados = {};
 
@@ -182,23 +169,18 @@
         const res = await fetch(sheetUrl);
         const text = await res.text();
         
-        // Dividimos por líneas y luego por tabulaciones
         const rows = text.trim().split("\n").map(r => r.split("\t"));
-        
-        // ✅ LIMPIEZA DE HEADERS: Eliminamos espacios invisibles
         const headers = rows[0].map(h => h.trim());
         const data = rows.slice(1);
 
         const categorias = {};
 
         data.forEach(row => {
-          if (row.length < 2) return; // Ignorar filas vacías
+          if (row.length < 2) return;
           
           const item = {};
-          // Asignamos valores limpios
           headers.forEach((h, i) => item[h] = (row[i] || "").trim());
 
-          // ✅ VALIDACIÓN ROBUSTA DE DISPONIBILIDAD
           const disponible = item["Disponible"]?.toString().toUpperCase();
           const esDisponible = disponible === "TRUE" || disponible === "1" || disponible === "SI";
           
@@ -236,7 +218,7 @@
               <h3>${nombre}</h3>
               ${opciones ? `<p class="opciones">🥩 ${opciones}</p>` : ""}
               ${descripcion ? `<p>${descripcion}</p>` : ""}
-              ${unidades ? `<p class="unidades"> ${unidades}</p>` : ""}
+              ${unidades ? `<p class="unidades">📦 ${unidades}</p>` : ""}
               <p class="precio">${precio}</p>
               <button class="select-btn">Agregar</button>
               <div class="cantidad">Cantidad: 0</div>
@@ -282,7 +264,6 @@
       let detalle = "";
 
       items.forEach(i => {
-        // ✅ Corregido para manejar comas en decimales (ej: $6,00)
         const precioStr = String(i.item["Precio ($)"]).replace('$', '').replace(',', '.');
         const precioNum = parseFloat(precioStr) || 0;
         

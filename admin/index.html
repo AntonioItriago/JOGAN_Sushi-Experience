@@ -4,60 +4,67 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JŌGAN | Panel Administrativo</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: #fff; min-height: 100vh; }
-    .header { background: rgba(0, 0, 0, 0.8); padding: 20px; text-align: center; border-bottom: 3px solid #c9a961; }
-    .header h1 { color: #c9a961; font-size: 2em; letter-spacing: 3px; }
-    .header p { color: #e0e0e0; margin-top: 5px; font-size: 0.9em; }
+    body { font-family: 'Noto Serif JP', serif; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); color: #F5F5DC; min-height: 100vh; }
+    .header { background: rgba(0, 0, 0, 0.85); padding: 20px; text-align: center; border-bottom: 3px solid #9ACD32; }
+    .header h1 { color: #C5E17A; font-size: 2em; letter-spacing: 3px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+    .header p { color: #F5F5DC; margin-top: 5px; font-size: 0.9em; }
     .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
     .tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
-    .tab-btn { background: rgba(201, 169, 97, 0.2); color: #c9a961; border: 2px solid #c9a961; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1em; transition: all 0.3s; font-family: 'Georgia', serif; }
-    .tab-btn:hover, .tab-btn.active { background: #c9a961; color: #000; }
-    .tab-content { display: none; background: rgba(0, 0, 0, 0.5); padding: 30px; border-radius: 10px; border: 1px solid #c9a961; }
+    .tab-btn { background: rgba(154, 205, 50, 0.2); color: #C5E17A; border: 2px solid #9ACD32; padding: 12px 24px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1em; transition: all 0.3s; font-family: 'Noto Serif JP', serif; }
+    .tab-btn:hover, .tab-btn.active { background: #9ACD32; color: #1a1a1a; }
+    .tab-content { display: none; background: rgba(0, 0, 0, 0.7); padding: 30px; border-radius: 10px; border: 1px solid #9ACD32; }
     .tab-content.active { display: block; }
-    .tab-content h2 { color: #c9a961; margin-bottom: 20px; border-bottom: 2px solid #c9a961; padding-bottom: 10px; }
+    .tab-content h2 { color: #C5E17A; margin-bottom: 20px; border-bottom: 2px solid #9ACD32; padding-bottom: 10px; }
     .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; margin-bottom: 8px; color: #c9a961; font-weight: bold; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.1); border: 1px solid #c9a961; border-radius: 5px; color: #fff; font-size: 1em; font-family: 'Georgia', serif; }
-    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #d4af37; box-shadow: 0 0 10px rgba(201, 169, 97, 0.3); }
+    .form-group label { display: block; margin-bottom: 8px; color: #C5E17A; font-weight: bold; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; background: rgba(245, 245, 220, 0.1); border: 1px solid #9ACD32; border-radius: 5px; color: #F5F5DC; font-size: 1em; font-family: 'Noto Serif JP', serif; }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #C5E17A; box-shadow: 0 0 10px rgba(154, 205, 50, 0.3); }
     .form-group textarea { resize: vertical; min-height: 80px; }
-    .btn-submit { background: #c9a961; color: #000; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1em; margin-top: 20px; font-family: 'Georgia', serif; transition: all 0.3s; }
-    .btn-submit:hover { background: #d4af37; transform: scale(1.05); }
+    .categoria-selector { display: flex; gap: 10px; align-items: flex-end; }
+    .categoria-selector input { flex: 1; }
+    .categoria-selector select { flex: 1; }
+    .categoria-selector button { background: #9ACD32; color: #1a1a1a; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Noto Serif JP', serif; }
+    .btn-submit { background: #9ACD32; color: #1a1a1a; border: none; padding: 12px 30px; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1.1em; margin-top: 20px; font-family: 'Noto Serif JP', serif; transition: all 0.3s; }
+    .btn-submit:hover { background: #C5E17A; transform: scale(1.05); }
     .btn-submit:disabled { background: #666; cursor: not-allowed; transform: none; }
     .mensaje { margin-top: 20px; padding: 15px; border-radius: 5px; display: none; }
     .mensaje.exito { background: #d4edda; color: #155724; display: block; }
     .mensaje.error { background: #f8d7da; color: #721c24; display: block; }
     .mensaje.cargando { background: #fff3cd; color: #856404; display: block; }
     .lista-productos { max-height: 500px; overflow-y: auto; margin-top: 20px; }
-    .producto-item { background: rgba(255, 255, 255, 0.05); padding: 15px; margin-bottom: 10px; border-radius: 5px; cursor: pointer; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
-    .producto-item:hover { background: rgba(201, 169, 97, 0.2); border-color: #c9a961; }
+    .producto-item { background: rgba(245, 245, 220, 0.05); padding: 15px; margin-bottom: 10px; border-radius: 5px; cursor: pointer; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; }
+    .producto-item:hover { background: rgba(154, 205, 50, 0.2); border-color: #9ACD32; }
     .producto-info { flex: 1; }
-    .producto-info h4 { color: #c9a961; margin-bottom: 5px; }
-    .producto-info p { font-size: 0.9em; color: #e0e0e0; }
-    .btn-eliminar { background: #ff4444; color: #fff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Georgia', serif; transition: all 0.3s; }
+    .producto-info h4 { color: #C5E17A; margin-bottom: 5px; }
+    .producto-info p { font-size: 0.9em; color: #F5F5DC; }
+    .btn-eliminar { background: #ff4444; color: #fff; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Noto Serif JP', serif; transition: all 0.3s; }
     .btn-eliminar:hover { background: #cc0000; transform: scale(1.05); }
-    .cargando { text-align: center; padding: 40px; color: #c9a961; font-size: 1.2em; }
-    .spinner { border: 4px solid rgba(201, 169, 97, 0.3); border-top: 4px solid #c9a961; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
+    .cargando { text-align: center; padding: 40px; color: #C5E17A; font-size: 1.2em; }
+    .spinner { border: 4px solid rgba(154, 205, 50, 0.3); border-top: 4px solid #9ACD32; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .alert-box { background: rgba(201, 169, 97, 0.1); border: 2px solid #c9a961; padding: 20px; margin: 20px 0; border-radius: 10px; text-align: center; }
-    .alert-box a { color: #c9a961; font-weight: bold; text-decoration: none; }
+    .alert-box { background: rgba(154, 205, 50, 0.1); border: 2px solid #9ACD32; padding: 20px; margin: 20px 0; border-radius: 10px; text-align: center; }
+    .alert-box a { color: #C5E17A; font-weight: bold; text-decoration: none; }
     .alert-box a:hover { text-decoration: underline; }
-    @media (max-width: 768px) { .header h1 { font-size: 1.5em; } .container { padding: 10px; } .tabs { flex-direction: column; } .tab-btn { width: 100%; } .tab-content { padding: 20px; } .producto-item { flex-direction: column; align-items: flex-start; gap: 10px; } .btn-eliminar { width: 100%; } }
+    @media (max-width: 768px) { .header h1 { font-size: 1.5em; } .container { padding: 10px; } .tabs { flex-direction: column; } .tab-btn { width: 100%; } .tab-content { padding: 20px; } .producto-item { flex-direction: column; align-items: flex-start; gap: 10px; } .btn-eliminar { width: 100%; } .categoria-selector { flex-direction: column; } }
     @media (max-width: 480px) { .header h1 { font-size: 1.2em; } .btn-submit { width: 100%; } }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>🍣 JŌGAN | Panel Administrativo</h1>
+    <h1>🍣 JGAN | Panel Administrativo</h1>
     <p>Gestión de menú - SUSHI EXPERIENCE</p>
   </div>
 
   <div class="container">
     <div class="alert-box">
       <p>⚠️ <strong>Nota importante:</strong> Si el panel no carga los productos desde aquí, usa directamente el panel del Apps Script:</p>
-      <p style="margin-top: 10px;"><a href="https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec" target="_blank"> Abrir panel directo del Apps Script</a></p>
+      <p style="margin-top: 10px;"><a href="https://script.google.com/macros/s/AKfycbzNvtBRfypOY5CmrDUYrspANxmJJacSONHf3IG44jqz-sLAtlyCuKo_tfUJXEJmGfiF/exec" target="_blank">🔗 Abrir panel directo del Apps Script</a></p>
     </div>
 
     <div class="tabs">
@@ -69,7 +76,34 @@
     <div id="tab-agregar" class="tab-content active">
       <h2>Agregar Nuevo Producto</h2>
       <form id="form-agregar">
-        <div class="form-group"><label>Categoría:</label><input type="text" id="agg-categoria" required placeholder="Ej: Entradas, Rolls Fríos, Promociones"></div>
+        <div class="form-group">
+          <label>Categoría:</label>
+          <div class="categoria-selector">
+            <input type="text" id="agg-categoria-input" placeholder="Escribir nueva categoría..." list="categorias-list">
+            <select id="agg-categoria-select" onchange="document.getElementById('agg-categoria-input').value = this.value">
+              <option value="">-- Seleccionar existente --</option>
+              <option value="Entradas">Entradas</option>
+              <option value="Rolls Fríos">Rolls Fríos</option>
+              <option value="Rolls Tempura">Rolls Tempura</option>
+              <option value="Promociones">Promociones</option>
+              <option value="Extras">Extras</option>
+              <option value="Bebidas">Bebidas</option>
+              <option value="Postres">Postres</option>
+              <option value="Ensaladas">Ensaladas</option>
+            </select>
+            <button type="button" onclick="agregarNuevaCategoria()">+ Nueva</button>
+          </div>
+          <datalist id="categorias-list">
+            <option value="Entradas">
+            <option value="Rolls Fríos">
+            <option value="Rolls Tempura">
+            <option value="Promociones">
+            <option value="Extras">
+            <option value="Bebidas">
+            <option value="Postres">
+            <option value="Ensaladas">
+          </datalist>
+        </div>
         <div class="form-group"><label>Nombre del Producto:</label><input type="text" id="agg-nombre" required placeholder="Ej: Jōgan Roll"></div>
         <div class="form-group"><label>Opciones / Proteína:</label><input type="text" id="agg-opciones" placeholder="Ej: Pollo / Camarón / Cangrejo"></div>
         <div class="form-group"><label>Descripción / Ingredientes:</label><textarea id="agg-descripcion" placeholder="Ej: Aguacate, queso crema, cebollín..."></textarea></div>
@@ -85,8 +119,21 @@
       <h2>Modificar Producto</h2>
       <div id="lista-modificar" class="lista-productos"><div class="cargando"><div class="spinner"></div>Cargando productos...</div></div>
       <div id="form-modificar" style="display:none; margin-top: 30px;">
-        <h3 style="color: #c9a961; margin-bottom: 20px;">Editar Producto</h3>
-        <div class="form-group"><label>Categoría:</label><input type="text" id="mod-categoria"></div>
+        <h3 style="color: #C5E17A; margin-bottom: 20px;">Editar Producto</h3>
+        <div class="form-group">
+          <label>Categoría:</label>
+          <input type="text" id="mod-categoria" list="categorias-list-mod">
+          <datalist id="categorias-list-mod">
+            <option value="Entradas">
+            <option value="Rolls Fríos">
+            <option value="Rolls Tempura">
+            <option value="Promociones">
+            <option value="Extras">
+            <option value="Bebidas">
+            <option value="Postres">
+            <option value="Ensaladas">
+          </datalist>
+        </div>
         <div class="form-group"><label>Nombre del Producto:</label><input type="text" id="mod-nombre"></div>
         <div class="form-group"><label>Opciones / Proteína:</label><input type="text" id="mod-opciones"></div>
         <div class="form-group"><label>Descripción / Ingredientes:</label><textarea id="mod-descripcion"></textarea></div>
@@ -121,14 +168,28 @@
       });
     });
 
+    function agregarNuevaCategoria() {
+      const input = document.getElementById('agg-categoria-input');
+      const nuevaCat = input.value.trim();
+      if (nuevaCat) {
+        const select = document.getElementById('agg-categoria-select');
+        const option = document.createElement('option');
+        option.value = nuevaCat;
+        option.textContent = nuevaCat;
+        select.appendChild(option);
+        select.value = nuevaCat;
+        alert(`✅ Categoría "${nuevaCat}" agregada a la lista`);
+      } else {
+        alert('⚠️ Escribe el nombre de la categoría primero');
+      }
+    }
+
     async function obtenerProductos() {
       const response = await fetch(BACKEND_URL + '?action=obtenerProductos', {
         method: 'GET',
         mode: 'cors',
         credentials: 'omit',
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return await response.json();
@@ -138,15 +199,7 @@
       const formData = new URLSearchParams();
       formData.append('action', 'crearProducto');
       formData.append('data', JSON.stringify(data));
-      
-      const response = await fetch(BACKEND_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formData.toString()
-      });
+      await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() });
       return { exito: true, mensaje: '✅ Producto creado' };
     }
 
@@ -154,15 +207,7 @@
       const formData = new URLSearchParams();
       formData.append('action', 'modificarProducto');
       formData.append('data', JSON.stringify(data));
-      
-      const response = await fetch(BACKEND_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formData.toString()
-      });
+      await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() });
       return { exito: true, mensaje: '✅ Producto modificado' };
     }
 
@@ -170,15 +215,7 @@
       const formData = new URLSearchParams();
       formData.append('action', 'eliminarProducto');
       formData.append('data', JSON.stringify({ nombre: nombre }));
-      
-      const response = await fetch(BACKEND_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formData.toString()
-      });
+      await fetch(BACKEND_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: formData.toString() });
       return { exito: true, mensaje: '✅ Producto eliminado' };
     }
 
@@ -194,8 +231,8 @@
         listaElim.innerHTML = '';
 
         if (!Array.isArray(productos) || productos.length === 0) {
-          listaMod.innerHTML = '<p style="text-align:center; color:#c9a961;">No hay productos registrados</p>';
-          listaElim.innerHTML = '<p style="text-align:center; color:#c9a961;">No hay productos registrados</p>';
+          listaMod.innerHTML = '<p style="text-align:center; color:#C5E17A;">No hay productos registrados</p>';
+          listaElim.innerHTML = '<p style="text-align:center; color:#C5E17A;">No hay productos registrados</p>';
           return;
         }
 
@@ -205,7 +242,7 @@
           itemMod.innerHTML = `
             <div class="producto-info">
               <h4>${p['Nombre del Producto']}</h4>
-              <p>${p['Categoría']} - $${p['Precio ($)']} - ${p['Disponible'] ? '✅ Disponible' : '❌ No disponible'}</p>
+              <p>${p['Categoría']} - ${p['Precio ($)']} - ${p['Disponible'] ? '✅ Disponible' : '❌ No disponible'}</p>
             </div>
           `;
           itemMod.onclick = () => cargarProductoModificar(p);
@@ -216,7 +253,7 @@
           itemElim.innerHTML = `
             <div class="producto-info">
               <h4>${p['Nombre del Producto']}</h4>
-              <p>${p['Categoría']} - $${p['Precio ($)']}</p>
+              <p>${p['Categoría']} - ${p['Precio ($)</p>
             </div>
             <button class="btn-eliminar" onclick="event.stopPropagation(); eliminarProducto('${p['Nombre del Producto'].replace(/'/g, "\\'")}')">Eliminar</button>
           `;
@@ -250,7 +287,7 @@
       btn.textContent = 'Agregando...';
 
       const datos = {
-        categoria: document.getElementById('agg-categoria').value,
+        categoria: document.getElementById('agg-categoria-input').value,
         nombre: document.getElementById('agg-nombre').value,
         opciones: document.getElementById('agg-opciones').value,
         descripcion: document.getElementById('agg-descripcion').value,
