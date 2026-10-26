@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<!-- PWA -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#9ACD32">
-<link rel="apple-touch-icon" href="/icon-192.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta charset="UTF-8">
-  <title>JGAN - SUSHI EXPERIENCE</title>
+  <title>JŌGAN - SUSHI EXPERIENCE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#9ACD32">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
   <!-- Google Fonts: Noto Serif JP (estilo japonés) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -224,7 +225,7 @@
               <h3>${nombre}</h3>
               ${opciones ? `<p class="opciones">🥩 ${opciones}</p>` : ""}
               ${descripcion ? `<p>${descripcion}</p>` : ""}
-              ${unidades ? `<p class="unidades"> ${unidades}</p>` : ""}
+              ${unidades ? `<p class="unidades">📦 ${unidades}</p>` : ""}
               <p class="precio">${precio}</p>
               <button class="select-btn">Agregar</button>
               <div class="cantidad">Cantidad: 0</div>
@@ -286,6 +287,7 @@
 
     loadMenu();
   </script>
+  
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       if (window.location.href.includes('mesa')) {
@@ -300,14 +302,16 @@
         console.log('Modo mesa: elementos de pedido ocultos via CSS');
       }
     });
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('SW registrado:', reg.scope))
-        .catch(err => console.log('SW error:', err));
-    });
-  }
-</script>
+  </script>
+  
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('SW registrado:', reg.scope))
+          .catch(err => console.log('SW error:', err));
+      });
+    }
+  </script>
 </body>
 </html>
