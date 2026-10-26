@@ -12,10 +12,10 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   
-  <!-- Google Fonts: Cinzel (logo) + Cormorant Garamond (elegante) + Noto Serif JP (japonés) -->
+  <!-- Google Fonts: Jost (geométrica moderna como el logo) + Noto Serif JP (kanji) + Cormorant Garamond (texto) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;600&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
   
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
   
@@ -28,10 +28,10 @@
   <style>
     /* Paleta de colores basada en el logo */
     :root {
-      --dorado-logo: #A0855B;        /* Color dorado/bronce del logo */
-      --dorado-claro: #C9A961;       /* Dorado más claro para acentos */
-      --dorado-oscuro: #7A6245;      /* Dorado oscuro para bordes */
-      --texto-claro: #F5F0E8;        /* Color arroz para texto */
+      --dorado-logo: #A0855B;
+      --dorado-claro: #C9A961;
+      --dorado-oscuro: #7A6245;
+      --texto-claro: #F5F0E8;
       --fondo-oscuro: rgba(0,0,0,0.85);
     }
 
@@ -45,16 +45,16 @@
       padding-bottom: 80px;
     }
 
-    /* Título principal - igual al logo */
+    /* Título principal - Geométrica Sans como el logo */
     h1 {
       text-align: center;
       background: var(--fondo-oscuro);
       padding: 25px 20px;
       margin: 0;
-      font-family: 'Cinzel', serif;
-      font-size: 2.5em;
-      font-weight: 600;
-      letter-spacing: 8px;
+      font-family: 'Jost', sans-serif;
+      font-size: 2.8em;
+      font-weight: 500;
+      letter-spacing: 12px;
       color: var(--dorado-logo);
       text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
     }
@@ -68,16 +68,16 @@
       box-shadow: 0 4px 20px rgba(0,0,0,0.6);
     }
 
-    /* Categorías - misma fuente que el logo */
+    /* Categorías - misma fuente geométrica del logo */
     .category h2 {
       margin-top: 0;
       border-bottom: 2px solid var(--dorado-logo);
       padding-bottom: 12px;
-      font-family: 'Cinzel', serif;
+      font-family: 'Jost', sans-serif;
       color: var(--dorado-logo);
-      letter-spacing: 4px;
-      font-size: 1.8em;
-      font-weight: 600;
+      letter-spacing: 6px;
+      font-size: 1.7em;
+      font-weight: 500;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
 
@@ -101,58 +101,60 @@
       backdrop-filter: blur(5px);
     }
 
-    /* Nombres de productos - misma fuente que el logo */
+    /* Nombres de productos - geométrica como el logo */
     .item h3 {
       margin: 0;
-      font-family: 'Cinzel', serif;
+      font-family: 'Jost', sans-serif;
       font-size: 1.25em;
-      font-weight: 600;
+      font-weight: 500;
       color: var(--dorado-logo);
-      letter-spacing: 1.5px;
+      letter-spacing: 2px;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
 
     .item p { 
-      font-size: 1em; 
+      font-size: 1.05em; 
       margin: 8px 0; 
       color: var(--texto-claro);
       font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
     }
 
     .opciones { 
-      font-size: 0.95em; 
+      font-size: 1em; 
       color: #E8DCC8; 
       font-style: italic; 
       min-height: 18px; 
     }
 
     .unidades { 
-      font-size: 0.95em; 
+      font-size: 1em; 
       color: #D4C5A9; 
     }
 
-    /* Precios en dorado */
+    /* Precios en dorado - geométrica */
     .precio {
       font-size: 1.3em;
-      font-weight: 700;
-      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-family: 'Jost', sans-serif;
       color: var(--dorado-claro);
       margin-top: 12px;
+      letter-spacing: 1px;
       text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
 
     .select-btn {
       margin-top: 12px;
-      padding: 10px 20px;
+      padding: 10px 24px;
       background: var(--dorado-logo);
       color: #1a1a1a;
       border: none;
       border-radius: 4px;
       cursor: pointer;
       font-weight: 600;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
       transition: all 0.3s;
-      font-family: 'Cinzel', serif;
+      font-family: 'Jost', sans-serif;
       font-size: 0.9em;
     }
 
@@ -164,9 +166,10 @@
 
     .cantidad { 
       margin-top: 8px; 
-      font-size: 0.95em; 
+      font-size: 1em; 
       color: var(--dorado-claro);
       font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
     }
 
     #carrito-flotante {
@@ -203,13 +206,13 @@
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-family: 'Cinzel', serif;
+      font-family: 'Jost', sans-serif;
     }
     #pedido { display: none; }
   </style>
 </head>
 <body>
-  <h1>JŌGAN 浄眼</h1>
+  <h1>JŌGAN <span style="font-family:'Noto Serif JP',serif; font-size:0.5em; letter-spacing:4px;">浄眼</span></h1>
   <div id="menu"></div>
 
   <a id="carrito-flotante" href="#" target="_blank">
@@ -277,7 +280,7 @@
             div.className = "item";
             div.innerHTML = `
               <h3>${nombre}</h3>
-              ${opciones ? `<p class="opciones"> ${opciones}</p>` : ""}
+              ${opciones ? `<p class="opciones">🥩 ${opciones}</p>` : ""}
               ${descripcion ? `<p>${descripcion}</p>` : ""}
               ${unidades ? `<p class="unidades">📦 ${unidades}</p>` : ""}
               <p class="precio">${precio}</p>
