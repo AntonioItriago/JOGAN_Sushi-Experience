@@ -8,6 +8,8 @@
   "theme_color": "#9ACD32",
   "orientation": "portrait",
   "lang": "es",
+  "scope": "/",
+  "categories": ["food", "lifestyle"],
   "icons": [
     {
       "src": "icon-192.png",
