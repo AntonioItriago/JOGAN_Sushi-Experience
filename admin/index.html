@@ -6,42 +6,261 @@
 <title>JŌGAN | Panel Administrativo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
 <style>
+:root {
+  --dorado-logo: #A0855B;
+  --dorado-claro: #C9A961;
+  --dorado-oscuro: #7A6245;
+  --texto-claro: #F5F0E8;
+  --fondo-oscuro: rgba(0,0,0,0.85);
+  --fondo-panel: #1a1a1a;
+  --fondo-card: #222;
+  --fondo-input: #2b2b2b;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Noto Serif JP',serif; background:#1a1a1a; color:#F5F5DC; min-height:100vh; }
-.header { background:#000; padding:20px; text-align:center; border-bottom:3px solid #9ACD32; }
-.header h1 { color:#C5E17A; font-size:1.8em; letter-spacing:2px; }
-.header p { color:#F5F5DC; margin-top:6px; font-size:.85em; }
-.container { max-width:1100px; margin:0 auto; padding:20px; }
-.tabs { display:flex; gap:10px; margin-bottom:25px; flex-wrap:wrap; justify-content:center; }
-.tab-btn { background:rgba(154,205,50,.15); color:#C5E17A; border:2px solid #9ACD32; padding:12px 20px; border-radius:6px; cursor:pointer; font-weight:bold; font-family:inherit; transition:.25s; }
-.tab-btn:hover { background:rgba(154,205,50,.35); }
-.tab-btn.active { background:#9ACD32; color:#111; }
-.tab-content { display:none; background:#222; padding:25px; border-radius:10px; border:1px solid #9ACD32; }
-.tab-content.active { display:block; }
-.tab-content h2 { color:#C5E17A; margin-bottom:20px; border-bottom:2px solid #9ACD32; padding-bottom:10px; }
-.form-group { margin-bottom:18px; }
-.form-group label { display:block; margin-bottom:6px; color:#C5E17A; font-weight:bold; }
-.form-group input,.form-group select,.form-group textarea { width:100%; padding:11px; background:#333; border:1px solid #9ACD32; border-radius:5px; color:#F5F5DC; font-family:inherit; font-size:1em; }
-.form-group textarea { min-height:80px; resize:vertical; }
-.categoria-selector { display:flex; gap:8px; flex-wrap:wrap; }
-.categoria-selector input,.categoria-selector select { flex:1; min-width:140px; }
-.btn { background:#9ACD32; color:#111; border:none; padding:12px 24px; border-radius:5px; cursor:pointer; font-weight:bold; font-family:inherit; transition:.25s; }
-.btn:hover { background:#C5E17A; }
-.btn:disabled { background:#666; cursor:not-allowed; }
-.btn-danger { background:#c0392b; color:#fff; padding:8px 16px; }
-.mensaje { margin-top:15px; padding:12px; border-radius:5px; display:none; }
-.mensaje.ok { display:block; background:#d4edda; color:#155724; }
-.mensaje.err { display:block; background:#f8d7da; color:#721c24; }
-.lista { max-height:420px; overflow-y:auto; margin-top:15px; }
-.producto-item { background:#2b2b2b; border:1px solid #444; padding:14px; margin-bottom:10px; border-radius:6px; display:flex; justify-content:space-between; align-items:center; gap:12px; cursor:pointer; transition:.2s; }
-.producto-item:hover { border-color:#9ACD32; background:#333; }
-.producto-item h4 { color:#C5E17A; margin-bottom:5px; }
-.producto-item p { font-size:.85em; color:#ddd; }
-.debug { display:none; margin-top:20px; padding:12px; background:#111; border:1px solid #9ACD32; border-radius:5px; font-family:monospace; font-size:.8em; color:#9ACD32; white-space:pre-wrap; max-height:200px; overflow:auto; }
-.aviso { font-size:.85em; color:#bbb; margin-bottom:20px; text-align:center; }
-.aviso a { color:#C5E17A; }
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--fondo-panel);
+  color: var(--texto-claro);
+  min-height:100vh;
+}
+
+.header {
+  background: #000;
+  padding: 25px 20px;
+  text-align: center;
+  border-bottom: 3px solid var(--dorado-logo);
+}
+
+.header h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--dorado-logo);
+  font-size: 1.8em;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 6px rgba(0,0,0,0.9);
+}
+
+.header p {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--texto-claro);
+  margin-top: 8px;
+  font-size: 1em;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tab-btn {
+  background: rgba(160, 133, 91, 0.15);
+  color: var(--dorado-logo);
+  border: 2px solid var(--dorado-logo);
+  padding: 12px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.95em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: .25s;
+}
+
+.tab-btn:hover {
+  background: rgba(160, 133, 91, 0.35);
+}
+
+.tab-btn.active {
+  background: var(--dorado-logo);
+  color: #111;
+}
+
+.tab-content {
+  display: none;
+  background: var(--fondo-card);
+  padding: 25px;
+  border-radius: 10px;
+  border: 1px solid var(--dorado-logo);
+}
+
+.tab-content.active { display: block; }
+
+.tab-content h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--dorado-logo);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--dorado-logo);
+  padding-bottom: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-size: 1.4em;
+}
+
+.form-group { margin-bottom: 18px; }
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--dorado-logo);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 0.95em;
+  letter-spacing: 0.05em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 11px;
+  background: var(--fondo-input);
+  border: 1px solid var(--dorado-logo);
+  border-radius: 5px;
+  color: var(--texto-claro);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05em;
+  font-weight: 500;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--dorado-claro);
+  box-shadow: 0 0 8px rgba(160, 133, 91, 0.3);
+}
+
+.form-group textarea { min-height: 80px; resize: vertical; }
+
+.categoria-selector { display: flex; gap: 8px; flex-wrap: wrap; }
+.categoria-selector input,
+.categoria-selector select { flex: 1; min-width: 140px; }
+
+.btn {
+  background: var(--dorado-logo);
+  color: #1a1a1a;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: 0.95em;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: .25s;
+}
+
+.btn:hover {
+  background: var(--dorado-claro);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(160, 133, 91, 0.4);
+}
+
+.btn:disabled {
+  background: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-danger {
+  background: #c0392b;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 0.85em;
+  letter-spacing: 0.08em;
+}
+
+.btn-danger:hover {
+  background: #e74c3c;
+}
+
+.mensaje { margin-top: 15px; padding: 12px; border-radius: 5px; display: none; font-family: 'Cormorant Garamond', serif; font-size: 1.05em; }
+.mensaje.ok { display: block; background: #d4edda; color: #155724; }
+.mensaje.err { display: block; background: #f8d7da; color: #721c24; }
+
+.lista { max-height: 420px; overflow-y: auto; margin-top: 15px; }
+
+.producto-item {
+  background: var(--fondo-input);
+  border: 1px solid #444;
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.producto-item:hover {
+  border-color: var(--dorado-logo);
+  background: #333;
+}
+
+.producto-item h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: var(--dorado-logo);
+  margin-bottom: 5px;
+  letter-spacing: 0.05em;
+}
+
+.producto-item p {
+  font-size: 1em;
+  color: var(--texto-claro);
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+}
+
+.debug {
+  display: none;
+  margin-top: 20px;
+  padding: 12px;
+  background: #111;
+  border: 1px solid var(--dorado-logo);
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 0.85em;
+  color: var(--dorado-claro);
+  white-space: pre-wrap;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.aviso {
+  font-size: 1em;
+  color: #bbb;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+}
+
+.aviso a {
+  color: var(--dorado-claro);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.aviso a:hover { text-decoration: underline; }
+
 @media(max-width:768px){
   .tabs{flex-direction:column}
   .tab-btn{width:100%}
@@ -49,6 +268,7 @@ body { font-family:'Noto Serif JP',serif; background:#1a1a1a; color:#F5F5DC; min
   .tab-content{padding:18px}
   .producto-item{flex-direction:column;align-items:flex-start}
   .btn-danger{width:100%}
+  .header h1{font-size:1.4em; letter-spacing:0.1em;}
 }
 </style>
 </head>
@@ -195,7 +415,6 @@ async function obtenerProductos(){
 
 /* ---------- ESCRITURA HACIA APPS SCRIPT ---------- */
 async function enviarAccion(action, data){
-  // text/plain evita el preflight OPTIONS que Apps Script no soporta
   await fetch(BACKEND, {
     method: 'POST',
     mode: 'no-cors',
@@ -229,8 +448,8 @@ function renderListas(lista){
   le.innerHTML = '';
 
   if(lista.length === 0){
-    lm.innerHTML = '<p>No hay productos registrados.</p>';
-    le.innerHTML = '<p>No hay productos registrados.</p>';
+    lm.innerHTML = '<p style="text-align:center; color:var(--dorado-claro); padding:20px;">No hay productos registrados.</p>';
+    le.innerHTML = '<p style="text-align:center; color:var(--dorado-claro); padding:20px;">No hay productos registrados.</p>';
     return;
   }
 
@@ -278,16 +497,16 @@ function renderListas(lista){
 }
 
 async function cargarProductos(){
-  $('lista-modificar').innerHTML = '<p>Cargando productos...</p>';
-  $('lista-eliminar').innerHTML = '<p>Cargando productos...</p>';
+  $('lista-modificar').innerHTML = '<p style="text-align:center; color:var(--dorado-claro); padding:20px;">Cargando productos...</p>';
+  $('lista-eliminar').innerHTML = '<p style="text-align:center; color:var(--dorado-claro); padding:20px;">Cargando productos...</p>';
   try{
     productosCache = await obtenerProductos();
     poblarCategorias(productosCache);
     renderListas(productosCache);
   }catch(err){
     debug('ERROR: ' + err.message);
-    $('lista-modificar').innerHTML = '<p style="color:#ff6b6b">No se pudo cargar. Revisa el debug.</p>';
-    $('lista-eliminar').innerHTML = '<p style="color:#ff6b6b">No se pudo cargar.</p>';
+    $('lista-modificar').innerHTML = '<p style="color:#ff6b6b; text-align:center; padding:20px;">No se pudo cargar. Revisa el debug.</p>';
+    $('lista-eliminar').innerHTML = '<p style="color:#ff6b6b; text-align:center; padding:20px;">No se pudo cargar.</p>';
   }
 }
 
@@ -355,7 +574,6 @@ $('btn-guardar-agregar').addEventListener('click', async function(){
   try{
     await enviarAccion('crearProducto', datos);
     mensaje('msg-agregar','✅ Solicitud enviada. Revisa la hoja en 1-2 minutos.',true);
-    $('form-agregar').reset();
   }catch(err){
     mensaje('msg-agregar','❌ ' + err.message,false);
   }finally{
