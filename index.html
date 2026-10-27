@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
   
   <meta property="og:title" content="JŌGAN | SUSHI EXPERIENCE">
   <meta property="og:description" content="Explora nuestro menú digital, arma tu pedido y envíalo directamente por WhatsApp.">
@@ -188,6 +188,7 @@
       font-size: 26px;
       z-index: 1000;
       transition: transform 0.2s;
+      cursor: pointer;
     }
     #carrito-flotante:active { transform: scale(0.9); }
     
@@ -209,186 +210,166 @@
     }
     #pedido { display: none; }
 
-    /* ========== BANNER DE INSTALACIÓN PWA ========== */
-    #install-banner {
-      display: none;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: rgba(0, 0, 0, 0.95);
-      border-top: 3px solid var(--dorado-logo);
-      padding: 20px;
-      z-index: 2000;
-      animation: slideUp 0.5s ease-out;
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.8);
-    }
-
-    #install-banner.visible {
-      display: block;
-    }
-
-    @keyframes slideUp {
-      from { transform: translateY(100%); }
-      to { transform: translateY(0); }
-    }
-
-    .install-content {
-      max-width: 600px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .install-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 12px;
-      background: var(--dorado-logo);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      flex-shrink: 0;
-      box-shadow: 0 4px 12px rgba(160, 133, 91, 0.5);
-    }
-
-    .install-text {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .install-text h3 {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      color: var(--dorado-logo);
-      font-size: 1.2em;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin: 0 0 5px 0;
-    }
-
-    .install-text p {
-      font-family: 'Cormorant Garamond', serif;
-      color: var(--texto-claro);
-      font-size: 1em;
-      margin: 0;
-      font-weight: 500;
-    }
-
-    .install-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn-install {
-      background: var(--dorado-logo);
-      color: #1a1a1a;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.9em;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: all 0.3s;
-    }
-
-    .btn-install:hover {
-      background: var(--dorado-claro);
-      transform: scale(1.05);
-      box-shadow: 0 4px 12px rgba(160, 133, 91, 0.5);
-    }
-
-    .btn-later {
-      background: transparent;
-      color: var(--texto-claro);
-      border: 1px solid var(--dorado-logo);
-      padding: 12px 24px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
-      font-size: 0.9em;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: all 0.3s;
-    }
-
-    .btn-later:hover {
-      background: rgba(160, 133, 91, 0.2);
-    }
-
-    /* Modal para iOS */
-    #ios-modal {
+    /* ========== PANEL DE CONFIRMACIÓN DE PEDIDO ========== */
+    #panel-pedido {
       display: none;
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.85);
-      z-index: 3000;
-      align-items: center;
-      justify-content: center;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 2000;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    #panel-pedido.visible {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .panel-header {
+      background: #000;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid var(--dorado-logo);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .panel-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--dorado-logo);
+      font-size: 1.5em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    .panel-content {
+      max-width: 600px;
+      margin: 0 auto;
       padding: 20px;
     }
 
-    #ios-modal.visible {
-      display: flex;
+    .pedido-vacio {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--texto-claro);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2em;
     }
 
-    .ios-modal-content {
-      background: #1a1a1a;
+    .pedido-item {
+      background: rgba(20, 20, 20, 0.9);
+      border: 1px solid var(--dorado-logo);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pedido-item-info {
+      flex: 1;
+    }
+
+    .pedido-item-info h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--dorado-logo);
+      font-size: 1em;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin: 0 0 5px 0;
+    }
+
+    .pedido-item-info p {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--texto-claro);
+      font-size: 0.95em;
+      margin: 3px 0;
+    }
+
+    .pedido-item-precio {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--dorado-claro);
+      font-size: 1em;
+      margin-top: 5px;
+    }
+
+    .btn-eliminar-item {
+      background: #c0392b;
+      color: #fff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+
+    .btn-eliminar-item:hover {
+      background: #e74c3c;
+      transform: scale(1.1);
+    }
+
+    .pedido-total {
+      background: rgba(160, 133, 91, 0.15);
       border: 2px solid var(--dorado-logo);
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 400px;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
       text-align: center;
     }
 
-    .ios-modal-content h3 {
+    .pedido-total p {
       font-family: 'Montserrat', sans-serif;
-      color: var(--dorado-logo);
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 15px;
-    }
-
-    .ios-modal-content p {
-      font-family: 'Cormorant Garamond', serif;
       color: var(--texto-claro);
       font-size: 1.1em;
-      margin-bottom: 20px;
-      line-height: 1.5;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 10px 0;
     }
 
-    .ios-modal-content .ios-steps {
-      text-align: left;
-      background: rgba(160, 133, 91, 0.1);
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
+    .pedido-total .total-monto {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--dorado-claro);
+      font-size: 2em;
+      letter-spacing: 0.05em;
     }
 
-    .ios-modal-content .ios-steps p {
-      margin: 8px 0;
-      font-size: 1em;
+    .panel-botones {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
     }
 
-    .ios-modal-content .btn-close {
-      background: var(--dorado-logo);
-      color: #1a1a1a;
-      border: none;
-      padding: 12px 24px;
+    .btn-volver {
+      flex: 1;
+      min-width: 140px;
+      background: transparent;
+      color: var(--texto-claro);
+      border: 2px solid var(--dorado-logo);
+      padding: 14px 20px;
       border-radius: 4px;
       cursor: pointer;
       font-family: 'Montserrat', sans-serif;
@@ -396,12 +377,46 @@
       font-size: 0.9em;
       letter-spacing: 0.1em;
       text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-volver:hover {
+      background: rgba(160, 133, 91, 0.2);
+    }
+
+    .btn-finalizar {
+      flex: 1;
+      min-width: 140px;
+      background: var(--dorado-logo);
+      color: #1a1a1a;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-finalizar:hover {
+      background: var(--dorado-claro);
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(160, 133, 91, 0.5);
+    }
+
+    .btn-finalizar:disabled {
+      background: #666;
+      cursor: not-allowed;
+      transform: none;
     }
 
     @media(max-width: 600px) {
       h1 { font-size: 1.8em; letter-spacing: 0.1em; }
-      .install-content { flex-direction: column; text-align: center; }
-      .install-text { text-align: center; }
+      .panel-botones { flex-direction: column; }
+      .btn-volver, .btn-finalizar { width: 100%; }
     }
   </style>
 </head>
@@ -409,39 +424,28 @@
   <h1>JŌGAN <span style="font-family:'Noto Serif JP',serif; font-size:0.4em; letter-spacing:0.05em; font-weight:400; text-transform:none;">浄眼</span></h1>
   <div id="menu"></div>
 
-  <a id="carrito-flotante" href="#" target="_blank">
+  <a id="carrito-flotante" href="#">
     🛒
     <div id="contador-carrito">0</div>
   </a>
 
   <a id="pedido" href="#" target="_blank">📲 Pedir</a>
 
-  <!-- BANNER DE INSTALACIÓN PWA -->
-  <div id="install-banner">
-    <div class="install-content">
-      <div class="install-icon">🍣</div>
-      <div class="install-text">
-        <h3>JŌGAN - SUSHI EXPERIENCE</h3>
-        <p>Instala nuestra app para un acceso rápido al menú</p>
-      </div>
-      <div class="install-buttons">
-        <button class="btn-install" id="btn-install">Instalar App</button>
-        <button class="btn-later" id="btn-later">Ahora no</button>
-      </div>
+  <!-- PANEL DE CONFIRMACIÓN DE PEDIDO -->
+  <div id="panel-pedido">
+    <div class="panel-header">
+      <h2>Confirmar Pedido</h2>
     </div>
-  </div>
-
-  <!-- MODAL PARA iOS -->
-  <div id="ios-modal">
-    <div class="ios-modal-content">
-      <h3>Instalar JŌGAN</h3>
-      <p>Para instalar la app en tu iPhone:</p>
-      <div class="ios-steps">
-        <p>1️⃣ Toca el botón <strong>Compartir</strong> (⬆️)</p>
-        <p>2️⃣ Desliza hacia abajo y toca <strong>"Agregar a inicio"</strong></p>
-        <p>3️⃣ Toca <strong>"Agregar"</strong> para confirmar</p>
+    <div class="panel-content">
+      <div id="lista-pedido"></div>
+      <div id="total-pedido" class="pedido-total" style="display:none;">
+        <p>Total a Pagar</p>
+        <div class="total-monto" id="monto-total">$0.00</div>
       </div>
-      <button class="btn-close" id="btn-close-ios">Entendido</button>
+      <div class="panel-botones">
+        <button class="btn-volver" id="btn-volver-menu">Volver al Menú</button>
+        <button class="btn-finalizar" id="btn-finalizar" disabled>Finalizar Pedido</button>
+      </div>
     </div>
   </div>
 
@@ -503,9 +507,9 @@
             div.className = "item";
             div.innerHTML = `
               <h3>${nombre}</h3>
-              ${opciones ? `<p class="opciones">🥩 ${opciones}</p>` : ""}
+              ${opciones ? `<p class="opciones">${opciones}</p>` : ""}
               ${descripcion ? `<p>${descripcion}</p>` : ""}
-              ${unidades ? `<p class="unidades"> ${unidades}</p>` : ""}
+              ${unidades ? `<p class="unidades">${unidades}</p>` : ""}
               <p class="precio">${precio}</p>
               <button class="select-btn">AGREGAR</button>
               <div class="cantidad">Cantidad: 0</div>
@@ -539,13 +543,102 @@
       const totalProductos = items.reduce((a, b) => a + b.cantidad, 0);
 
       if (totalProductos === 0) {
-        carritoBtn.href = "#";
         contadorDiv.style.display = "none";
+      } else {
+        contadorDiv.textContent = totalProductos;
+        contadorDiv.style.display = "flex";
+      }
+
+      actualizarPanelPedido();
+    }
+
+    function actualizarPanelPedido() {
+      const listaDiv = document.getElementById("lista-pedido");
+      const totalDiv = document.getElementById("total-pedido");
+      const montoDiv = document.getElementById("monto-total");
+      const btnFinalizar = document.getElementById("btn-finalizar");
+      const items = Object.values(seleccionados);
+
+      listaDiv.innerHTML = "";
+
+      if (items.length === 0) {
+        listaDiv.innerHTML = '<div class="pedido-vacio">Tu pedido está vacío.<br>Agrega productos desde el menú.</div>';
+        totalDiv.style.display = "none";
+        btnFinalizar.disabled = true;
         return;
       }
 
-      contadorDiv.textContent = totalProductos;
-      contadorDiv.style.display = "flex";
+      let total = 0;
+
+      items.forEach(i => {
+        const precioStr = String(i.item["Precio ($)"]).replace('$', '').replace(',', '.');
+        const precioNum = parseFloat(precioStr) || 0;
+        const subtotal = precioNum * i.cantidad;
+        total += subtotal;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "pedido-item";
+        itemDiv.innerHTML = `
+          <div class="pedido-item-info">
+            <h4>${i.item["Nombre del Producto"]}</h4>
+            <p>Cantidad: ${i.cantidad}</p>
+            <p class="pedido-item-precio">$${subtotal.toFixed(2)}</p>
+          </div>
+          <button class="btn-eliminar-item" data-nombre="${i.item["Nombre del Producto"]}">✕</button>
+        `;
+        listaDiv.appendChild(itemDiv);
+      });
+
+      // Agregar event listeners a los botones de eliminar
+      document.querySelectorAll('.btn-eliminar-item').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const nombre = this.getAttribute('data-nombre');
+          eliminarDelPedido(nombre);
+        });
+      });
+
+      montoDiv.textContent = `$${total.toFixed(2)}`;
+      totalDiv.style.display = "block";
+      btnFinalizar.disabled = false;
+    }
+
+    function eliminarDelPedido(nombre) {
+      if (seleccionados[nombre]) {
+        delete seleccionados[nombre];
+        actualizarPedido();
+        
+        // Actualizar la cantidad en el menú si existe
+        const cantidadDivs = document.querySelectorAll('.cantidad');
+        cantidadDivs.forEach(div => {
+          const itemDiv = div.closest('.item');
+          const itemNombre = itemDiv.querySelector('h3').textContent;
+          if (itemNombre === nombre) {
+            div.textContent = "Cantidad: 0";
+          }
+        });
+      }
+    }
+
+    // Abrir panel de pedido al hacer clic en el carrito
+    document.getElementById("carrito-flotante").addEventListener("click", function(e) {
+      e.preventDefault();
+      const items = Object.values(seleccionados);
+      if (items.length > 0) {
+        actualizarPanelPedido();
+        document.getElementById("panel-pedido").classList.add("visible");
+      }
+    });
+
+    // Botón Volver al Menú
+    document.getElementById("btn-volver-menu").addEventListener("click", function() {
+      document.getElementById("panel-pedido").classList.remove("visible");
+    });
+
+    // Botón Finalizar Pedido
+    document.getElementById("btn-finalizar").addEventListener("click", function() {
+      const items = Object.values(seleccionados);
+      
+      if (items.length === 0) return;
 
       let total = 0;
       let detalle = "";
@@ -553,17 +646,16 @@
       items.forEach(i => {
         const precioStr = String(i.item["Precio ($)"]).replace('$', '').replace(',', '.');
         const precioNum = parseFloat(precioStr) || 0;
-        
         const subtotal = precioNum * i.cantidad;
         total += subtotal;
-        detalle += `- ${i.item["Nombre del Producto"]} ×${i.cantidad} → $${subtotal.toFixed(2)}\n`;
+        detalle += `- ${i.item["Nombre del Producto"]} x${i.cantidad} → $${subtotal.toFixed(2)}\n`;
       });
 
-      const mensaje = `¡Hola! Quiero realizar un pedido en JŌGAN:\n\n${detalle}\n*TOTAL ESTIMADO:* $${total.toFixed(2)}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
+      const mensaje = `¡Hola! Quiero realizar un pedido en JŌGAN:\n\n${detalle}\n*TOTAL:* $${total.toFixed(2)}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
 
       const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-      carritoBtn.href = url;
-    }
+      window.open(url, '_blank');
+    });
 
     loadMenu();
   </script>
@@ -577,7 +669,6 @@
           .select-btn { display: none !important; }
           .cantidad { display: none !important; }
           #contador-carrito { display: none !important; }
-          #install-banner { display: none !important; }
         `;
         document.head.appendChild(style);
         console.log('Modo mesa: elementos de pedido ocultos via CSS');
@@ -586,7 +677,6 @@
   </script>
   
   <script>
-    // ========== SERVICE WORKER ==========
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -594,97 +684,6 @@
           .catch(err => console.log('SW error:', err));
       });
     }
-
-    // ========== BANNER DE INSTALACIÓN PWA ==========
-    let deferredPrompt;
-    const installBanner = document.getElementById('install-banner');
-    const btnInstall = document.getElementById('btn-install');
-    const btnLater = document.getElementById('btn-later');
-    const iosModal = document.getElementById('ios-modal');
-    const btnCloseIos = document.getElementById('btn-close-ios');
-
-    // Detectar si ya se instaló o se rechazó antes
-    const yaInstalado = localStorage.getItem('jogan_installado') === 'true';
-    const yaRechazado = localStorage.getItem('jogan_rechazado') === 'true';
-
-    // Solo mostrar si no está instalado y no fue rechazado recientemente
-    function debeMostrarBanner() {
-      if (yaInstalado) return false;
-      if (yaRechazado) {
-        // Si fue rechazado, mostrar de nuevo después de 7 días
-        const fechaRechazo = localStorage.getItem('jogan_fecha_rechazo');
-        if (fechaRechazo) {
-          const diasPasados = (Date.now() - parseInt(fechaRechazo)) / (1000 * 60 * 60 * 24);
-          return diasPasados >= 7;
-        }
-      }
-      return true;
-    }
-
-    // Capturar el evento beforeinstallprompt (Android/Chrome)
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      console.log('PWA instalable detectada');
-      
-      if (debeMostrarBanner()) {
-        setTimeout(() => {
-          installBanner.classList.add('visible');
-        }, 2000); // Mostrar después de 2 segundos
-      }
-    });
-
-    // Detectar iOS
-    const esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const esStandalone = window.matchMedia('(display-mode: standalone)').matches;
-
-    // Si es iOS y no está en modo standalone, mostrar instrucciones
-    if (esIOS && !esStandalone && debeMostrarBanner()) {
-      setTimeout(() => {
-        iosModal.classList.add('visible');
-      }, 2000);
-    }
-
-    // Botón instalar (Android/Chrome)
-    btnInstall.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-          console.log('Usuario aceptó instalar');
-          localStorage.setItem('jogan_installado', 'true');
-        } else {
-          console.log('Usuario rechazó instalar');
-          localStorage.setItem('jogan_rechazado', 'true');
-          localStorage.setItem('jogan_fecha_rechazo', Date.now().toString());
-        }
-        
-        deferredPrompt = null;
-        installBanner.classList.remove('visible');
-      }
-    });
-
-    // Botón "Ahora no"
-    btnLater.addEventListener('click', () => {
-      installBanner.classList.remove('visible');
-      localStorage.setItem('jogan_rechazado', 'true');
-      localStorage.setItem('jogan_fecha_rechazo', Date.now().toString());
-    });
-
-    // Cerrar modal iOS
-    btnCloseIos.addEventListener('click', () => {
-      iosModal.classList.remove('visible');
-      localStorage.setItem('jogan_rechazado', 'true');
-      localStorage.setItem('jogan_fecha_rechazo', Date.now().toString());
-    });
-
-    // Detectar cuando la app se instala
-    window.addEventListener('appinstalled', () => {
-      console.log('App instalada exitosamente');
-      localStorage.setItem('jogan_installado', 'true');
-      installBanner.classList.remove('visible');
-    });
   </script>
 </body>
 </html>
