@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jogan-v4';
+const CACHE_NAME = 'jogan-v3';
 const urlsToCache = [
   '/',
   '/index.html',
