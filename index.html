@@ -10,14 +10,16 @@
   <meta name="theme-color" content="#A0855B">
   <link rel="apple-touch-icon" href="/icon-192.png">
   <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="JŌGAN">
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
   
   <meta property="og:title" content="JŌGAN | SUSHI EXPERIENCE">
   <meta property="og:description" content="Explora nuestro menú digital, arma tu pedido y envíalo directamente por WhatsApp.">
@@ -413,8 +415,199 @@
       transform: none;
     }
 
+    /* ========== BANNER DE INSTALACIÓN PWA ========== */
+    #install-banner {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      border-top: 3px solid var(--dorado-logo);
+      padding: 20px;
+      z-index: 2000;
+      animation: slideUp 0.5s ease-out;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.8);
+    }
+
+    #install-banner.visible {
+      display: block;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .install-content {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .install-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      background: var(--dorado-logo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(160, 133, 91, 0.5);
+    }
+
+    .install-text {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .install-text h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--dorado-logo);
+      font-size: 1.2em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 0 5px 0;
+    }
+
+    .install-text p {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--texto-claro);
+      font-size: 1em;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .install-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-install {
+      background: var(--dorado-logo);
+      color: #1a1a1a;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-install:hover {
+      background: var(--dorado-claro);
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(160, 133, 91, 0.5);
+    }
+
+    .btn-later {
+      background: transparent;
+      color: var(--texto-claro);
+      border: 1px solid var(--dorado-logo);
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .btn-later:hover {
+      background: rgba(160, 133, 91, 0.2);
+    }
+
+    /* Modal para iOS */
+    #ios-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #ios-modal.visible {
+      display: flex;
+    }
+
+    .ios-modal-content {
+      background: #1a1a1a;
+      border: 2px solid var(--dorado-logo);
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .ios-modal-content h3 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--dorado-logo);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .ios-modal-content p {
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--texto-claro);
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .ios-modal-content .ios-steps {
+      text-align: left;
+      background: rgba(160, 133, 91, 0.1);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .ios-modal-content .ios-steps p {
+      margin: 8px 0;
+      font-size: 1em;
+    }
+
+    .ios-modal-content .btn-close {
+      background: var(--dorado-logo);
+      color: #1a1a1a;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
     @media(max-width: 600px) {
       h1 { font-size: 1.8em; letter-spacing: 0.1em; }
+      .install-content { flex-direction: column; text-align: center; }
+      .install-text { text-align: center; }
       .panel-botones { flex-direction: column; }
       .btn-volver, .btn-finalizar { width: 100%; }
     }
@@ -446,6 +639,36 @@
         <button class="btn-volver" id="btn-volver-menu">Volver al Menú</button>
         <button class="btn-finalizar" id="btn-finalizar" disabled>Finalizar Pedido</button>
       </div>
+    </div>
+  </div>
+
+  <!-- BANNER DE INSTALACIÓN PWA -->
+  <div id="install-banner">
+    <div class="install-content">
+      <div class="install-icon"></div>
+      <div class="install-text">
+        <h3>JŌGAN - SUSHI EXPERIENCE</h3>
+        <p>Instala nuestra app para un acceso rápido al menú</p>
+      </div>
+      <div class="install-buttons">
+        <button class="btn-install" id="btn-install">Instalar App</button>
+        <button class="btn-later" id="btn-later">Ahora no</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL PARA iOS -->
+  <div id="ios-modal">
+    <div class="ios-modal-content">
+      <h3>Instalar JŌGAN</h3>
+      <p>Para instalar la app en tu iPhone:</p>
+      <div class="ios-steps">
+        <p>1️⃣ Abre esta página en <strong>Safari</strong></p>
+        <p>2️⃣ Toca el botón <strong>Compartir</strong> ⬆️</p>
+        <p>3️⃣ Desliza y toca <strong>"Agregar a inicio"</strong></p>
+        <p>4️⃣ Toca <strong>"Agregar"</strong> para confirmar</p>
+      </div>
+      <button class="btn-close" id="btn-close-ios">Entendido</button>
     </div>
   </div>
 
@@ -584,12 +807,11 @@
             <p>Cantidad: ${i.cantidad}</p>
             <p class="pedido-item-precio">$${subtotal.toFixed(2)}</p>
           </div>
-          <button class="btn-eliminar-item" data-nombre="${i.item["Nombre del Producto"]}">✕</button>
+          <button class="btn-eliminar-item" data-nombre="${i.item["Nombre del Producto"]}"></button>
         `;
         listaDiv.appendChild(itemDiv);
       });
 
-      // Agregar event listeners a los botones de eliminar
       document.querySelectorAll('.btn-eliminar-item').forEach(btn => {
         btn.addEventListener('click', function() {
           const nombre = this.getAttribute('data-nombre');
@@ -607,7 +829,6 @@
         delete seleccionados[nombre];
         actualizarPedido();
         
-        // Actualizar la cantidad en el menú si existe
         const cantidadDivs = document.querySelectorAll('.cantidad');
         cantidadDivs.forEach(div => {
           const itemDiv = div.closest('.item');
@@ -619,7 +840,6 @@
       }
     }
 
-    // Abrir panel de pedido al hacer clic en el carrito
     document.getElementById("carrito-flotante").addEventListener("click", function(e) {
       e.preventDefault();
       const items = Object.values(seleccionados);
@@ -629,12 +849,10 @@
       }
     });
 
-    // Botón Volver al Menú
     document.getElementById("btn-volver-menu").addEventListener("click", function() {
       document.getElementById("panel-pedido").classList.remove("visible");
     });
 
-    // Botón Finalizar Pedido
     document.getElementById("btn-finalizar").addEventListener("click", function() {
       const items = Object.values(seleccionados);
       
@@ -669,6 +887,7 @@
           .select-btn { display: none !important; }
           .cantidad { display: none !important; }
           #contador-carrito { display: none !important; }
+          #install-banner { display: none !important; }
         `;
         document.head.appendChild(style);
         console.log('Modo mesa: elementos de pedido ocultos via CSS');
@@ -677,6 +896,7 @@
   </script>
   
   <script>
+    // ========== SERVICE WORKER ==========
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -684,6 +904,87 @@
           .catch(err => console.log('SW error:', err));
       });
     }
+
+    // ========== BANNER DE INSTALACIÓN PWA ==========
+    let deferredPrompt;
+    const installBanner = document.getElementById('install-banner');
+    const btnInstall = document.getElementById('btn-install');
+    const btnLater = document.getElementById('btn-later');
+    const iosModal = document.getElementById('ios-modal');
+    const btnCloseIos = document.getElementById('btn-close-ios');
+
+    const yaInstalado = localStorage.getItem('jogan_installado') === 'true';
+    const yaRechazado = localStorage.getItem('jogan_rechazado') === 'true';
+
+    function debeMostrarBanner() {
+      if (yaInstalado) return false;
+      if (yaRechazado) {
+        const fechaRechazo = localStorage.getItem('jogan_fecha_rechazo');
+        if (fechaRechazo) {
+          const diasPasados = (Date.now() - parseInt(fechaRechazo)) / (1000 * 60 * 60 * 24);
+          return diasPasados >= 7;
+        }
+      }
+      return true;
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      console.log('PWA instalable detectada');
+      
+      if (debeMostrarBanner()) {
+        setTimeout(() => {
+          installBanner.classList.add('visible');
+        }, 2000);
+      }
+    });
+
+    const esIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    const esStandalone = window.matchMedia('(display-mode: standalone)').matches;
+
+    if (esIOS && !esStandalone && debeMostrarBanner()) {
+      setTimeout(() => {
+        iosModal.classList.add('visible');
+      }, 2000);
+    }
+
+    btnInstall.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        
+        if (outcome === 'accepted') {
+          console.log('Usuario aceptó instalar');
+          localStorage.setItem('jogan_installado', 'true');
+        } else {
+          console.log('Usuario rechazó instalar');
+          localStorage.setItem('jogan_rechazado', 'true');
+          localStorage.setItem('jogan_fecha_rechazo', Date.now().toString());
+        }
+        
+        deferredPrompt = null;
+        installBanner.classList.remove('visible');
+      }
+    });
+
+    btnLater.addEventListener('click', () => {
+      installBanner.classList.remove('visible');
+      localStorage.setItem('jogan_rechazado', 'true');
+      localStorage.setItem('jogan_fecha_rechazo', Date.now().toString());
+    });
+
+    btnCloseIos.addEventListener('click', () => {
+      iosModal.classList.remove('visible');
+      localStorage.setItem('jogan_rechazado', 'true');
+      localStorage.setItem('jogan_fecha_rechazo', Date.now().toString());
+    });
+
+    window.addEventListener('appinstalled', () => {
+      console.log('App instalada exitosamente');
+      localStorage.setItem('jogan_installado', 'true');
+      installBanner.classList.remove('visible');
+    });
   </script>
 </body>
 </html>
