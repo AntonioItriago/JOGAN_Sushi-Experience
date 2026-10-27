@@ -1,15 +1,16 @@
-const CACHE_NAME = 'jogan-v2';
+const CACHE_NAME = 'jogan-v3';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/fondo.jpg',
+  '/fondo.jpg?v=3',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png'
 ];
 
-// Instalar Service Worker y precargar recursos
+// Instalar Service Worker y forzar activación inmediata
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Fuerza activación inmediata
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
@@ -31,7 +32,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Limpiar caches viejos al actualizar
+// Limpiar caches viejos y tomar control inmediato
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => {
@@ -39,6 +40,8 @@ self.addEventListener('activate', event => {
         keys.filter(key => key !== CACHE_NAME)
             .map(key => caches.delete(key))
       );
+    }).then(() => {
+      return self.clients.claim(); // Toma control de todas las pestañas
     })
   );
 });
