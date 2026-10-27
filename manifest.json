@@ -1,6 +1,6 @@
 {
-  "name": "JGAN - SUSHI EXPERIENCE",
-  "short_name": "JŌGAN",
+  "name": "JŌGAN - SUSHI EXPERIENCE",
+  "short_name": "JGAN",
   "description": "Menú digital del restaurante JŌGAN. Arma tu pedido y envíalo por WhatsApp.",
   "start_url": "/",
   "display": "standalone",
