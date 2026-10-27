@@ -44,8 +44,8 @@
       padding-bottom: 80px;
     }
 
-    /* ========== BOTÓN INSTALAR APP (ARRIBA IZQUIERDA) ========== */
-    #btn-instalar-app {
+    /* ========== BOTÓN SUPERIOR IZQUIERDA ========== */
+    #btn-accion-app {
       position: fixed;
       top: 15px;
       left: 15px;
@@ -65,29 +65,33 @@
       padding: 0;
     }
 
-    #btn-instalar-app:hover {
+    #btn-accion-app:hover {
       background: var(--dorado-claro);
       transform: scale(1.1);
     }
 
-    #btn-instalar-app svg {
+    #btn-accion-app svg {
       width: 26px;
       height: 26px;
       fill: #1a1a1a;
     }
 
-    #btn-instalar-app .install-badge {
+    #btn-accion-app .btn-badge {
       position: absolute;
       top: -4px;
       right: -4px;
       background: #c0392b;
       color: white;
       font-family: 'Montserrat', sans-serif;
-      font-size: 0.6em;
+      font-size: 0.55em;
       font-weight: 700;
       padding: 2px 5px;
       border-radius: 8px;
       letter-spacing: 0.5px;
+    }
+
+    #btn-accion-app.compartir .btn-badge {
+      background: #27ae60;
     }
 
     h1 {
@@ -454,7 +458,7 @@
       transform: none;
     }
 
-    /* ========== MODAL INSTALACIÓN ========== */
+    /* ========== MODALES ========== */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -605,33 +609,60 @@
       margin-bottom: 10px;
     }
 
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--dorado-logo);
+      color: #1a1a1a;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 0.9em;
+      z-index: 4000;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+
+    .toast.visible {
+      opacity: 1;
+    }
+
     @media(max-width: 600px) {
       h1 { font-size: 1.8em; letter-spacing: 0.1em; }
       .panel-botones { flex-direction: column; }
       .btn-volver, .btn-finalizar { width: 100%; }
-      #btn-instalar-app { width: 45px; height: 45px; top: 10px; left: 10px; }
-      #btn-instalar-app svg { width: 22px; height: 22px; }
+      #btn-accion-app { width: 45px; height: 45px; top: 10px; left: 10px; }
+      #btn-accion-app svg { width: 22px; height: 22px; }
     }
   </style>
 </head>
 <body>
-  <!-- BOTÓN INSTALAR APP (ARRIBA IZQUIERDA) -->
-  <button id="btn-instalar-app" aria-label="Instalar aplicación">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <!-- BOTÓN SUPERIOR IZQUIERDA (dinámico: instalar o compartir) -->
+  <button id="btn-accion-app" aria-label="Acción de la app">
+    <svg id="icono-instalar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
     </svg>
-    <span class="install-badge">APP</span>
+    <svg id="icono-compartir" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+      <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+    </svg>
+    <span class="btn-badge" id="btn-badge-text">APP</span>
   </button>
 
   <h1>JŌGAN <span style="font-family:'Noto Serif JP',serif; font-size:0.4em; letter-spacing:0.05em; font-weight:400; text-transform:none;">浄眼</span></h1>
   <div id="menu"></div>
 
   <a id="carrito-flotante" href="#">
-    🛒
+    
     <div id="contador-carrito">0</div>
   </a>
 
-  <a id="pedido" href="#" target="_blank">📲 Pedir</a>
+  <a id="pedido" href="#" target="_blank"> Pedir</a>
 
   <div id="panel-pedido">
     <div class="panel-header">
@@ -707,7 +738,7 @@
       <div class="modal-icon">📲</div>
       <h3>Instalar JŌGAN</h3>
       <p>
-        Toca <strong>"Instalar"</strong> en el siguiente diálogo para agregar JŌGAN a tus aplicaciones.
+        Toca <strong>"Instalar"</strong> en el siguiente diálogo para agregar JGAN a tus aplicaciones.
       </p>
       <p style="font-size: 0.9em; color: var(--dorado-claro);">
         La app se abrirá en pantalla completa y funcionará sin la barra del navegador.
@@ -718,6 +749,27 @@
       </div>
     </div>
   </div>
+
+  <!-- MODAL: APP YA INSTALADA -->
+  <div id="modal-ya-instalada" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-icon">✅</div>
+      <h3>¡JŌGAN ya está instalado!</h3>
+      <p>
+        La aplicación ya se encuentra en tu dispositivo. Puedes abrirla directamente desde tu pantalla de inicio.
+      </p>
+      <p style="font-size: 0.95em; color: var(--dorado-claro);">
+        Si deseas compartir este menú con alguien, usa el botón de compartir.
+      </p>
+      <div class="modal-buttons">
+        <button class="modal-btn secondary" id="btn-cerrar-ya-instalada">Cerrar</button>
+        <button class="modal-btn" id="btn-compartir-desde-modal">Compartir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast" class="toast"></div>
 
   <script>
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv&v=" + new Date().getTime();
@@ -934,7 +986,7 @@
           .select-btn { display: none !important; }
           .cantidad { display: none !important; }
           #contador-carrito { display: none !important; }
-          #btn-instalar-app { display: none !important; }
+          #btn-accion-app { display: none !important; }
         `;
         document.head.appendChild(style);
         console.log('Modo mesa: elementos ocultos');
@@ -952,71 +1004,122 @@
       });
     }
 
-    // ========== DETECCIÓN DE DISPOSITIVO ==========
+    // ========== DETECCIÓN DE DISPOSITIVO Y ESTADO ==========
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const esIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
     const esAndroid = /android/i.test(userAgent);
-    const esStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    const esStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                        window.navigator.standalone === true;
 
-    // ========== MODALES ==========
+    // ========== ELEMENTOS DEL DOM ==========
+    const btnAccionApp = document.getElementById('btn-accion-app');
+    const iconoInstalar = document.getElementById('icono-instalar');
+    const iconoCompartir = document.getElementById('icono-compartir');
+    const btnBadgeText = document.getElementById('btn-badge-text');
+    const toast = document.getElementById('toast');
+
     const modalDisculpaIphone = document.getElementById('modal-disculpa-iphone');
     const modalGuiaIphone = document.getElementById('modal-guia-iphone');
     const modalAndroid = document.getElementById('modal-android');
-    const btnInstalarApp = document.getElementById('btn-instalar-app');
+    const modalYaInstalada = document.getElementById('modal-ya-instalada');
 
+    // ========== FUNCIONES AUXILIARES ==========
     function cerrarTodosLosModales() {
       modalDisculpaIphone.classList.remove('visible');
       modalGuiaIphone.classList.remove('visible');
       modalAndroid.classList.remove('visible');
+      modalYaInstalada.classList.remove('visible');
     }
 
-    // Click en botón instalar
-    btnInstalarApp.addEventListener('click', function() {
-      // Si ya está instalada como standalone, no hacer nada
-      if (esStandalone) {
-        alert('¡JŌGAN ya está instalado en tu dispositivo! 🎉');
-        return;
-      }
+    function mostrarToast(mensaje) {
+      toast.textContent = mensaje;
+      toast.classList.add('visible');
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 2500);
+    }
 
-      if (esIOS) {
-        // iPhone: mostrar disculpa
-        modalDisculpaIphone.classList.add('visible');
-      } else if (esAndroid) {
-        // Android: intentar instalar
-        if (deferredPrompt) {
-          modalAndroid.classList.add('visible');
+    async function compartirLink() {
+      const shareData = {
+        title: 'JŌGAN - SUSHI EXPERIENCE',
+        text: 'Descubre el menú de JŌGAN Sushi. ¡Sabores que hacen la vida más linda!',
+        url: window.location.href
+      };
+
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+          console.log('Compartido exitosamente');
         } else {
-          // Si no hay deferredPrompt disponible, mostrar guía manual
-          modalGuiaIphone.classList.add('visible');
+          // Fallback: copiar al portapapeles
+          await navigator.clipboard.writeText(window.location.href);
+          mostrarToast(' Link copiado al portapapeles');
         }
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.error('Error al compartir:', err);
+          // Fallback final
+          await navigator.clipboard.writeText(window.location.href);
+          mostrarToast('🔗 Link copiado al portapapeles');
+        }
+      }
+    }
+
+    // ========== CONFIGURAR BOTÓN SEGÚN ESTADO ==========
+    function configurarBotonAccion() {
+      if (esStandalone) {
+        // App ya instalada: mostrar botón de compartir
+        iconoInstalar.style.display = 'none';
+        iconoCompartir.style.display = 'block';
+        btnBadgeText.textContent = 'COMP';
+        btnAccionApp.classList.add('compartir');
+        btnAccionApp.setAttribute('aria-label', 'Compartir aplicación');
       } else {
-        // Otros dispositivos (PC, etc): mostrar guía
-        modalGuiaIphone.classList.add('visible');
+        // No instalada: mostrar botón de instalar
+        iconoInstalar.style.display = 'block';
+        iconoCompartir.style.display = 'none';
+        btnBadgeText.textContent = 'APP';
+        btnAccionApp.classList.remove('compartir');
+        btnAccionApp.setAttribute('aria-label', 'Instalar aplicación');
+      }
+    }
+
+    // ========== CLICK EN BOTÓN PRINCIPAL ==========
+    btnAccionApp.addEventListener('click', function() {
+      if (esStandalone) {
+        // App instalada: compartir
+        compartirLink();
+      } else {
+        // No instalada: flujo de instalación
+        if (esIOS) {
+          modalDisculpaIphone.classList.add('visible');
+        } else if (esAndroid) {
+          if (deferredPrompt) {
+            modalAndroid.classList.add('visible');
+          } else {
+            // Si no hay deferredPrompt, mostrar guía manual
+            modalGuiaIphone.classList.add('visible');
+          }
+        } else {
+          // PC u otros: compartir
+          compartirLink();
+        }
       }
     });
 
-    // Botón cerrar disculpa iPhone
-    document.getElementById('btn-cerrar-disculpa').addEventListener('click', function() {
-      cerrarTodosLosModales();
-    });
-
-    // Botón continuar guía iPhone
+    // ========== MODALES IPHONE ==========
+    document.getElementById('btn-cerrar-disculpa').addEventListener('click', cerrarTodosLosModales);
+    
     document.getElementById('btn-continuar-guia').addEventListener('click', function() {
       modalDisculpaIphone.classList.remove('visible');
       modalGuiaIphone.classList.add('visible');
     });
 
-    // Botón cerrar guía
-    document.getElementById('btn-cerrar-guia').addEventListener('click', function() {
-      cerrarTodosLosModales();
-    });
+    document.getElementById('btn-cerrar-guia').addEventListener('click', cerrarTodosLosModales);
 
-    // Botón cerrar Android
-    document.getElementById('btn-cerrar-android').addEventListener('click', function() {
-      cerrarTodosLosModales();
-    });
+    // ========== MODAL ANDROID ==========
+    document.getElementById('btn-cerrar-android').addEventListener('click', cerrarTodosLosModales);
 
-    // Botón instalar Android
     document.getElementById('btn-instalar-android').addEventListener('click', async function() {
       if (deferredPrompt) {
         modalAndroid.classList.remove('visible');
@@ -1026,6 +1129,11 @@
         if (outcome === 'accepted') {
           console.log('Usuario aceptó instalar');
           localStorage.setItem('jogan_installado', 'true');
+          mostrarToast('✅ App instalada exitosamente');
+          // Actualizar botón después de instalar
+          setTimeout(() => {
+            configurarBotonAccion();
+          }, 1000);
         } else {
           console.log('Usuario rechazó instalar');
         }
@@ -1034,7 +1142,15 @@
       }
     });
 
-    // Capturar evento beforeinstallprompt (Android)
+    // ========== MODAL YA INSTALADA ==========
+    document.getElementById('btn-cerrar-ya-instalada').addEventListener('click', cerrarTodosLosModales);
+    
+    document.getElementById('btn-compartir-desde-modal').addEventListener('click', function() {
+      cerrarTodosLosModales();
+      compartirLink();
+    });
+
+    // ========== CAPTURAR beforeinstallprompt ==========
     let deferredPrompt = null;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
@@ -1047,7 +1163,19 @@
       console.log('App instalada exitosamente');
       localStorage.setItem('jogan_installado', 'true');
       cerrarTodosLosModales();
+      mostrarToast('✅ JŌGAN instalado correctamente');
+      configurarBotonAccion();
     });
+
+    // ========== INICIALIZAR ==========
+    configurarBotonAccion();
+
+    // Si está en navegador pero la app ya fue instalada antes, mostrar sugerencia
+    if (!esStandalone && localStorage.getItem('jogan_installado') === 'true') {
+      setTimeout(() => {
+        modalYaInstalada.classList.add('visible');
+      }, 3000);
+    }
   </script>
 </body>
 </html>
