@@ -510,7 +510,7 @@
               ${opciones ? `<p class="opciones">${opciones}</p>` : ""}
               ${descripcion ? `<p>${descripcion}</p>` : ""}
               ${unidades ? `<p class="unidades">${unidades}</p>` : ""}
-              <p class="precio">${precio}</p>
+              <p class="precio">$${precio.replace(/\$/g, '')}</p>
               <button class="select-btn">AGREGAR</button>
               <div class="cantidad">Cantidad: 0</div>
             `;
