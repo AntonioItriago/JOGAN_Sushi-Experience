@@ -5,7 +5,6 @@
   <title>JŌGAN - SUSHI EXPERIENCE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- PWA -->
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#A0855B">
   <link rel="apple-touch-icon" href="/icon-192.png">
@@ -14,7 +13,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="JŌGAN">
   
-  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
@@ -212,7 +210,6 @@
     }
     #pedido { display: none; }
 
-    /* ========== PANEL DE CONFIRMACIÓN DE PEDIDO ========== */
     #panel-pedido {
       display: none;
       position: fixed;
@@ -226,9 +223,7 @@
       animation: fadeIn 0.3s ease-out;
     }
 
-    #panel-pedido.visible {
-      display: block;
-    }
+    #panel-pedido.visible { display: block; }
 
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -281,9 +276,7 @@
       gap: 12px;
     }
 
-    .pedido-item-info {
-      flex: 1;
-    }
+    .pedido-item-info { flex: 1; }
 
     .pedido-item-info h4 {
       font-family: 'Montserrat', sans-serif;
@@ -415,7 +408,6 @@
       transform: none;
     }
 
-    /* ========== BANNER DE INSTALACIÓN PWA ========== */
     #install-banner {
       display: none;
       position: fixed;
@@ -430,9 +422,7 @@
       box-shadow: 0 -4px 20px rgba(0,0,0,0.8);
     }
 
-    #install-banner.visible {
-      display: block;
-    }
+    #install-banner.visible { display: block; }
 
     @keyframes slideUp {
       from { transform: translateY(100%); }
@@ -462,10 +452,7 @@
       box-shadow: 0 4px 12px rgba(160, 133, 91, 0.5);
     }
 
-    .install-text {
-      flex: 1;
-      min-width: 200px;
-    }
+    .install-text { flex: 1; min-width: 200px; }
 
     .install-text h3 {
       font-family: 'Montserrat', sans-serif;
@@ -532,7 +519,6 @@
       background: rgba(160, 133, 91, 0.2);
     }
 
-    /* Modal para iOS */
     #ios-modal {
       display: none;
       position: fixed;
@@ -547,9 +533,7 @@
       padding: 20px;
     }
 
-    #ios-modal.visible {
-      display: flex;
-    }
+    #ios-modal.visible { display: flex; }
 
     .ios-modal-content {
       background: #1a1a1a;
@@ -624,7 +608,6 @@
 
   <a id="pedido" href="#" target="_blank">📲 Pedir</a>
 
-  <!-- PANEL DE CONFIRMACIÓN DE PEDIDO -->
   <div id="panel-pedido">
     <div class="panel-header">
       <h2>Confirmar Pedido</h2>
@@ -642,10 +625,9 @@
     </div>
   </div>
 
-  <!-- BANNER DE INSTALACIÓN PWA -->
   <div id="install-banner">
     <div class="install-content">
-      <div class="install-icon"></div>
+      <div class="install-icon">🍣</div>
       <div class="install-text">
         <h3>JŌGAN - SUSHI EXPERIENCE</h3>
         <p>Instala nuestra app para un acceso rápido al menú</p>
@@ -657,7 +639,6 @@
     </div>
   </div>
 
-  <!-- MODAL PARA iOS -->
   <div id="ios-modal">
     <div class="ios-modal-content">
       <h3>Instalar JŌGAN</h3>
@@ -807,7 +788,7 @@
             <p>Cantidad: ${i.cantidad}</p>
             <p class="pedido-item-precio">$${subtotal.toFixed(2)}</p>
           </div>
-          <button class="btn-eliminar-item" data-nombre="${i.item["Nombre del Producto"]}"></button>
+          <button class="btn-eliminar-item" data-nombre="${i.item["Nombre del Producto"]}">✕</button>
         `;
         listaDiv.appendChild(itemDiv);
       });
@@ -896,7 +877,6 @@
   </script>
   
   <script>
-    // ========== SERVICE WORKER ==========
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -905,7 +885,6 @@
       });
     }
 
-    // ========== BANNER DE INSTALACIÓN PWA ==========
     let deferredPrompt;
     const installBanner = document.getElementById('install-banner');
     const btnInstall = document.getElementById('btn-install');
