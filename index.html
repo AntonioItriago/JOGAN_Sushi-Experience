@@ -2,34 +2,25 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>JŌGAN - SUSHI EXPERIENCE</title>
+  <title>JOGAN - SUSHI EXPERIENCE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <link rel="manifest" href="./manifest.json">
+  <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#A0855B">
-  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="/icon.png">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="JŌGAN">
+  <meta name="apple-mobile-web-app-title" content="JOGAN">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
   
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍣</text></svg>">
-  
-  <meta property="og:title" content="JŌGAN | SUSHI EXPERIENCE">
-  <meta property="og:description" content="Explora nuestro menú digital, arma tu pedido y envíalo directamente por WhatsApp.">
-  <meta property="og:image" content="https://antonioitriago.github.io/JOGAN_Sushi-Experience/fondo.jpg">
-  <meta property="og:url" content="https://antonioitriago.github.io/JOGAN_Sushi-Experience/">
-  <meta property="og:type" content="website">
-  
   <style>
     :root {
       --dorado-logo: #A0855B;
       --dorado-claro: #C9A961;
-      --dorado-oscuro: #7A6245;
       --texto-claro: #F5F0E8;
       --fondo-oscuro: rgba(0,0,0,0.85);
     }
@@ -44,7 +35,6 @@
       padding-bottom: 80px;
     }
 
-    /* ========== BOTÓN SUPERIOR IZQUIERDA ========== */
     #btn-accion-app {
       position: fixed;
       top: 15px;
@@ -65,17 +55,8 @@
       padding: 0;
     }
 
-    #btn-accion-app:hover {
-      background: var(--dorado-claro);
-      transform: scale(1.1);
-    }
-
-    #btn-accion-app svg {
-      width: 26px;
-      height: 26px;
-      fill: #1a1a1a;
-    }
-
+    #btn-accion-app:hover { background: var(--dorado-claro); transform: scale(1.1); }
+    #btn-accion-app svg { width: 26px; height: 26px; fill: #1a1a1a; }
     #btn-accion-app .btn-badge {
       position: absolute;
       top: -4px;
@@ -87,12 +68,8 @@
       font-weight: 700;
       padding: 2px 5px;
       border-radius: 8px;
-      letter-spacing: 0.5px;
     }
-
-    #btn-accion-app.compartir .btn-badge {
-      background: #27ae60;
-    }
+    #btn-accion-app.compartir .btn-badge { background: #27ae60; }
 
     h1 {
       text-align: center;
@@ -127,14 +104,9 @@
       letter-spacing: 0.15em;
       text-transform: uppercase;
       font-size: 1.5em;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
     }
 
-    .carousel {
-      display: flex;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-    }
+    .carousel { display: flex; overflow-x: auto; scroll-behavior: smooth; }
     .carousel::-webkit-scrollbar { display: none; }
     .carousel { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -158,28 +130,11 @@
       color: var(--dorado-logo);
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
 
-    .item p { 
-      font-size: 1.05em; 
-      margin: 8px 0; 
-      color: var(--texto-claro);
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 500;
-    }
-
-    .opciones { 
-      font-size: 1em; 
-      color: #E8DCC8; 
-      font-style: italic; 
-      min-height: 18px; 
-    }
-
-    .unidades { 
-      font-size: 1em; 
-      color: #D4C5A9; 
-    }
+    .item p { font-size: 1.05em; margin: 8px 0; color: var(--texto-claro); font-family: 'Cormorant Garamond', serif; font-weight: 500; }
+    .opciones { font-size: 1em; color: #E8DCC8; font-style: italic; min-height: 18px; }
+    .unidades { font-size: 1em; color: #D4C5A9; }
 
     .precio {
       font-size: 1.3em;
@@ -187,8 +142,6 @@
       font-family: 'Montserrat', sans-serif;
       color: var(--dorado-claro);
       margin-top: 12px;
-      letter-spacing: 0.05em;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
     }
 
     .select-btn {
@@ -207,19 +160,8 @@
       text-transform: uppercase;
     }
 
-    .select-btn:hover {
-      background: var(--dorado-claro);
-      transform: scale(1.05);
-      box-shadow: 0 4px 15px rgba(160, 133, 91, 0.5);
-    }
-
-    .cantidad { 
-      margin-top: 8px; 
-      font-size: 1em; 
-      color: var(--dorado-claro);
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 500;
-    }
+    .select-btn:hover { background: var(--dorado-claro); transform: scale(1.05); }
+    .cantidad { margin-top: 8px; font-size: 1em; color: var(--dorado-claro); font-family: 'Cormorant Garamond', serif; }
 
     #carrito-flotante {
       position: fixed;
@@ -237,7 +179,6 @@
       justify-content: center;
       font-size: 26px;
       z-index: 1000;
-      transition: transform 0.2s;
       cursor: pointer;
     }
     #carrito-flotante:active { transform: scale(0.9); }
@@ -258,27 +199,16 @@
       font-weight: bold;
       font-family: 'Montserrat', sans-serif;
     }
-    #pedido { display: none; }
 
     #panel-pedido {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0, 0, 0, 0.95);
       z-index: 2000;
       overflow-y: auto;
-      animation: fadeIn 0.3s ease-out;
     }
-
     #panel-pedido.visible { display: block; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
 
     .panel-header {
       background: #000;
@@ -289,7 +219,6 @@
       top: 0;
       z-index: 10;
     }
-
     .panel-header h2 {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
@@ -299,20 +228,8 @@
       text-transform: uppercase;
       margin: 0;
     }
-
-    .panel-content {
-      max-width: 600px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .pedido-vacio {
-      text-align: center;
-      padding: 40px 20px;
-      color: var(--texto-claro);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.2em;
-    }
+    .panel-content { max-width: 600px; margin: 0 auto; padding: 20px; }
+    .pedido-vacio { text-align: center; padding: 40px 20px; color: var(--texto-claro); font-size: 1.2em; }
 
     .pedido-item {
       background: rgba(20, 20, 20, 0.9);
@@ -325,33 +242,17 @@
       align-items: center;
       gap: 12px;
     }
-
     .pedido-item-info { flex: 1; }
-
     .pedido-item-info h4 {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       color: var(--dorado-logo);
       font-size: 1em;
-      letter-spacing: 0.05em;
       text-transform: uppercase;
       margin: 0 0 5px 0;
     }
-
-    .pedido-item-info p {
-      font-family: 'Cormorant Garamond', serif;
-      color: var(--texto-claro);
-      font-size: 0.95em;
-      margin: 3px 0;
-    }
-
-    .pedido-item-precio {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      color: var(--dorado-claro);
-      font-size: 1em;
-      margin-top: 5px;
-    }
+    .pedido-item-info p { font-family: 'Cormorant Garamond', serif; color: var(--texto-claro); font-size: 0.95em; margin: 3px 0; }
+    .pedido-item-precio { font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--dorado-claro); font-size: 1em; margin-top: 5px; }
 
     .btn-eliminar-item {
       background: #c0392b;
@@ -365,13 +266,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s;
       flex-shrink: 0;
-    }
-
-    .btn-eliminar-item:hover {
-      background: #e74c3c;
-      transform: scale(1.1);
     }
 
     .pedido-total {
@@ -382,102 +277,60 @@
       margin: 20px 0;
       text-align: center;
     }
-
     .pedido-total p {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       color: var(--texto-claro);
       font-size: 1.1em;
-      letter-spacing: 0.1em;
       text-transform: uppercase;
       margin: 0 0 10px 0;
     }
-
     .pedido-total .total-monto {
       font-family: 'Montserrat', sans-serif;
       font-weight: 700;
       color: var(--dorado-claro);
       font-size: 2em;
-      letter-spacing: 0.05em;
     }
 
-    .panel-botones {
-      display: flex;
-      gap: 12px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn-volver {
+    .panel-botones { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+    .btn-volver, .btn-finalizar {
       flex: 1;
       min-width: 140px;
+      padding: 14px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.9em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .btn-volver {
       background: transparent;
       color: var(--texto-claro);
       border: 2px solid var(--dorado-logo);
-      padding: 14px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.9em;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: all 0.3s;
     }
-
-    .btn-volver:hover {
-      background: rgba(160, 133, 91, 0.2);
-    }
-
+    .btn-volver:hover { background: rgba(160, 133, 91, 0.2); }
     .btn-finalizar {
-      flex: 1;
-      min-width: 140px;
       background: var(--dorado-logo);
       color: #1a1a1a;
       border: none;
-      padding: 14px 20px;
-      border-radius: 4px;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.9em;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      transition: all 0.3s;
     }
+    .btn-finalizar:hover { background: var(--dorado-claro); }
+    .btn-finalizar:disabled { background: #666; cursor: not-allowed; }
 
-    .btn-finalizar:hover {
-      background: var(--dorado-claro);
-      transform: scale(1.02);
-      box-shadow: 0 4px 15px rgba(160, 133, 91, 0.5);
-    }
-
-    .btn-finalizar:disabled {
-      background: #666;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* ========== MODALES ========== */
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(0,0,0,0.9);
       z-index: 3000;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      animation: fadeIn 0.3s ease-out;
     }
-
-    .modal-overlay.visible {
-      display: flex;
-    }
-
+    .modal-overlay.visible { display: flex; }
     .modal-content {
       background: #1a1a1a;
       border: 2px solid var(--dorado-logo);
@@ -486,12 +339,9 @@
       max-width: 420px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.8);
     }
-
     .modal-content .modal-icon {
-      width: 70px;
-      height: 70px;
+      width: 70px; height: 70px;
       margin: 0 auto 15px;
       background: var(--dorado-logo);
       border-radius: 50%;
@@ -500,7 +350,6 @@
       justify-content: center;
       font-size: 36px;
     }
-
     .modal-content h3 {
       font-family: 'Montserrat', sans-serif;
       color: var(--dorado-logo);
@@ -508,71 +357,14 @@
       letter-spacing: 0.1em;
       text-transform: uppercase;
       margin-bottom: 15px;
-      font-size: 1.3em;
     }
-
-    .modal-content p {
-      font-family: 'Cormorant Garamond', serif;
-      color: var(--texto-claro);
-      font-size: 1.05em;
-      margin-bottom: 15px;
-      line-height: 1.5;
-    }
-
-    .modal-content .modal-steps {
-      text-align: left;
-      background: rgba(160, 133, 91, 0.1);
-      padding: 15px;
-      border-radius: 8px;
-      margin: 15px 0 20px;
-      border-left: 3px solid var(--dorado-logo);
-    }
-
-    .modal-content .modal-steps .step {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-bottom: 12px;
-      font-family: 'Cormorant Garamond', serif;
-      color: var(--texto-claro);
-      font-size: 1em;
-    }
-
-    .modal-content .modal-steps .step:last-child {
-      margin-bottom: 0;
-    }
-
-    .modal-content .modal-steps .step-num {
-      background: var(--dorado-logo);
-      color: #1a1a1a;
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 700;
-      font-size: 0.85em;
-      flex-shrink: 0;
-    }
-
-    .modal-content .modal-steps .step-text {
-      flex: 1;
-      padding-top: 2px;
-    }
-
-    .modal-content .modal-steps .step-text strong {
-      color: var(--dorado-claro);
-    }
-
-    .modal-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
+    .modal-content p { font-family: 'Cormorant Garamond', serif; color: var(--texto-claro); font-size: 1.05em; margin-bottom: 15px; line-height: 1.5; }
+    .modal-steps { text-align: left; background: rgba(160, 133, 91, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0 20px; border-left: 3px solid var(--dorado-logo); }
+    .modal-steps .step { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-family: 'Cormorant Garamond', serif; color: var(--texto-claro); font-size: 1em; }
+    .modal-steps .step-num { background: var(--dorado-logo); color: #1a1a1a; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.85em; flex-shrink: 0; }
+    .modal-steps .step-text { flex: 1; padding-top: 2px; }
+    .modal-steps .step-text strong { color: var(--dorado-claro); }
+    .modal-buttons { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
     .modal-btn {
       background: var(--dorado-logo);
       color: #1a1a1a;
@@ -585,31 +377,12 @@
       font-size: 0.9em;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      transition: all 0.3s;
       min-width: 140px;
     }
+    .modal-btn:hover { background: var(--dorado-claro); }
+    .modal-btn.secondary { background: transparent; color: var(--texto-claro); border: 1px solid var(--dorado-logo); }
+    .disculpa-icon { font-size: 2.5em; margin-bottom: 10px; }
 
-    .modal-btn:hover {
-      background: var(--dorado-claro);
-      transform: scale(1.02);
-    }
-
-    .modal-btn.secondary {
-      background: transparent;
-      color: var(--texto-claro);
-      border: 1px solid var(--dorado-logo);
-    }
-
-    .modal-btn.secondary:hover {
-      background: rgba(160, 133, 91, 0.2);
-    }
-
-    .disculpa-icon {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-
-    /* Toast notification */
     .toast {
       position: fixed;
       bottom: 100px;
@@ -626,12 +399,8 @@
       opacity: 0;
       transition: opacity 0.3s;
       pointer-events: none;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-
-    .toast.visible {
-      opacity: 1;
-    }
+    .toast.visible { opacity: 1; }
 
     @media(max-width: 600px) {
       h1 { font-size: 1.8em; letter-spacing: 0.1em; }
@@ -643,7 +412,6 @@
   </style>
 </head>
 <body>
-  <!-- BOTÓN SUPERIOR IZQUIERDA (dinámico: instalar o compartir) -->
   <button id="btn-accion-app" aria-label="Acción de la app">
     <svg id="icono-instalar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
@@ -654,20 +422,13 @@
     <span class="btn-badge" id="btn-badge-text">APP</span>
   </button>
 
-  <h1>JŌGAN <span style="font-family:'Noto Serif JP',serif; font-size:0.4em; letter-spacing:0.05em; font-weight:400; text-transform:none;">浄眼</span></h1>
+  <h1>JOGAN <span style="font-family:'Noto Serif JP',serif; font-size:0.4em; letter-spacing:0.05em; font-weight:400; text-transform:none;">浄眼</span></h1>
   <div id="menu"></div>
 
-  <a id="carrito-flotante" href="#">
-    
-    <div id="contador-carrito">0</div>
-  </a>
-
-  <a id="pedido" href="#" target="_blank"> Pedir</a>
+  <a id="carrito-flotante" href="#"><div id="contador-carrito">0</div></a>
 
   <div id="panel-pedido">
-    <div class="panel-header">
-      <h2>Confirmar Pedido</h2>
-    </div>
+    <div class="panel-header"><h2>Confirmar Pedido</h2></div>
     <div class="panel-content">
       <div id="lista-pedido"></div>
       <div id="total-pedido" class="pedido-total" style="display:none;">
@@ -681,17 +442,12 @@
     </div>
   </div>
 
-  <!-- MODAL: DISCULPA PARA IPHONE -->
   <div id="modal-disculpa-iphone" class="modal-overlay">
     <div class="modal-content">
       <div class="disculpa-icon">📱</div>
       <h3>Instalación en iPhone</h3>
-      <p>
-        Lamentamos informarte que en dispositivos <strong>iPhone</strong> no es posible instalar la aplicación automáticamente como en Android, debido a restricciones del sistema iOS.
-      </p>
-      <p style="color: var(--dorado-claro); font-weight: 500;">
-        Pero no te preocupes, te guiaremos paso a paso para que puedas tener JŌGAN en tu pantalla de inicio en menos de 30 segundos.
-      </p>
+      <p>Lamentamos informarte que en dispositivos <strong>iPhone</strong> no es posible instalar la aplicación automáticamente como en Android, debido a restricciones del sistema iOS.</p>
+      <p style="color: var(--dorado-claro); font-weight: 500;">Pero no te preocupes, te guiaremos paso a paso para que puedas tener JOGAN en tu pantalla de inicio en menos de 30 segundos.</p>
       <div class="modal-buttons">
         <button class="modal-btn secondary" id="btn-cerrar-disculpa">Cancelar</button>
         <button class="modal-btn" id="btn-continuar-guia">Continuar →</button>
@@ -699,50 +455,28 @@
     </div>
   </div>
 
-  <!-- MODAL: GUÍA DE INSTALACIÓN IPHONE -->
   <div id="modal-guia-iphone" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-icon">🍣</div>
       <h3>Guía de Instalación</h3>
       <p>Sigue estos pasos sencillos:</p>
       <div class="modal-steps">
-        <div class="step">
-          <span class="step-num">1</span>
-          <span class="step-text">Asegúrate de estar usando <strong>Safari</strong> (no Chrome)</span>
-        </div>
-        <div class="step">
-          <span class="step-num">2</span>
-          <span class="step-text">Toca el botón <strong>Compartir</strong> ⬆️ (abajo en el centro)</span>
-        </div>
-        <div class="step">
-          <span class="step-num">3</span>
-          <span class="step-text">Desliza hacia abajo y toca <strong>"Agregar a pantalla de inicio"</strong></span>
-        </div>
-        <div class="step">
-          <span class="step-num">4</span>
-          <span class="step-text">Confirma tocando <strong>"Agregar"</strong> arriba a la derecha</span>
-        </div>
+        <div class="step"><span class="step-num">1</span><span class="step-text">Asegúrate de estar usando <strong>Safari</strong> (no Chrome)</span></div>
+        <div class="step"><span class="step-num">2</span><span class="step-text">Toca el botón <strong>Compartir</strong> ⬆️ (abajo en el centro)</span></div>
+        <div class="step"><span class="step-num">3</span><span class="step-text">Desliza hacia abajo y toca <strong>"Agregar a pantalla de inicio"</strong></span></div>
+        <div class="step"><span class="step-num">4</span><span class="step-text">Confirma tocando <strong>"Agregar"</strong> arriba a la derecha</span></div>
       </div>
-      <p style="font-size: 0.95em; color: var(--dorado-claro);">
-        ✅ ¡Listo! Tendrás JŌGAN como una app en tu teléfono
-      </p>
-      <div class="modal-buttons">
-        <button class="modal-btn" id="btn-cerrar-guia">Entendido</button>
-      </div>
+      <p style="font-size: 0.95em; color: var(--dorado-claro);">✅ ¡Listo! Tendrás JOGAN como una app en tu teléfono</p>
+      <div class="modal-buttons"><button class="modal-btn" id="btn-cerrar-guia">Entendido</button></div>
     </div>
   </div>
 
-  <!-- MODAL: INSTALACIÓN ANDROID -->
   <div id="modal-android" class="modal-overlay">
     <div class="modal-content">
       <div class="modal-icon">📲</div>
-      <h3>Instalar JŌGAN</h3>
-      <p>
-        Toca <strong>"Instalar"</strong> en el siguiente diálogo para agregar JGAN a tus aplicaciones.
-      </p>
-      <p style="font-size: 0.9em; color: var(--dorado-claro);">
-        La app se abrirá en pantalla completa y funcionará sin la barra del navegador.
-      </p>
+      <h3>Instalar JOGAN</h3>
+      <p>Toca <strong>"Instalar"</strong> en el siguiente diálogo para agregar JOGAN a tus aplicaciones.</p>
+      <p style="font-size: 0.9em; color: var(--dorado-claro);">La app se abrirá en pantalla completa y funcionará sin la barra del navegador.</p>
       <div class="modal-buttons">
         <button class="modal-btn secondary" id="btn-cerrar-android">Ahora no</button>
         <button class="modal-btn" id="btn-instalar-android">Instalar App</button>
@@ -750,53 +484,28 @@
     </div>
   </div>
 
-  <!-- MODAL: APP YA INSTALADA -->
-  <div id="modal-ya-instalada" class="modal-overlay">
-    <div class="modal-content">
-      <div class="modal-icon">✅</div>
-      <h3>¡JŌGAN ya está instalado!</h3>
-      <p>
-        La aplicación ya se encuentra en tu dispositivo. Puedes abrirla directamente desde tu pantalla de inicio.
-      </p>
-      <p style="font-size: 0.95em; color: var(--dorado-claro);">
-        Si deseas compartir este menú con alguien, usa el botón de compartir.
-      </p>
-      <div class="modal-buttons">
-        <button class="modal-btn secondary" id="btn-cerrar-ya-instalada">Cerrar</button>
-        <button class="modal-btn" id="btn-compartir-desde-modal">Compartir</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast notification -->
   <div id="toast" class="toast"></div>
 
   <script>
     const sheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS4kg3_0KQlDJt72rSTB7nqi5G5XcvyV0_2zkAQkqfOkSxiNM8ggO_8E2XQ0qOwu1PVFR9iLyb00faG/pub?gid=0&single=true&output=tsv&v=" + new Date().getTime();
     const numeroWhatsApp = "584141889077";
-
     let seleccionados = {};
 
     async function loadMenu() {
       try {
         const res = await fetch(sheetUrl);
         const text = await res.text();
-        
         const rows = text.trim().split("\n").map(r => r.split("\t"));
         const headers = rows[0].map(h => h.trim());
         const data = rows.slice(1);
-
         const categorias = {};
 
         data.forEach(row => {
           if (row.length < 2) return;
-          
           const item = {};
           headers.forEach((h, i) => item[h] = (row[i] || "").trim());
-
           const disponible = item["Disponible"]?.toString().toUpperCase();
           const esDisponible = disponible === "TRUE" || disponible === "1" || disponible === "SI";
-          
           if (esDisponible) {
             const categoria = item["Categoría"] || "Sin categoría";
             if (!categorias[categoria]) categorias[categoria] = [];
@@ -852,25 +561,17 @@
           menuDiv.appendChild(catDiv);
         });
       } catch (err) {
-        document.getElementById("menu").innerHTML = "Error cargando menú 😢";
+        document.getElementById("menu").innerHTML = "Error cargando menú";
         console.error(err);
       }
     }
 
     function actualizarPedido() {
-      const carritoBtn = document.getElementById("carrito-flotante");
       const contadorDiv = document.getElementById("contador-carrito");
       const items = Object.values(seleccionados);
-
       const totalProductos = items.reduce((a, b) => a + b.cantidad, 0);
-
-      if (totalProductos === 0) {
-        contadorDiv.style.display = "none";
-      } else {
-        contadorDiv.textContent = totalProductos;
-        contadorDiv.style.display = "flex";
-      }
-
+      contadorDiv.textContent = totalProductos;
+      contadorDiv.style.display = totalProductos === 0 ? "none" : "flex";
       actualizarPanelPedido();
     }
 
@@ -891,7 +592,6 @@
       }
 
       let total = 0;
-
       items.forEach(i => {
         const precioStr = String(i.item["Precio ($)"]).replace('$', '').replace(',', '.');
         const precioNum = parseFloat(precioStr) || 0;
@@ -927,12 +627,9 @@
       if (seleccionados[nombre]) {
         delete seleccionados[nombre];
         actualizarPedido();
-        
-        const cantidadDivs = document.querySelectorAll('.cantidad');
-        cantidadDivs.forEach(div => {
+        document.querySelectorAll('.cantidad').forEach(div => {
           const itemDiv = div.closest('.item');
-          const itemNombre = itemDiv.querySelector('h3').textContent;
-          if (itemNombre === nombre) {
+          if (itemDiv && itemDiv.querySelector('h3').textContent === nombre) {
             div.textContent = "Cantidad: 0";
           }
         });
@@ -941,25 +638,21 @@
 
     document.getElementById("carrito-flotante").addEventListener("click", function(e) {
       e.preventDefault();
-      const items = Object.values(seleccionados);
-      if (items.length > 0) {
+      if (Object.values(seleccionados).length > 0) {
         actualizarPanelPedido();
         document.getElementById("panel-pedido").classList.add("visible");
       }
     });
 
-    document.getElementById("btn-volver-menu").addEventListener("click", function() {
+    document.getElementById("btn-volver-menu").addEventListener("click", () => {
       document.getElementById("panel-pedido").classList.remove("visible");
     });
 
-    document.getElementById("btn-finalizar").addEventListener("click", function() {
+    document.getElementById("btn-finalizar").addEventListener("click", () => {
       const items = Object.values(seleccionados);
-      
       if (items.length === 0) return;
 
-      let total = 0;
-      let detalle = "";
-
+      let total = 0, detalle = "";
       items.forEach(i => {
         const precioStr = String(i.item["Precio ($)"]).replace('$', '').replace(',', '.');
         const precioNum = parseFloat(precioStr) || 0;
@@ -968,40 +661,21 @@
         detalle += `- ${i.item["Nombre del Producto"]} x${i.cantidad} → $${subtotal.toFixed(2)}\n`;
       });
 
-      const mensaje = `¡Hola! Quiero realizar un pedido en JŌGAN:\n\n${detalle}\n*TOTAL:* $${total.toFixed(2)}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
-
-      const url = `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-      window.open(url, '_blank');
+      const mensaje = `¡Hola! Quiero realizar un pedido en JOGAN:\n\n${detalle}\n*TOTAL:* $${total.toFixed(2)}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
+      window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
     });
 
     loadMenu();
   </script>
-  
+
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      if (window.location.href.includes('mesa')) {
-        const style = document.createElement('style');
-        style.textContent = `
-          #carrito-flotante { display: none !important; }
-          .select-btn { display: none !important; }
-          .cantidad { display: none !important; }
-          #contador-carrito { display: none !important; }
-          #btn-accion-app { display: none !important; }
-        `;
-        document.head.appendChild(style);
-        console.log('Modo mesa: elementos ocultos');
-      }
-    });
-  </script>
-  
-    // ========== DETECCIÓN DE DISPOSITIVO Y ESTADO ==========
+    // SIN Service Worker - igual que Control de Asistencia
+    
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;
     const esIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
     const esAndroid = /android/i.test(userAgent);
-    const esStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-                        window.navigator.standalone === true;
+    const esStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    // ========== ELEMENTOS DEL DOM ==========
     const btnAccionApp = document.getElementById('btn-accion-app');
     const iconoInstalar = document.getElementById('icono-instalar');
     const iconoCompartir = document.getElementById('icono-compartir');
@@ -1011,162 +685,98 @@
     const modalDisculpaIphone = document.getElementById('modal-disculpa-iphone');
     const modalGuiaIphone = document.getElementById('modal-guia-iphone');
     const modalAndroid = document.getElementById('modal-android');
-    const modalYaInstalada = document.getElementById('modal-ya-instalada');
 
-    // ========== FUNCIONES AUXILIARES ==========
     function cerrarTodosLosModales() {
       modalDisculpaIphone.classList.remove('visible');
       modalGuiaIphone.classList.remove('visible');
       modalAndroid.classList.remove('visible');
-      modalYaInstalada.classList.remove('visible');
     }
 
     function mostrarToast(mensaje) {
       toast.textContent = mensaje;
       toast.classList.add('visible');
-      setTimeout(() => {
-        toast.classList.remove('visible');
-      }, 2500);
+      setTimeout(() => toast.classList.remove('visible'), 2500);
     }
 
     async function compartirLink() {
       const shareData = {
-        title: 'JŌGAN - SUSHI EXPERIENCE',
-        text: 'Descubre el menú de JŌGAN Sushi. ¡Sabores que hacen la vida más linda!',
+        title: 'JOGAN - SUSHI EXPERIENCE',
+        text: 'Descubre el menú de JOGAN Sushi.',
         url: window.location.href
       };
-
       try {
         if (navigator.share) {
           await navigator.share(shareData);
-          console.log('Compartido exitosamente');
         } else {
-          // Fallback: copiar al portapapeles
           await navigator.clipboard.writeText(window.location.href);
-          mostrarToast(' Link copiado al portapapeles');
+          mostrarToast('Link copiado al portapapeles');
         }
       } catch (err) {
         if (err.name !== 'AbortError') {
-          console.error('Error al compartir:', err);
-          // Fallback final
           await navigator.clipboard.writeText(window.location.href);
-          mostrarToast('🔗 Link copiado al portapapeles');
+          mostrarToast('Link copiado al portapapeles');
         }
       }
     }
 
-    // ========== CONFIGURAR BOTÓN SEGÚN ESTADO ==========
     function configurarBotonAccion() {
-  if (esStandalone) {
-    // Si ya es app, ocultamos botón instalar y mostramos compartir (sin modales)
-    iconoInstalar.style.display = 'none';
-    iconoCompartir.style.display = 'block';
-    btnBadgeText.textContent = 'COMP';
-    btnAccionApp.classList.add('compartir');
-    btnAccionApp.onclick = compartirLink; // Click directo a compartir
-  } else {
-    // Si es navegador, mostramos instalar
-    iconoInstalar.style.display = 'block';
-    iconoCompartir.style.display = 'none';
-    btnBadgeText.textContent = 'APP';
-    btnAccionApp.classList.remove('compartir');
-    // Aquí va la lógica de abrir modal de instalación
-    btnAccionApp.onclick = function() {
-       if (esAndroid && deferredPrompt) {
-           deferredPrompt.prompt();
-       } else if (esIOS) {
-           modalDisculpaIphone.classList.add('visible');
-       }
-    };
-  }
-}
-
-    // ========== CLICK EN BOTÓN PRINCIPAL ==========
-    btnAccionApp.addEventListener('click', function() {
       if (esStandalone) {
-        // App instalada: compartir
-        compartirLink();
+        iconoInstalar.style.display = 'none';
+        iconoCompartir.style.display = 'block';
+        btnBadgeText.textContent = 'COMP';
+        btnAccionApp.classList.add('compartir');
+        btnAccionApp.onclick = compartirLink;
       } else {
-        // No instalada: flujo de instalación
-        if (esIOS) {
-          modalDisculpaIphone.classList.add('visible');
-        } else if (esAndroid) {
-          if (deferredPrompt) {
-            modalAndroid.classList.add('visible');
+        iconoInstalar.style.display = 'block';
+        iconoCompartir.style.display = 'none';
+        btnBadgeText.textContent = 'APP';
+        btnAccionApp.classList.remove('compartir');
+        btnAccionApp.onclick = function() {
+          if (esAndroid && deferredPrompt) {
+            deferredPrompt.prompt();
+          } else if (esIOS) {
+            modalDisculpaIphone.classList.add('visible');
           } else {
-            // Si no hay deferredPrompt, mostrar guía manual
-            modalGuiaIphone.classList.add('visible');
+            compartirLink();
           }
-        } else {
-          // PC u otros: compartir
-          compartirLink();
-        }
+        };
       }
-    });
+    }
 
-    // ========== MODALES IPHONE ==========
     document.getElementById('btn-cerrar-disculpa').addEventListener('click', cerrarTodosLosModales);
-    
-    document.getElementById('btn-continuar-guia').addEventListener('click', function() {
+    document.getElementById('btn-continuar-guia').addEventListener('click', () => {
       modalDisculpaIphone.classList.remove('visible');
       modalGuiaIphone.classList.add('visible');
     });
-
     document.getElementById('btn-cerrar-guia').addEventListener('click', cerrarTodosLosModales);
-
-    // ========== MODAL ANDROID ==========
     document.getElementById('btn-cerrar-android').addEventListener('click', cerrarTodosLosModales);
+
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+    });
 
     document.getElementById('btn-instalar-android').addEventListener('click', async function() {
       if (deferredPrompt) {
         modalAndroid.classList.remove('visible');
         deferredPrompt.prompt();
         const { outcome } = await deferredPrompt.userChoice;
-        
         if (outcome === 'accepted') {
-          console.log('Usuario aceptó instalar');
-          localStorage.setItem('jogan_installado', 'true');
-          mostrarToast('✅ App instalada exitosamente');
-          // Actualizar botón después de instalar
-          setTimeout(() => {
-            configurarBotonAccion();
-          }, 1000);
-        } else {
-          console.log('Usuario rechazó instalar');
+          mostrarToast('App instalada');
+          setTimeout(configurarBotonAccion, 1000);
         }
-        
         deferredPrompt = null;
       }
     });
 
-    // ========== MODAL YA INSTALADA ==========
-    document.getElementById('btn-cerrar-ya-instalada').addEventListener('click', cerrarTodosLosModales);
-    
-    document.getElementById('btn-compartir-desde-modal').addEventListener('click', function() {
-      cerrarTodosLosModales();
-      compartirLink();
-    });
-
-    // ========== CAPTURAR beforeinstallprompt ==========
-    let deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      console.log('PWA instalable detectada');
-    });
-
-    // Detectar cuando la app se instala
     window.addEventListener('appinstalled', () => {
-      console.log('App instalada exitosamente');
-      localStorage.setItem('jogan_installado', 'true');
       cerrarTodosLosModales();
-      mostrarToast('✅ JŌGAN instalado correctamente');
+      mostrarToast('JOGAN instalado');
       configurarBotonAccion();
     });
 
-    // ========== INICIALIZAR ==========
     configurarBotonAccion();
-
   </script>
 </body>
 </html>
