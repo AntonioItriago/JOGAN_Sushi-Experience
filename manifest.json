@@ -1,24 +1,40 @@
 ﻿{
-  "name": "JŌGAN - SUSHI EXPERIENCE",
-  "short_name": "JŌGAN",
-  "description": "Menú digital del restaurante JOGAN. Arma tu pedido y envíalo por WhatsApp.",
+  "id": "/",
+  "name": "JOGAN - SUSHI EXPERIENCE",
+  "short_name": "JOGAN",
+  "description": "Menu digital del restaurante JOGAN",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1a1a",
   "theme_color": "#A0855B",
   "orientation": "portrait",
   "lang": "es",
+  "scope": "/",
+  "categories": ["food", "lifestyle"],
   "icons": [
     {
       "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
