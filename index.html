@@ -25,6 +25,8 @@
       --fondo-oscuro: rgba(0,0,0,0.85);
     }
 
+    * { box-sizing: border-box; }
+
     body {
       font-family: 'Cormorant Garamond', serif;
       color: var(--texto-claro);
@@ -381,7 +383,6 @@
     }
     .modal-btn:hover { background: var(--dorado-claro); }
     .modal-btn.secondary { background: transparent; color: var(--texto-claro); border: 1px solid var(--dorado-logo); }
-    .disculpa-icon { font-size: 2.5em; margin-bottom: 10px; }
 
     .toast {
       position: fixed;
@@ -444,7 +445,7 @@
 
   <div id="modal-disculpa-iphone" class="modal-overlay">
     <div class="modal-content">
-      <div class="disculpa-icon">📱</div>
+      <div class="modal-icon">📱</div>
       <h3>Instalación en iPhone</h3>
       <p>Lamentamos informarte que en dispositivos <strong>iPhone</strong> no es posible instalar la aplicación automáticamente como en Android, debido a restricciones del sistema iOS.</p>
       <p style="color: var(--dorado-claro); font-weight: 500;">Pero no te preocupes, te guiaremos paso a paso para que puedas tener JOGAN en tu pantalla de inicio en menos de 30 segundos.</p>
@@ -524,7 +525,7 @@
         Object.keys(categorias).forEach(cat => {
           const catDiv = document.createElement("div");
           catDiv.className = "category";
-          catDiv.innerHTML = `<h2>${cat}</h2><div class="carousel"></div>`;
+          catDiv.innerHTML = "<h2>" + cat + "</h2><div class='carousel'></div>";
           const carousel = catDiv.querySelector(".carousel");
 
           categorias[cat].forEach(item => {
@@ -536,20 +537,18 @@
 
             const div = document.createElement("div");
             div.className = "item";
-            div.innerHTML = `
-              <h3>${nombre}</h3>
-              ${opciones ? `<p class="opciones">${opciones}</p>` : ""}
-              ${descripcion ? `<p>${descripcion}</p>` : ""}
-              ${unidades ? `<p class="unidades">${unidades}</p>` : ""}
-              <p class="precio">$${precio.replace(/\$/g, '')}</p>
-              <button class="select-btn">AGREGAR</button>
-              <div class="cantidad">Cantidad: 0</div>
-            `;
+            div.innerHTML = "<h3>" + nombre + "</h3>" +
+              (opciones ? "<p class='opciones'>" + opciones + "</p>" : "") +
+              (descripcion ? "<p>" + descripcion + "</p>" : "") +
+              (unidades ? "<p class='unidades'>" + unidades + "</p>" : "") +
+              "<p class='precio'>$" + precio.replace(/\$/g, '') + "</p>" +
+              "<button class='select-btn'>AGREGAR</button>" +
+              "<div class='cantidad'>Cantidad: 0</div>";
             const btn = div.querySelector(".select-btn");
             const cantidadDiv = div.querySelector(".cantidad");
 
-            btn.addEventListener("click", () => {
-              if (!seleccionados[nombre]) seleccionados[nombre] = { item, cantidad: 0 };
+            btn.addEventListener("click", function() {
+              if (!seleccionados[nombre]) seleccionados[nombre] = { item: item, cantidad: 0 };
               seleccionados[nombre].cantidad++;
               cantidadDiv.textContent = "Cantidad: " + seleccionados[nombre].cantidad;
               actualizarPedido();
@@ -569,7 +568,7 @@
     function actualizarPedido() {
       const contadorDiv = document.getElementById("contador-carrito");
       const items = Object.values(seleccionados);
-      const totalProductos = items.reduce((a, b) => a + b.cantidad, 0);
+      const totalProductos = items.reduce(function(a, b) { return a + b.cantidad; }, 0);
       contadorDiv.textContent = totalProductos;
       contadorDiv.style.display = totalProductos === 0 ? "none" : "flex";
       actualizarPanelPedido();
@@ -592,7 +591,7 @@
       }
 
       let total = 0;
-      items.forEach(i => {
+      items.forEach(function(i) {
         const precioStr = String(i.item["Precio ($)"]).replace('$', '').replace(',', '.');
         const precioNum = parseFloat(precioStr) || 0;
         const subtotal = precioNum * i.cantidad;
@@ -600,25 +599,23 @@
 
         const itemDiv = document.createElement("div");
         itemDiv.className = "pedido-item";
-        itemDiv.innerHTML = `
-          <div class="pedido-item-info">
-            <h4>${i.item["Nombre del Producto"]}</h4>
-            <p>Cantidad: ${i.cantidad}</p>
-            <p class="pedido-item-precio">$${subtotal.toFixed(2)}</p>
-          </div>
-          <button class="btn-eliminar-item" data-nombre="${i.item["Nombre del Producto"]}">✕</button>
-        `;
+        itemDiv.innerHTML = "<div class='pedido-item-info'>" +
+          "<h4>" + i.item["Nombre del Producto"] + "</h4>" +
+          "<p>Cantidad: " + i.cantidad + "</p>" +
+          "<p class='pedido-item-precio'>$" + subtotal.toFixed(2) + "</p>" +
+          "</div>" +
+          "<button class='btn-eliminar-item' data-nombre='" + i.item["Nombre del Producto"] + "'>✕</button>";
         listaDiv.appendChild(itemDiv);
       });
 
-      document.querySelectorAll('.btn-eliminar-item').forEach(btn => {
+      document.querySelectorAll('.btn-eliminar-item').forEach(function(btn) {
         btn.addEventListener('click', function() {
           const nombre = this.getAttribute('data-nombre');
           eliminarDelPedido(nombre);
         });
       });
 
-      montoDiv.textContent = `$${total.toFixed(2)}`;
+      montoDiv.textContent = "$" + total.toFixed(2);
       totalDiv.style.display = "block";
       btnFinalizar.disabled = false;
     }
@@ -627,7 +624,7 @@
       if (seleccionados[nombre]) {
         delete seleccionados[nombre];
         actualizarPedido();
-        document.querySelectorAll('.cantidad').forEach(div => {
+        document.querySelectorAll('.cantidad').forEach(function(div) {
           const itemDiv = div.closest('.item');
           if (itemDiv && itemDiv.querySelector('h3').textContent === nombre) {
             div.textContent = "Cantidad: 0";
@@ -644,25 +641,25 @@
       }
     });
 
-    document.getElementById("btn-volver-menu").addEventListener("click", () => {
+    document.getElementById("btn-volver-menu").addEventListener("click", function() {
       document.getElementById("panel-pedido").classList.remove("visible");
     });
 
-    document.getElementById("btn-finalizar").addEventListener("click", () => {
+    document.getElementById("btn-finalizar").addEventListener("click", function() {
       const items = Object.values(seleccionados);
       if (items.length === 0) return;
 
       let total = 0, detalle = "";
-      items.forEach(i => {
+      items.forEach(function(i) {
         const precioStr = String(i.item["Precio ($)"]).replace('$', '').replace(',', '.');
         const precioNum = parseFloat(precioStr) || 0;
         const subtotal = precioNum * i.cantidad;
         total += subtotal;
-        detalle += `- ${i.item["Nombre del Producto"]} x${i.cantidad} → $${subtotal.toFixed(2)}\n`;
+        detalle += "- " + i.item["Nombre del Producto"] + " x" + i.cantidad + " → $" + subtotal.toFixed(2) + "\n";
       });
 
-      const mensaje = `¡Hola! Quiero realizar un pedido en JOGAN:\n\n${detalle}\n*TOTAL:* $${total.toFixed(2)}\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!`;
-      window.open(`https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`, '_blank');
+      const mensaje = "¡Hola! Quiero realizar un pedido en JOGAN:\n\n" + detalle + "\n*TOTAL:* $" + total.toFixed(2) + "\n\nPor favor, necesito confirmar el pedido, delivery y los detalles de pago. ¡Gracias!";
+      window.open("https://wa.me/" + numeroWhatsApp + "?text=" + encodeURIComponent(mensaje), '_blank');
     });
 
     loadMenu();
@@ -671,20 +668,20 @@
   <script>
     // SIN Service Worker - igual que Control de Asistencia
     
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const esIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
-    const esAndroid = /android/i.test(userAgent);
-    const esStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    var esIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
+    var esAndroid = /android/i.test(userAgent);
+    var esStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    const btnAccionApp = document.getElementById('btn-accion-app');
-    const iconoInstalar = document.getElementById('icono-instalar');
-    const iconoCompartir = document.getElementById('icono-compartir');
-    const btnBadgeText = document.getElementById('btn-badge-text');
-    const toast = document.getElementById('toast');
+    var btnAccionApp = document.getElementById('btn-accion-app');
+    var iconoInstalar = document.getElementById('icono-instalar');
+    var iconoCompartir = document.getElementById('icono-compartir');
+    var btnBadgeText = document.getElementById('btn-badge-text');
+    var toast = document.getElementById('toast');
 
-    const modalDisculpaIphone = document.getElementById('modal-disculpa-iphone');
-    const modalGuiaIphone = document.getElementById('modal-guia-iphone');
-    const modalAndroid = document.getElementById('modal-android');
+    var modalDisculpaIphone = document.getElementById('modal-disculpa-iphone');
+    var modalGuiaIphone = document.getElementById('modal-guia-iphone');
+    var modalAndroid = document.getElementById('modal-android');
 
     function cerrarTodosLosModales() {
       modalDisculpaIphone.classList.remove('visible');
@@ -695,27 +692,23 @@
     function mostrarToast(mensaje) {
       toast.textContent = mensaje;
       toast.classList.add('visible');
-      setTimeout(() => toast.classList.remove('visible'), 2500);
+      setTimeout(function() { toast.classList.remove('visible'); }, 2500);
     }
 
-    async function compartirLink() {
-      const shareData = {
+    function compartirLink() {
+      var shareData = {
         title: 'JOGAN - SUSHI EXPERIENCE',
         text: 'Descubre el menú de JOGAN Sushi.',
         url: window.location.href
       };
-      try {
-        if (navigator.share) {
-          await navigator.share(shareData);
-        } else {
-          await navigator.clipboard.writeText(window.location.href);
+      if (navigator.share) {
+        navigator.share(shareData).catch(function() {});
+      } else {
+        navigator.clipboard.writeText(window.location.href).then(function() {
           mostrarToast('Link copiado al portapapeles');
-        }
-      } catch (err) {
-        if (err.name !== 'AbortError') {
-          await navigator.clipboard.writeText(window.location.href);
-          mostrarToast('Link copiado al portapapeles');
-        }
+        }).catch(function() {
+          mostrarToast('No se pudo copiar');
+        });
       }
     }
 
@@ -744,33 +737,34 @@
     }
 
     document.getElementById('btn-cerrar-disculpa').addEventListener('click', cerrarTodosLosModales);
-    document.getElementById('btn-continuar-guia').addEventListener('click', () => {
+    document.getElementById('btn-continuar-guia').addEventListener('click', function() {
       modalDisculpaIphone.classList.remove('visible');
       modalGuiaIphone.classList.add('visible');
     });
     document.getElementById('btn-cerrar-guia').addEventListener('click', cerrarTodosLosModales);
     document.getElementById('btn-cerrar-android').addEventListener('click', cerrarTodosLosModales);
 
-    let deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', (e) => {
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
       e.preventDefault();
       deferredPrompt = e;
     });
 
-    document.getElementById('btn-instalar-android').addEventListener('click', async function() {
+    document.getElementById('btn-instalar-android').addEventListener('click', function() {
       if (deferredPrompt) {
         modalAndroid.classList.remove('visible');
         deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === 'accepted') {
-          mostrarToast('App instalada');
-          setTimeout(configurarBotonAccion, 1000);
-        }
-        deferredPrompt = null;
+        deferredPrompt.userChoice.then(function(result) {
+          if (result.outcome === 'accepted') {
+            mostrarToast('App instalada');
+            setTimeout(configurarBotonAccion, 1000);
+          }
+          deferredPrompt = null;
+        });
       }
     });
 
-    window.addEventListener('appinstalled', () => {
+    window.addEventListener('appinstalled', function() {
       cerrarTodosLosModales();
       mostrarToast('JOGAN instalado');
       configurarBotonAccion();
@@ -778,9 +772,5 @@
 
     configurarBotonAccion();
   </script>
-  <div style="position:fixed;bottom:0;left:0;background:red;color:white;padding:10px;z-index:9999;font-family:monospace;font-size:12px;">
-  v4.0 - <span id="fecha"></span>
-  <script>document.getElementById('fecha').textContent=new Date().toLocaleString()</script>
-</div>
 </body>
 </html>
