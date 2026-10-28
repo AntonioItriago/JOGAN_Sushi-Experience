@@ -1057,22 +1057,29 @@
 
     // ========== CONFIGURAR BOTÓN SEGÚN ESTADO ==========
     function configurarBotonAccion() {
-      if (esStandalone) {
-        // App ya instalada: mostrar botón de compartir
-        iconoInstalar.style.display = 'none';
-        iconoCompartir.style.display = 'block';
-        btnBadgeText.textContent = 'COMP';
-        btnAccionApp.classList.add('compartir');
-        btnAccionApp.setAttribute('aria-label', 'Compartir aplicación');
-      } else {
-        // No instalada: mostrar botón de instalar
-        iconoInstalar.style.display = 'block';
-        iconoCompartir.style.display = 'none';
-        btnBadgeText.textContent = 'APP';
-        btnAccionApp.classList.remove('compartir');
-        btnAccionApp.setAttribute('aria-label', 'Instalar aplicación');
-      }
-    }
+  if (esStandalone) {
+    // Si ya es app, ocultamos botón instalar y mostramos compartir (sin modales)
+    iconoInstalar.style.display = 'none';
+    iconoCompartir.style.display = 'block';
+    btnBadgeText.textContent = 'COMP';
+    btnAccionApp.classList.add('compartir');
+    btnAccionApp.onclick = compartirLink; // Click directo a compartir
+  } else {
+    // Si es navegador, mostramos instalar
+    iconoInstalar.style.display = 'block';
+    iconoCompartir.style.display = 'none';
+    btnBadgeText.textContent = 'APP';
+    btnAccionApp.classList.remove('compartir');
+    // Aquí va la lógica de abrir modal de instalación
+    btnAccionApp.onclick = function() {
+       if (esAndroid && deferredPrompt) {
+           deferredPrompt.prompt();
+       } else if (esIOS) {
+           modalDisculpaIphone.classList.add('visible');
+       }
+    };
+  }
+}
 
     // ========== CLICK EN BOTÓN PRINCIPAL ==========
     btnAccionApp.addEventListener('click', function() {
@@ -1160,12 +1167,6 @@
     // ========== INICIALIZAR ==========
     configurarBotonAccion();
 
-    // Si está en navegador pero la app ya fue instalada antes, mostrar sugerencia
-    if (!esStandalone && localStorage.getItem('jogan_installado') === 'true') {
-      setTimeout(() => {
-        modalYaInstalada.classList.add('visible');
-      }, 3000);
-    }
   </script>
 </body>
 </html>
