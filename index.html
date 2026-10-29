@@ -82,44 +82,45 @@
     .toast.visible { opacity: 1; }
     @media(max-width: 600px) { h1 { font-size: 1.8em; letter-spacing: 0.1em; } .panel-botones { flex-direction: column; } .btn-volver, .btn-finalizar { width: 100%; } #btn-accion-app { width: 45px; height: 45px; top: 10px; left: 10px; } #btn-accion-app svg { width: 22px; height: 22px; } }
     #carrito-flotante {
-  position: fixed !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  background: var(--dorado-logo) !important;
-  color: #1a1a1a !important;
-  border-radius: 50% !important;
-  width: 65px !important;
-  height: 65px !important;
-  text-decoration: none !important;
-  box-shadow: 0 4px 20px rgba(160, 133, 91, 0.6) !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-size: 26px !important;
-  z-index: 1000 !important;
-  cursor: pointer !important;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--dorado-logo);
+  color: #1a1a1a;
+  border-radius: 50%;
+  width: 65px;
+  height: 65px;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(160, 133, 91, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  z-index: 1000;
+  cursor: pointer;
 }
 
-#carrito-flotante::before {
-  content: "🛒";
-  font-size: 28px;
+#carrito-flotante:active {
+  transform: scale(0.9);
 }
 
 #contador-carrito {
-  position: absolute !important;
-  top: -5px !important;
-  right: -5px !important;
-  background: #c0392b !important;
-  color: white !important;
-  border-radius: 50% !important;
-  width: 24px !important;
-  height: 24px !important;
-  font-size: 14px !important;
-  display: none !important;
-  align-items: center !important;
-  justify-content: center !important;
-  font-weight: bold !important;
-  font-family: 'Montserrat', sans-serif !important;
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #c0392b;
+  color: white;
+  border-radius: 50%;
+  min-width: 24px;
+  height: 24px;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  border: 2px solid var(--dorado-logo);
 }
   </style>
 </head>
@@ -132,7 +133,10 @@
 
   <h1>JOGAN <span style="font-family:'Noto Serif JP',serif; font-size:0.4em; letter-spacing:0.05em; font-weight:400; text-transform:none;">浄眼</span></h1>
   <div id="menu"></div>
-  <a id="carrito-flotante" href="#"><div id="contador-carrito">0</div></a>
+  <a id="carrito-flotante" href="#">
+  🛒
+  <span id="contador-carrito">0</span>
+</a>
 
   <div id="panel-pedido">
     <div class="panel-header"><h2>Confirmar Pedido</h2></div>
@@ -272,13 +276,13 @@
     }
 
     function actualizarPedido() {
-      const contadorDiv = document.getElementById("contador-carrito");
-      const items = Object.values(seleccionados);
-      const totalProductos = items.reduce(function(a, b) { return a + b.cantidad; }, 0);
-      contadorDiv.textContent = totalProductos;
-      contadorDiv.style.display = totalProductos === 0 ? "none" : "flex";
-      actualizarPanelPedido();
-    }
+  const contadorDiv = document.getElementById("contador-carrito");
+  const items = Object.values(seleccionados);
+  const totalProductos = items.reduce(function(a, b) { return a + b.cantidad; }, 0);
+  contadorDiv.textContent = totalProductos;
+  contadorDiv.style.display = totalProductos === 0 ? "none" : "flex";
+  actualizarPanelPedido();
+}
 
     function actualizarPanelPedido() {
       const listaDiv = document.getElementById("lista-pedido");
