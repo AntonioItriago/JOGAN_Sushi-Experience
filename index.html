@@ -18,6 +18,111 @@
     :root { --dorado-logo: #A0855B; --dorado-claro: #C9A961; --texto-claro: #F5F0E8; --fondo-oscuro: rgba(0,0,0,0.85); }
     * { box-sizing: border-box; }
     body { font-family: 'Cormorant Garamond', serif; color: var(--texto-claro); background: url('fondo.jpg?v=3') no-repeat center center fixed; background-size: cover; margin: 0; padding: 0; padding-bottom: 80px; }
+
+    /* ===== BANNER DE INSTALACIÓN ===== */
+    #banner-instalar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+      border-bottom: 2px solid var(--dorado-logo);
+      padding: 12px 50px 12px 16px;
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+      animation: slideDown 0.4s ease-out;
+    }
+    #banner-instalar.visible { display: flex; }
+    #banner-instalar.ocultando { animation: slideUp 0.4s ease-in forwards; }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-100%); opacity: 0; }
+    }
+
+    .banner-contenido {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+    }
+    .banner-icono {
+      width: 40px;
+      height: 40px;
+      background: var(--dorado-logo);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .banner-texto { flex: 1; }
+    .banner-texto strong {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      color: var(--dorado-claro);
+      font-size: 0.95em;
+      letter-spacing: 0.05em;
+    }
+    .banner-texto span {
+      font-size: 0.85em;
+      color: #ccc;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .banner-botones { display: flex; gap: 8px; align-items: center; }
+    .btn-banner-instalar {
+      background: var(--dorado-logo);
+      color: #1a1a1a;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 0.8em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .btn-banner-instalar:hover { background: var(--dorado-claro); }
+    .btn-banner-cerrar {
+      background: transparent;
+      color: #999;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+    }
+    .btn-banner-cerrar:hover { color: white; background: rgba(255,255,255,0.1); }
+
+    .banner-timer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: var(--dorado-logo);
+      transition: width linear;
+    }
+
     #btn-accion-app { position: fixed; top: 15px; left: 15px; z-index: 1500; background: var(--dorado-logo); color: #1a1a1a; border: none; border-radius: 50%; width: 50px; height: 50px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.5); transition: all 0.3s; padding: 0; }
     #btn-accion-app:hover { background: var(--dorado-claro); transform: scale(1.1); }
     #btn-accion-app svg { width: 26px; height: 26px; fill: #1a1a1a; }
@@ -80,10 +185,27 @@
     .modal-btn.secondary { background: transparent; color: var(--texto-claro); border: 1px solid var(--dorado-logo); }
     .toast { position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%); background: var(--dorado-logo); color: #1a1a1a; padding: 12px 24px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 0.9em; z-index: 4000; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
     .toast.visible { opacity: 1; }
-    @media(max-width: 600px) { h1 { font-size: 1.8em; letter-spacing: 0.1em; } .panel-botones { flex-direction: column; } .btn-volver, .btn-finalizar { width: 100%; } #btn-accion-app { width: 45px; height: 45px; top: 10px; left: 10px; } #btn-accion-app svg { width: 22px; height: 22px; } }
+    @media(max-width: 600px) { h1 { font-size: 1.8em; letter-spacing: 0.1em; } .panel-botones { flex-direction: column; } .btn-volver, .btn-finalizar { width: 100%; } #btn-accion-app { width: 45px; height: 45px; top: 10px; left: 10px; } #btn-accion-app svg { width: 22px; height: 22px; } .banner-texto strong { font-size: 0.85em; } .banner-texto span { font-size: 0.75em; } .btn-banner-instalar { padding: 6px 12px; font-size: 0.7em; } }
   </style>
 </head>
 <body>
+
+  <!-- BANNER DE INSTALACIÓN TEMPORAL -->
+  <div id="banner-instalar">
+    <div class="banner-contenido">
+      <div class="banner-icono">📲</div>
+      <div class="banner-texto">
+        <strong>Instala JOGAN como App</strong>
+        <span>Acceso rápido y experiencia completa</span>
+      </div>
+      <div class="banner-botones">
+        <button class="btn-banner-instalar" id="btn-banner-instalar">Instalar</button>
+      </div>
+    </div>
+    <button class="btn-banner-cerrar" id="btn-banner-cerrar">✕</button>
+    <div class="banner-timer" id="banner-timer"></div>
+  </div>
+
   <button id="btn-accion-app" aria-label="Acción de la app">
     <svg id="icono-instalar" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
     <svg id="icono-compartir" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="display:none;"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
@@ -332,11 +454,13 @@
   </script>
 
   <script>
+    // ========== DETECCIÓN DE DISPOSITIVO ==========
     var userAgent = navigator.userAgent || navigator.vendor || window.opera;
     var esIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream;
     var esAndroid = /android/i.test(userAgent);
     var esStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
+    // ========== ELEMENTOS DEL DOM ==========
     var btnAccionApp = document.getElementById('btn-accion-app');
     var iconoInstalar = document.getElementById('icono-instalar');
     var iconoCompartir = document.getElementById('icono-compartir');
@@ -346,6 +470,16 @@
     var modalDisculpaIphone = document.getElementById('modal-disculpa-iphone');
     var modalGuiaIphone = document.getElementById('modal-guia-iphone');
     var modalAndroid = document.getElementById('modal-android');
+
+    // ========== BANNER DE INSTALACIÓN ==========
+    var bannerInstalar = document.getElementById('banner-instalar');
+    var btnBannerInstalar = document.getElementById('btn-banner-instalar');
+    var btnBannerCerrar = document.getElementById('btn-banner-cerrar');
+    var bannerTimer = document.getElementById('banner-timer');
+    var bannerTimeout = null;
+    var bannerTimerInterval = null;
+    var bannerDuracion = 30000; // 30 segundos
+    var bannerInicio = 0;
 
     function cerrarTodosLosModales() {
       modalDisculpaIphone.classList.remove('visible');
@@ -376,21 +510,80 @@
       }
     }
 
+    // ========== LÓGICA DEL BANNER ==========
+    function mostrarBanner() {
+      // Solo mostrar si NO es standalone y hay deferredPrompt disponible
+      if (esStandalone || !deferredPrompt) return;
+
+      bannerInstalar.classList.add('visible');
+      bannerInicio = Date.now();
+
+      // Animación de la barra de tiempo
+      bannerTimer.style.width = '100%';
+      bannerTimer.style.transition = 'none';
+
+      setTimeout(function() {
+        bannerTimer.style.transition = 'width ' + (bannerDuracion / 1000) + 's linear';
+        bannerTimer.style.width = '0%';
+      }, 50);
+
+      // Auto-ocultar después de 30 segundos
+      bannerTimeout = setTimeout(function() {
+        ocultarBanner();
+      }, bannerDuracion);
+    }
+
+    function ocultarBanner() {
+      if (bannerTimeout) {
+        clearTimeout(bannerTimeout);
+        bannerTimeout = null;
+      }
+      bannerInstalar.classList.add('ocultando');
+      setTimeout(function() {
+        bannerInstalar.classList.remove('visible', 'ocultando');
+      }, 400);
+    }
+
+    // Click en "Instalar" del banner
+    btnBannerInstalar.addEventListener('click', function() {
+      if (deferredPrompt) {
+        ocultarBanner();
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(result) {
+          if (result.outcome === 'accepted') {
+            mostrarToast('App instalada');
+            setTimeout(configurarBotonAccion, 1000);
+          }
+          deferredPrompt = null;
+        });
+      }
+    });
+
+    // Click en cerrar del banner
+    btnBannerCerrar.addEventListener('click', function() {
+      ocultarBanner();
+    });
+
+    // ========== CONFIGURAR BOTÓN PRINCIPAL ==========
     function configurarBotonAccion() {
       if (esStandalone) {
+        // App instalada: mostrar compartir
         iconoInstalar.style.display = 'none';
         iconoCompartir.style.display = 'block';
         btnBadgeText.textContent = 'COMP';
         btnAccionApp.classList.add('compartir');
         btnAccionApp.onclick = compartirLink;
+        // Ocultar banner si está visible
+        ocultarBanner();
       } else {
+        // No instalada: mostrar instalar
         iconoInstalar.style.display = 'block';
         iconoCompartir.style.display = 'none';
         btnBadgeText.textContent = 'APP';
         btnAccionApp.classList.remove('compartir');
         btnAccionApp.onclick = function() {
           if (esAndroid && deferredPrompt) {
-            deferredPrompt.prompt();
+            modalAndroid.classList.add('visible');
           } else if (esIOS) {
             modalDisculpaIphone.classList.add('visible');
           } else {
@@ -400,20 +593,16 @@
       }
     }
 
+    // ========== MODALES IPHONE ==========
     document.getElementById('btn-cerrar-disculpa').addEventListener('click', cerrarTodosLosModales);
     document.getElementById('btn-continuar-guia').addEventListener('click', function() {
       modalDisculpaIphone.classList.remove('visible');
       modalGuiaIphone.classList.add('visible');
     });
     document.getElementById('btn-cerrar-guia').addEventListener('click', cerrarTodosLosModales);
+
+    // ========== MODAL ANDROID ==========
     document.getElementById('btn-cerrar-android').addEventListener('click', cerrarTodosLosModales);
-
-    var deferredPrompt = null;
-    window.addEventListener('beforeinstallprompt', function(e) {
-      e.preventDefault();
-      deferredPrompt = e;
-    });
-
     document.getElementById('btn-instalar-android').addEventListener('click', function() {
       if (deferredPrompt) {
         modalAndroid.classList.remove('visible');
@@ -428,12 +617,26 @@
       }
     });
 
+    // ========== CAPTURAR beforeinstallprompt ==========
+    var deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', function(e) {
+      e.preventDefault();
+      deferredPrompt = e;
+      console.log('PWA instalable detectada');
+      // Mostrar banner después de un pequeño delay para que la página cargue
+      setTimeout(mostrarBanner, 1000);
+    });
+
+    // Detectar cuando la app se instala
     window.addEventListener('appinstalled', function() {
+      esStandalone = true;
+      ocultarBanner();
       cerrarTodosLosModales();
       mostrarToast('JOGAN instalado');
       configurarBotonAccion();
     });
 
+    // ========== INICIALIZAR ==========
     configurarBotonAccion();
   </script>
 </body>
